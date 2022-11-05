@@ -13,11 +13,13 @@ const state = reactive<State>({ list: [], current: null })
 const PortPreAssign = () => (
   <ElTable data={state.current?.json.portPreAssign} maxHeight="500px" scrollbarAlwaysOn border>
     <ElTableColumn prop="serviceName" label="serviceName" width="150">
-      {{ default: scope => <ElInput v-model={scope.row.serviceName} spellcheck="false" /> }}
+      {{
+        default: (scope: any) => <ElInput v-model={scope.row.serviceName} />
+      }}
     </ElTableColumn>
     <ElTableColumn prop="portType" label="portType">
       {{
-        default: scope =>
+        default: (scope: any) =>
           ((scope.row.portType || '') as string)
             .split(',')
             .filter(it => it !== '')
@@ -27,7 +29,7 @@ const PortPreAssign = () => (
     {/* 操作列 */}
     <ElTableColumn width="50" fixed="left" align="center">
       {{
-        default: scope => <ElButton icon={Delete} circle type="danger" />,
+        default: (scope: any) => <ElButton icon={Delete} circle type="danger" />,
         header: () => <ElButton icon={Plus} circle type="primary" />
       }}
     </ElTableColumn>
@@ -37,15 +39,15 @@ const PortPreAssign = () => (
 const PortRange = () => (
   <ElTable data={state.current?.json.portRange} maxHeight="500px" scrollbarAlwaysOn border>
     <ElTableColumn prop="key" label="key" width="150">
-      {{ default: scope => <ElInput v-model={scope.row.key} spellcheck="false" /> }}
+      {{ default: (scope: any) => <ElInput v-model={scope.row.key} /> }}
     </ElTableColumn>
     <ElTableColumn prop="range" label="range">
-      {{ default: scope => <ElInput v-model={scope.row.range} spellcheck="false" /> }}
+      {{ default: (scope: any) => <ElInput v-model={scope.row.range} /> }}
     </ElTableColumn>
     {/* 操作列 */}
     <ElTableColumn width="50" fixed="left" align="center">
       {{
-        default: scope => <ElButton icon={Delete} circle type="danger" />,
+        default: (scope: any) => <ElButton icon={Delete} circle type="danger" />,
         header: () => <ElButton icon={Plus} circle type="primary" />
       }}
     </ElTableColumn>

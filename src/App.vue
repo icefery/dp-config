@@ -5,7 +5,7 @@ import ArgsTemplate from './components/args-template/ArgsTemplate'
 </script>
 
 <template>
-  <el-config-provider size="small">
+  <el-config-provider size="small" spellcheck="false">
     <el-container>
       <el-aside>Aside</el-aside>
       <el-main>
