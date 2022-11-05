@@ -1,0 +1,114 @@
+{
+  "templateName": "nfs-provisioner",
+  "desc": "nfs-provisioner deploy args",
+  "shellParams": ["VAR_POD_NAME", "VAR_SERVICE_NAME", "VAR_IMAGE_NAME", "VAR_VERSION_NO", "VAR_NAMESPACE"],
+  "commonEnvs": ["PROVISIONER_NAME", "NFS_SERVER", "NFS_PATH"],
+  "serviceEnvs": [
+    {
+      "serviceName": "nfs-provisioner",
+      "envs": [],
+      "preShellEnvs": ["NFS_SERVER_IP"]
+    }
+  ],
+  "allParams": [
+    {
+      "key": "VAR_POD_NAME",
+      "const": false,
+      "value": "serviceName;-;podId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        },
+        {
+          "from": "codeMap",
+          "key": "podId",
+          "content": "podId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_SERVICE_NAME",
+      "const": false,
+      "value": "serviceName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_IMAGE_NAME",
+      "const": false,
+      "value": "imageName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "imageName",
+          "content": "imageName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_VERSION_NO",
+      "const": false,
+      "value": "versionNo",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "versionNo",
+          "content": "versionNo"
+        }
+      ]
+    },
+    {
+      "key": "VAR_NAMESPACE",
+      "const": false,
+      "value": "namespace",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "namespace",
+          "content": "namespace"
+        }
+      ]
+    },
+    {
+      "key": "PROVISIONER_NAME",
+      "const": true,
+      "value": "k8s-sigs.io/nfs-subdir-external-provisioner"
+    },
+    {
+      "key": "NFS_SERVER",
+      "const": false,
+      "value": "dpHost",
+      "rules": [
+        {
+          "from": "properties",
+          "key": "dpHost",
+          "content": "dpHost"
+        }
+      ]
+    },
+    {
+      "key": "NFS_PATH",
+      "const": true,
+      "value": "/opt/nfs"
+    },
+    {
+      "key": "NFS_SERVER_IP",
+      "const": false,
+      "value": "dpHost",
+      "rules": [
+        {
+          "from": "properties",
+          "key": "dpHost",
+          "content": "dpHost"
+        }
+      ]
+    }
+  ]
+}

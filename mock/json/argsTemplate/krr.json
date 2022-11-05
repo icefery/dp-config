@@ -1,0 +1,213 @@
+{
+  "templateName": "krr",
+  "desc": "krr",
+  "shellParams": ["VAR_POD_NAME", "VAR_NODE_NAME", "VAR_SERVICE_NAME", "VAR_IMAGE_NAME", "VAR_VERSION_NO", "VAR_HARBOR_ADDRESS", "VAR_PRODUCT_NAME", "VAR_NAMESPACE"],
+  "commonEnvs": ["MY_POD_NAMESPACE", "MY_POD_NAME", "ETCD_ADDR", "POD_IP", "KRR_API_PORT", "CONFIG_ID", "PRODUCT_NAME"],
+  "allParams": [
+    {
+      "key": "VAR_PRODUCT_NAME",
+      "const": false,
+      "value": "productType;-;productId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productType",
+          "content": "productType"
+        },
+        {
+          "from": "codeMap",
+          "key": "productId",
+          "content": "productId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_POD_NAME",
+      "const": false,
+      "value": "serviceName;-;podId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        },
+        {
+          "from": "codeMap",
+          "key": "podId",
+          "content": "podId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_NODE_NAME",
+      "const": false,
+      "value": "nodeName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "nodeName",
+          "content": "nodeName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_SERVICE_NAME",
+      "const": false,
+      "value": "serviceName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_IMAGE_NAME",
+      "const": false,
+      "value": "imageName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "imageName",
+          "content": "imageName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_VERSION_NO",
+      "const": false,
+      "value": "versionNo",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "versionNo",
+          "content": "versionNo"
+        }
+      ]
+    },
+    {
+      "key": "VAR_HARBOR_ADDRESS",
+      "const": false,
+      "value": "harborAddress",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "harborAddress",
+          "content": "harborAddress"
+        }
+      ]
+    },
+    {
+      "key": "MY_POD_NAMESPACE",
+      "const": false,
+      "value": "namespace",
+      "rules": [
+        {
+          "key": "namespace",
+          "from": "valueFrom",
+          "content": "metadata.namespace"
+        }
+      ]
+    },
+    {
+      "key": "MY_POD_NAME",
+      "const": false,
+      "value": "podRealName",
+      "rules": [
+        {
+          "key": "podRealName",
+          "from": "valueFrom",
+          "content": "metadata.name"
+        }
+      ]
+    },
+    {
+      "key": "ETCD_ADDR",
+      "const": false,
+      "value": "etcdClientAddr",
+      "rules": [
+        {
+          "key": "etcdClientAddr",
+          "from": "ipPortAttr",
+          "content": {
+            "joiner": ",",
+            "serviceName": "etcd",
+            "portType": "ETCD_CLIENT_PORT",
+            "default": "12250"
+          }
+        }
+      ]
+    },
+    {
+      "key": "POD_IP",
+      "const": false,
+      "value": "podIp",
+      "rules": [
+        {
+          "key": "podIp",
+          "from": "valueFrom",
+          "content": "status.podIP"
+        }
+      ]
+    },
+    {
+      "key": "K8S_CONFIG_PATH",
+      "const": true,
+      "value": ""
+    },
+    {
+      "key": "KRR_API_PORT",
+      "const": true,
+      "value": "8088"
+    },
+    {
+      "key": "CONFIG_ID",
+      "const": false,
+      "value": "serviceId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceId",
+          "content": "serviceId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_NAMESPACE",
+      "const": false,
+      "value": "productName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productName",
+          "content": "productName"
+        }
+      ]
+    },
+    {
+      "key": "PRODUCT_NAME",
+      "const": false,
+      "value": "productName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productName",
+          "content": "productName"
+        }
+      ]
+    },
+    {
+      "key": "KRR_DEBUG_PORT",
+      "const": false,
+      "value": "krrDebugPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "krrDebugPort",
+          "content": "GO_DEBUG_PORT"
+        }
+      ]
+    }
+  ]
+}

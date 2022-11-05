@@ -1,0 +1,477 @@
+{
+  "templateName": "cdw",
+  "desc": "cdw",
+  "shellParams": ["VAR_POD_NAME", "VAR_NODE_NAME", "VAR_SERVICE_NAME", "VAR_IMAGE_NAME", "VAR_VERSION_NO", "VAR_HARBOR_ADDRESS", "VAR_PRODUCT_NAME", "VAR_NAMESPACE", "RESOURCE_PACKAGE_PATH"],
+  "commonEnvs": ["DP_HOST", "DP_PORT", "SERVICE_ID", "RESOURCE_PACKAGE_PATH", "PRODUCT_ID", "PRODUCT_NAME", "POD_IP", "ETCD_CLIENT_ADDR", "MY_POD_NAME"],
+  "serviceEnvs": [
+    {
+      "serviceName": "ecpui",
+      "envs": ["ECP_IP_PORT"]
+    },
+    {
+      "serviceName": "idp",
+      "envs": ["IDP_HTTP_SERVICE_PORT", "IDP_HTTPS_SERVICE_PORT", "IDP_SHUTDOWN_PORT"]
+    },
+    {
+      "serviceName": "wp",
+      "envs": ["WP_HTTP_SERVICE_PORT", "WP_HTTPS_SERVICE_PORT", "WP_SHUTDOWN_PORT"]
+    }
+  ],
+  "allParams": [
+    {
+      "key": "VAR_PRODUCT_NAME",
+      "const": false,
+      "value": "productType;-;productId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productType",
+          "content": "productType"
+        },
+        {
+          "from": "codeMap",
+          "key": "productId",
+          "content": "productId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_POD_NAME",
+      "const": false,
+      "value": "serviceName;-;podId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        },
+        {
+          "from": "codeMap",
+          "key": "podId",
+          "content": "podId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_NODE_NAME",
+      "const": false,
+      "value": "nodeName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "nodeName",
+          "content": "nodeName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_SERVICE_NAME",
+      "const": false,
+      "value": "serviceName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_IMAGE_NAME",
+      "const": false,
+      "value": "imageName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "imageName",
+          "content": "imageName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_VERSION_NO",
+      "const": false,
+      "value": "versionNo",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "versionNo",
+          "content": "versionNo"
+        }
+      ]
+    },
+    {
+      "key": "VAR_HARBOR_ADDRESS",
+      "const": false,
+      "value": "harborAddress",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "harborAddress",
+          "content": "harborAddress"
+        }
+      ]
+    },
+    {
+      "key": "DP_HOST",
+      "const": false,
+      "value": "dpHost",
+      "rules": [
+        {
+          "from": "properties",
+          "key": "dpHost",
+          "content": "dpHost"
+        }
+      ]
+    },
+    {
+      "key": "DP_PORT",
+      "const": true,
+      "value": "12175"
+    },
+    {
+      "key": "ETCD_HOST",
+      "const": false,
+      "value": "etcdHost",
+      "rules": [
+        {
+          "from": "sql",
+          "key": "etcdHost",
+          "content": {
+            "conditions": [
+              {
+                "key": "service_name",
+                "value": "etcd"
+              },
+              {
+                "key": "node_type",
+                "value": "POD"
+              }
+            ],
+            "resultAttr": "node_ip",
+            "resultType": "List",
+            "resultAll": true,
+            "operate": "select",
+            "tblName": "top_info"
+          }
+        }
+      ]
+    },
+    {
+      "key": "ETCD_PORT",
+      "const": false,
+      "value": "etcdPort",
+      "rules": [
+        {
+          "from": "serviceAttr",
+          "key": "etcdPort",
+          "content": "etcd.ETCD_CLIENT_PORT"
+        }
+      ]
+    },
+    {
+      "key": "MQ_HOST",
+      "const": false,
+      "value": "mqHost",
+      "rules": [
+        {
+          "from": "sql",
+          "key": "mqHost",
+          "content": {
+            "conditions": [
+              {
+                "key": "service_name",
+                "value": "rabbitmq"
+              },
+              {
+                "key": "node_type",
+                "value": "POD"
+              }
+            ],
+            "resultAttr": "node_ip",
+            "resultType": "List",
+            "resultAll": true,
+            "operate": "select",
+            "tblName": "top_info"
+          }
+        }
+      ]
+    },
+    {
+      "key": "MQ_PORT",
+      "const": false,
+      "value": "mqPort",
+      "rules": [
+        {
+          "from": "serviceAttr",
+          "key": "mqPort",
+          "content": "rabbitmq.RABBITMQ_TCP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "MQ_USER",
+      "const": false,
+      "value": "mqUser",
+      "rules": [
+        {
+          "from": "properties",
+          "key": "mqUser",
+          "content": "mq.login.default.user"
+        }
+      ]
+    },
+    {
+      "key": "MQ_PWD",
+      "const": false,
+      "value": "mqPwd",
+      "rules": [
+        {
+          "from": "properties",
+          "key": "mqPwd",
+          "content": "mq.login.default.pwd"
+        }
+      ]
+    },
+    {
+      "key": "DATABASE_HOST",
+      "const": false,
+      "value": "dbHost",
+      "rules": [
+        {
+          "from": "sql",
+          "key": "dbHost",
+          "content": {
+            "conditions": [
+              {
+                "key": "service_name",
+                "value": "cdwdb"
+              },
+              {
+                "key": "node_type",
+                "value": "POD"
+              }
+            ],
+            "resultAttr": "node_ip",
+            "resultType": "List",
+            "resultAll": false,
+            "operate": "select",
+            "tblName": "top_info"
+          }
+        }
+      ]
+    },
+    {
+      "key": "DATABASE_PORT",
+      "const": true,
+      "value": "11016"
+    },
+    {
+      "key": "SERVICE_ID",
+      "const": false,
+      "value": "serviceId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceId",
+          "content": "serviceId"
+        }
+      ]
+    },
+    {
+      "key": "RESOURCE_PACKAGE_PATH",
+      "const": false,
+      "value": "productResource",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productResource",
+          "content": "productResource"
+        }
+      ]
+    },
+    {
+      "key": "PRODUCT_ID",
+      "const": false,
+      "value": "productId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productId",
+          "content": "productId"
+        }
+      ]
+    },
+    {
+      "key": "PRODUCT_NAME",
+      "const": false,
+      "value": "productName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productName",
+          "content": "productName"
+        }
+      ]
+    },
+    {
+      "key": "POD_IP",
+      "const": false,
+      "value": "podIp",
+      "rules": [
+        {
+          "key": "podIp",
+          "from": "valueFrom",
+          "content": "status.podIP"
+        }
+      ]
+    },
+    {
+      "key": "DATABASE_IP_PORT",
+      "const": false,
+      "value": "ipPortList",
+      "rules": [
+        {
+          "key": "ipPortList",
+          "from": "specialIpPort",
+          "content": {
+            "joiner": ",",
+            "serviceName": "cdwdb",
+            "portNames": "CDWDB_PORT",
+            "defaultPorts": "11016"
+          }
+        }
+      ]
+    },
+    {
+      "key": "ETCD_CLIENT_ADDR",
+      "const": false,
+      "value": "etcdClientAddr",
+      "rules": [
+        {
+          "key": "etcdClientAddr",
+          "from": "ipPortAttr",
+          "content": {
+            "joiner": ",",
+            "serviceName": "etcd",
+            "portType": "ETCD_CLIENT_PORT",
+            "default": "12250"
+          }
+        }
+      ]
+    },
+    {
+      "key": "VAR_NAMESPACE",
+      "const": false,
+      "value": "productName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productName",
+          "content": "productName"
+        }
+      ]
+    },
+    {
+      "key": "MY_POD_NAME",
+      "const": false,
+      "value": "podRealName",
+      "rules": [
+        {
+          "key": "podRealName",
+          "from": "valueFrom",
+          "content": "metadata.name"
+        }
+      ]
+    },
+    {
+      "key": "ECP_IP_PORT",
+      "const": false,
+      "value": "ipPortList",
+      "rules": [
+        {
+          "key": "ipPortList",
+          "from": "ipPortAttr",
+          "content": {
+            "joiner": ",",
+            "serviceName": "ecp",
+            "portType": "ECP_QUERY_HTTP_PORT",
+            "default": "12194"
+          }
+        }
+      ]
+    },
+    {
+      "key": "IDP_HTTP_SERVICE_PORT",
+      "const": false,
+      "value": "IDP_HTTP_SERVICE_PORT",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "IDP_HTTP_SERVICE_PORT",
+          "content": "IDP_HTTP_SERVICE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "IDP_HTTPS_SERVICE_PORT",
+      "const": false,
+      "value": "IDP_HTTPS_SERVICE_PORT",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "IDP_HTTPS_SERVICE_PORT",
+          "content": "IDP_HTTPS_SERVICE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "IDP_SHUTDOWN_PORT",
+      "const": false,
+      "value": "idpShutdownPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "idpShutdownPort",
+          "content": "IDP_SHUTDOWN_PORT"
+        }
+      ]
+    },
+    {
+      "key": "WP_HTTP_SERVICE_PORT",
+      "const": false,
+      "value": "wpHttpServicePort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "wpHttpServicePort",
+          "content": "WP_HTTP_SERVICE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "WP_HTTPS_SERVICE_PORT",
+      "const": false,
+      "value": "wpHttpsServicePort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "wpHttpsServicePort",
+          "content": "WP_HTTPS_SERVICE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "WP_SHUTDOWN_PORT",
+      "const": false,
+      "value": "wpShutdownPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "wpShutdownPort",
+          "content": "WP_SHUTDOWN_PORT"
+        }
+      ]
+    }
+  ]
+}

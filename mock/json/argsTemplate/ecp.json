@@ -1,0 +1,263 @@
+{
+  "templateName": "ecp",
+  "desc": "ecp",
+  "shellParams": ["VAR_POD_NAME", "VAR_NODE_NAME", "VAR_SERVICE_NAME", "VAR_IMAGE_NAME", "VAR_VERSION_NO", "VAR_HARBOR_ADDRESS", "VAR_PRODUCT_NAME", "VAR_NAMESPACE"],
+  "commonEnvs": ["PRODUCT_ID", "PRODUCT_NAME", "POD_IP", "MY_POD_NAME", "ECP_QUERY_DP_HOST_PORT", "ECP_QUERY_HTTP_PORT", "ECP_QUERY_CONFIG_ID", "INTERNAL_IP", "ECP_COLLECTOR_HTTP_PORT", "ECP_COLLECTOR_GRPC_PORT", "ECP_AGENT_UDP_PORT", "ECP_COLLECTOR_ADMIN_HTTP_PORT"],
+  "allParams": [
+    {
+      "key": "VAR_POD_NAME",
+      "const": false,
+      "value": "serviceName;-;podId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        },
+        {
+          "from": "codeMap",
+          "key": "podId",
+          "content": "podId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_NODE_NAME",
+      "const": false,
+      "value": "nodeName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "nodeName",
+          "content": "nodeName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_SERVICE_NAME",
+      "const": false,
+      "value": "serviceName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_IMAGE_NAME",
+      "const": false,
+      "value": "imageName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "imageName",
+          "content": "imageName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_VERSION_NO",
+      "const": false,
+      "value": "versionNo",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "versionNo",
+          "content": "versionNo"
+        }
+      ]
+    },
+    {
+      "key": "VAR_HARBOR_ADDRESS",
+      "const": false,
+      "value": "harborAddress",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "harborAddress",
+          "content": "harborAddress"
+        }
+      ]
+    },
+    {
+      "key": "VAR_PRODUCT_NAME",
+      "const": false,
+      "value": "productType;-;productId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productType",
+          "content": "productType"
+        },
+        {
+          "from": "codeMap",
+          "key": "productId",
+          "content": "productId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_NAMESPACE",
+      "const": false,
+      "value": "productName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productName",
+          "content": "productName"
+        }
+      ]
+    },
+    {
+      "key": "PRODUCT_ID",
+      "const": false,
+      "value": "productId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productId",
+          "content": "productId"
+        }
+      ]
+    },
+    {
+      "key": "PRODUCT_NAME",
+      "const": false,
+      "value": "productName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productName",
+          "content": "productName"
+        }
+      ]
+    },
+    {
+      "key": "POD_IP",
+      "const": false,
+      "value": "podIp",
+      "rules": [
+        {
+          "key": "podIp",
+          "from": "valueFrom",
+          "content": "status.podIP"
+        }
+      ]
+    },
+    {
+      "key": "MY_POD_NAME",
+      "const": false,
+      "value": "podRealName",
+      "rules": [
+        {
+          "key": "podRealName",
+          "from": "valueFrom",
+          "content": "metadata.name"
+        }
+      ]
+    },
+    {
+      "key": "ECP_QUERY_DP_HOST_PORT",
+      "const": false,
+      "value": "dpHost;:;dpPort",
+      "rules": [
+        {
+          "from": "properties",
+          "key": "dpHost",
+          "content": "dpHost"
+        },
+        {
+          "from": "const",
+          "key": "dpPort",
+          "content": "12175"
+        }
+      ]
+    },
+    {
+      "key": "ECP_QUERY_HTTP_PORT",
+      "const": false,
+      "value": "ecpQueryHttpPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "ecpQueryHttpPort",
+          "content": "ECP_QUERY_HTTP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "ECP_QUERY_CONFIG_ID",
+      "const": false,
+      "value": "serviceId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceId",
+          "content": "serviceId"
+        }
+      ]
+    },
+    {
+      "key": "INTERNAL_IP",
+      "const": false,
+      "value": "hostIp",
+      "rules": [
+        {
+          "key": "hostIp",
+          "from": "valueFrom",
+          "content": "status.hostIP"
+        }
+      ]
+    },
+    {
+      "key": "ECP_COLLECTOR_HTTP_PORT",
+      "const": false,
+      "value": "ecpCollectorHttpPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "ecpCollectorHttpPort",
+          "content": "ECP_COLLECTOR_HTTP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "ECP_COLLECTOR_GRPC_PORT",
+      "const": false,
+      "value": "ecpCollectorGrpcPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "ecpCollectorGrpcPort",
+          "content": "ECP_COLLECTOR_GRPC_PORT"
+        }
+      ]
+    },
+    {
+      "key": "ECP_AGENT_UDP_PORT",
+      "const": false,
+      "value": "ecpAgentUdpPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "ecpAgentUdpPort",
+          "content": "ECP_AGENT_UDP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "ECP_COLLECTOR_ADMIN_HTTP_PORT",
+      "const": false,
+      "value": "ecpCollectorAdminHttpPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "ecpCollectorAdminHttpPort",
+          "content": "ECP_COLLECTOR_ADMIN_HTTP_PORT"
+        }
+      ]
+    }
+  ]
+}

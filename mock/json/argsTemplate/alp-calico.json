@@ -1,0 +1,289 @@
+{
+  "templateName": "alp-calico",
+  "desc": "alp-calico deploy args",
+  "shellParams": ["VAR_POD_NAME", "VAR_NODE_NAME", "VAR_SERVICE_NAME", "VAR_IMAGE_NAME", "VAR_VERSION_NO", "VAR_HARBOR_ADDRESS", "VAR_PRODUCT_NAME", "VAR_NAMESPACE"],
+  "commonEnvs": ["SERVICE_ID", "MY_POD_NAMESPACE", "MY_POD_NAME", "INTERNAL_IP", "POD_IP", "PRODUCT_NAME", "NETWORK_MODE"],
+  "serviceEnvs": [
+    {
+      "serviceName": "alp",
+      "envs": ["WEB_UI_PORT", "FILE_UPLOAD_PORT"],
+      "preShellEnvs": ["VAR_ALP_WEB_TCP_PORT", "VAR_ALP_FILE_TCP_PORT", "VAR_NAMESPACE"]
+    }
+  ],
+  "allParams": [
+    {
+      "key": "WEB_UI_PORT",
+      "const": false,
+      "value": "webUIPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "webUIPort",
+          "content": "ALP_WEB_TCP_INNER_PORT"
+        }
+      ]
+    },
+    {
+      "key": "FILE_UPLOAD_PORT",
+      "const": false,
+      "value": "fileUploadPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "fileUploadPort",
+          "content": "ALP_FILE_TCP_INNER_PORT"
+        }
+      ]
+    },
+    {
+      "key": "VAR_ALP_WEB_TCP_PORT",
+      "const": false,
+      "value": "alpWebTcpPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "alpWebTcpPort",
+          "content": "ALP_WEB_TCP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "VAR_ALP_FILE_TCP_PORT",
+      "const": false,
+      "value": "alpFileTcpPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "alpFileTcpPort",
+          "content": "ALP_FILE_TCP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "VAR_PRODUCT_NAME",
+      "const": false,
+      "value": "productType;-;productId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productType",
+          "content": "productType"
+        },
+        {
+          "from": "codeMap",
+          "key": "productId",
+          "content": "productId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_POD_NAME",
+      "const": false,
+      "value": "serviceName;-;podId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        },
+        {
+          "from": "codeMap",
+          "key": "podId",
+          "content": "podId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_NODE_NAME",
+      "const": false,
+      "value": "nodeName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "nodeName",
+          "content": "nodeName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_SERVICE_NAME",
+      "const": false,
+      "value": "serviceName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_IMAGE_NAME",
+      "const": false,
+      "value": "imageName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "imageName",
+          "content": "imageName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_VERSION_NO",
+      "const": false,
+      "value": "versionNo",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "versionNo",
+          "content": "versionNo"
+        }
+      ]
+    },
+    {
+      "key": "VAR_HARBOR_ADDRESS",
+      "const": false,
+      "value": "harborAddress",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "harborAddress",
+          "content": "harborAddress"
+        }
+      ]
+    },
+    {
+      "key": "SERVICE_ID",
+      "const": false,
+      "value": "serviceId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceId",
+          "content": "serviceId"
+        }
+      ]
+    },
+    {
+      "key": "INTERNAL_IP",
+      "const": false,
+      "value": "internalIp",
+      "rules": [
+        {
+          "key": "internalIp",
+          "from": "valueFrom",
+          "content": "status.hostIP"
+        }
+      ]
+    },
+    {
+      "key": "POD_IP",
+      "const": false,
+      "value": "podIp",
+      "rules": [
+        {
+          "key": "podIp",
+          "from": "valueFrom",
+          "content": "status.podIP"
+        }
+      ]
+    },
+    {
+      "key": "SYS_EXTERNAL_IP",
+      "const": false,
+      "value": "externalIp",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "externalIp",
+          "content": "externalIp"
+        }
+      ]
+    },
+    {
+      "key": "MY_POD_NAMESPACE",
+      "const": false,
+      "value": "namespace",
+      "rules": [
+        {
+          "key": "namespace",
+          "from": "valueFrom",
+          "content": "metadata.namespace"
+        }
+      ]
+    },
+    {
+      "key": "MY_POD_NAME",
+      "const": false,
+      "value": "podRealName",
+      "rules": [
+        {
+          "key": "podRealName",
+          "from": "valueFrom",
+          "content": "metadata.name"
+        }
+      ]
+    },
+    {
+      "key": "PRODUCT_NAME",
+      "const": false,
+      "value": "productName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productName",
+          "content": "productName"
+        }
+      ]
+    },
+    {
+      "key": "NETWORK_MODE",
+      "const": false,
+      "value": "networkMode",
+      "rules": [
+        {
+          "from": "deployDetailAttr",
+          "key": "networkMode",
+          "content": "netMode"
+        }
+      ]
+    },
+    {
+      "key": "VAR_NAMESPACE",
+      "const": false,
+      "value": "namespace",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "namespace",
+          "content": "namespace"
+        }
+      ]
+    },
+    {
+      "key": "PRODUCT_TYPE",
+      "const": false,
+      "value": "productType",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productType",
+          "content": "productType"
+        }
+      ]
+    },
+    {
+      "key": "EXTERNAL_IP",
+      "const": false,
+      "value": "externalIp",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "externalIp",
+          "content": "externalIp"
+        }
+      ]
+    }
+  ]
+}

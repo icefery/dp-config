@@ -1,0 +1,137 @@
+{
+  "portPreAssign": [
+    {
+      "portType": "ETCD_CLIENT_PORT,ETCD_PEER_PORT",
+      "serviceName": "etcd"
+    },
+    {
+      "portType": "RABBITMQ_WEB_STOMP_PORT,RABBITMQ_STOMP_PORT",
+      "serviceName": "rabbitmq"
+    },
+    {
+      "portType": "LOG_VIEW_SERVER_PORT,LLF_CONFIG_PORT,GO_DEBUG_PORT",
+      "calicoPortType": "LOG_VIEW_SERVER_PORT,LLF_CONFIG_PORT,GO_DEBUG_PORT",
+      "serviceName": "llf"
+    },
+    {
+      "portType": "ECP_QUERY_HTTP_PORT,ECP_COLLECTOR_HTTP_PORT,ECP_COLLECTOR_GRPC_PORT,ECP_AGENT_UDP_PORT,ECP_COLLECTOR_ADMIN_HTTP_PORT",
+      "serviceName": "ecp"
+    },
+    {
+      "portType": "",
+      "calicoPortType": "ALP_WEB_TCP_PORT,ALP_WEB_TCP_INNER_PORT,ALP_FILE_TCP_PORT,ALP_FILE_TCP_INNER_PORT",
+      "serviceName": "alp"
+    },
+    {
+      "portType": "IDP_HTTP_SERVICE_PORT,IDP_HTTPS_SERVICE_PORT,IDP_SHUTDOWN_PORT",
+      "calicoPortType": "",
+      "serviceName": "idp"
+    },
+    {
+      "portType": "WP_HTTP_SERVICE_PORT,WP_HTTPS_SERVICE_PORT,WP_SHUTDOWN_PORT",
+      "calicoPortType": "",
+      "serviceName": "wp"
+    },
+    {
+      "portType": "YSP_KUBE_HTTP_SERVICE_PORT",
+      "calicoPortType": "",
+      "serviceName": "ysp-kube"
+    }
+  ],
+  "portRange": [
+    {
+      "key": "ETCD_CLIENT_PORT",
+      "range": "[12250-12264]"
+    },
+    {
+      "key": "ETCD_PEER_PORT",
+      "range": "[12265-12279]"
+    },
+    {
+      "key": "RABBITMQ_WEB_STOMP_PORT",
+      "range": "[12905-12905]"
+    },
+    {
+      "key": "RABBITMQ_STOMP_PORT",
+      "range": "[12906-12906]"
+    },
+    {
+      "key": "LOG_VIEW_SERVER_PORT",
+      "range": "[11006-11006]"
+    },
+    {
+      "key": "LLF_CONFIG_PORT",
+      "range": "[11007-11007]"
+    },
+    {
+      "key": "GO_DEBUG_PORT",
+      "range": "[11699-11699]"
+    },
+    {
+      "key": "ECP_QUERY_HTTP_PORT",
+      "range": "[12194-12194]"
+    },
+    {
+      "key": "ECP_COLLECTOR_HTTP_PORT",
+      "range": "[12191-12191]"
+    },
+    {
+      "key": "ECP_COLLECTOR_GRPC_PORT",
+      "range": "[12190-12190]"
+    },
+    {
+      "key": "ECP_AGENT_UDP_PORT",
+      "range": "[12185-12185]"
+    },
+    {
+      "key": "ECP_COLLECTOR_ADMIN_HTTP_PORT",
+      "range": "[12192-12192]"
+    },
+    {
+      "key": "ALP_WEB_TCP_PORT",
+      "range": "[30100-30104]"
+    },
+    {
+      "key": "ALP_WEB_TCP_INNER_PORT",
+      "range": "[11008-11008]"
+    },
+    {
+      "key": "ALP_FILE_TCP_PORT",
+      "range": "[30105-30109]"
+    },
+    {
+      "key": "ALP_FILE_TCP_INNER_PORT",
+      "range": "[11009-11009]"
+    },
+    {
+      "key": "IDP_HTTP_SERVICE_PORT",
+      "range": "[11060-11060]"
+    },
+    {
+      "key": "IDP_HTTPS_SERVICE_PORT",
+      "range": "[11066-11066]"
+    },
+    {
+      "key": "IDP_SHUTDOWN_PORT",
+      "range": "[11061-11061]"
+    },
+    {
+      "key": "YSP_KUBE_HTTP_SERVICE_PORT",
+      "range": "[12128-12128]"
+    },
+    {
+      "key": "WP_HTTP_SERVICE_PORT",
+      "range": "[12150-12150]"
+    },
+    {
+      "key": "WP_HTTPS_SERVICE_PORT",
+      "range": "[12149-12149]"
+    },
+    {
+      "key": "WP_SHUTDOWN_PORT",
+      "range": "[12151-12151]"
+    }
+  ],
+  "portStep": [],
+  "portNodeDiff": ["ALP_WEB_TCP_PORT", "ALP_FILE_TCP_PORT"]
+}

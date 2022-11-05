@@ -1,0 +1,216 @@
+{
+  "templateName": "etcd",
+  "desc": "etcd",
+  "shellParams": ["VAR_POD_NAME", "VAR_NODE_NAME", "VAR_SERVICE_NAME", "VAR_IMAGE_NAME", "VAR_VERSION_NO", "VAR_HARBOR_ADDRESS", "VAR_PRODUCT_NAME", "VAR_YsP_NAMESPACE", "VAR_NAMESPACE", "10000000001"],
+  "commonEnvs": ["ETCD_CLIENT_PORT", "ETCD_PEER_PORT", "ETCD_DEBUG", "ETCD_METRICS", "ETCD_ENABLE_PPROF", "INTERNAL_IP", "ETCD_CLIENT_ADDR", "ETCD_PEER_ADDR"],
+  "allParams": [
+    {
+      "key": "VAR_PRODUCT_NAME",
+      "const": false,
+      "value": "productType;-;productId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productType",
+          "content": "productType"
+        },
+        {
+          "from": "codeMap",
+          "key": "productId",
+          "content": "productId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_POD_NAME",
+      "const": false,
+      "value": "serviceName;-;podId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        },
+        {
+          "from": "codeMap",
+          "key": "podId",
+          "content": "podId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_NODE_NAME",
+      "const": false,
+      "value": "nodeName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "nodeName",
+          "content": "nodeName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_SERVICE_NAME",
+      "const": false,
+      "value": "serviceName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_IMAGE_NAME",
+      "const": false,
+      "value": "imageName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "imageName",
+          "content": "imageName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_VERSION_NO",
+      "const": false,
+      "value": "versionNo",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "versionNo",
+          "content": "versionNo"
+        }
+      ]
+    },
+    {
+      "key": "VAR_HARBOR_ADDRESS",
+      "const": false,
+      "value": "harborAddress",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "harborAddress",
+          "content": "harborAddress"
+        }
+      ]
+    },
+    {
+      "key": "ETCD_CLIENT_PORT",
+      "const": false,
+      "value": "etcdClientPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "etcdClientPort",
+          "content": "ETCD_CLIENT_PORT"
+        }
+      ]
+    },
+    {
+      "key": "ETCD_PEER_PORT",
+      "const": false,
+      "value": "etcdPeerPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "etcdPeerPort",
+          "content": "ETCD_PEER_PORT"
+        }
+      ]
+    },
+    {
+      "key": "ETCD_DEBUG",
+      "const": true,
+      "value": "false"
+    },
+    {
+      "key": "ETCD_METRICS",
+      "const": true,
+      "value": "extensive"
+    },
+    {
+      "key": "ETCD_ENABLE_PPROF",
+      "const": true,
+      "value": "true"
+    },
+    {
+      "key": "INTERNAL_IP",
+      "const": false,
+      "value": "internalIp",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "internalIp",
+          "content": "internalIp"
+        }
+      ]
+    },
+    {
+      "key": "ETCD_CLIENT_ADDR",
+      "const": false,
+      "value": "etcdClientAddr",
+      "rules": [
+        {
+          "key": "etcdClientAddr",
+          "from": "ipPortAttr",
+          "content": {
+            "joiner": ",",
+            "serviceName": "etcd",
+            "portType": "ETCD_CLIENT_PORT",
+            "default": "12250"
+          }
+        }
+      ]
+    },
+    {
+      "key": "ETCD_PEER_ADDR",
+      "const": false,
+      "value": "etcdPeerAddr",
+      "rules": [
+        {
+          "key": "etcdPeerAddr",
+          "from": "ipPortAttr",
+          "content": {
+            "joiner": ",",
+            "serviceName": "etcd",
+            "portType": "ETCD_PEER_PORT",
+            "default": "12265"
+          }
+        }
+      ]
+    },
+    {
+      "key": "VAR_YsP_NAMESPACE",
+      "const": true,
+      "value": "base-services"
+    },
+    {
+      "key": "VAR_NAMESPACE",
+      "const": false,
+      "value": "productName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productName",
+          "content": "productName"
+        }
+      ]
+    },
+    {
+      "key": "10000000001",
+      "const": false,
+      "value": "etcdClientPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "etcdClientPort",
+          "content": "ETCD_CLIENT_PORT"
+        }
+      ]
+    }
+  ]
+}

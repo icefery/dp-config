@@ -1,0 +1,192 @@
+{
+  "templateName": "rabbitmq",
+  "desc": "rabbitmq",
+  "shellParams": ["VAR_POD_NAME", "VAR_NODE_NAME", "VAR_SERVICE_NAME", "VAR_IMAGE_NAME", "VAR_VERSION_NO", "VAR_HARBOR_ADDRESS", "VAR_PRODUCT_NAME", "VAR_NAMESPACE"],
+  "commonEnvs": ["RABBITMQ_ERLANG_COOKIE", "ERL_EPMD_PORT", "RABBITMQ_TCP_PORT", "RABBITMQ_MANAGEMENT_PORT", "RABBITMQ_DIST_PORT", "RABBITMQ_LOGS", "RABBITMQ_WEB_STOMP_PORT", "RABBITMQ_STOMP_PORT"],
+  "allParams": [
+    {
+      "key": "VAR_PRODUCT_NAME",
+      "const": false,
+      "value": "productType;-;productId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productType",
+          "content": "productType"
+        },
+        {
+          "from": "codeMap",
+          "key": "productId",
+          "content": "productId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_POD_NAME",
+      "const": false,
+      "value": "serviceName;-;podId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        },
+        {
+          "from": "codeMap",
+          "key": "podId",
+          "content": "podId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_NODE_NAME",
+      "const": false,
+      "value": "nodeName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "nodeName",
+          "content": "nodeName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_SERVICE_NAME",
+      "const": false,
+      "value": "serviceName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_IMAGE_NAME",
+      "const": false,
+      "value": "imageName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "imageName",
+          "content": "imageName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_VERSION_NO",
+      "const": false,
+      "value": "versionNo",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "versionNo",
+          "content": "versionNo"
+        }
+      ]
+    },
+    {
+      "key": "VAR_HARBOR_ADDRESS",
+      "const": false,
+      "value": "harborAddress",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "harborAddress",
+          "content": "harborAddress"
+        }
+      ]
+    },
+    {
+      "key": "RABBITMQ_DEFAULT_USER",
+      "const": false,
+      "value": "mqUser",
+      "rules": [
+        {
+          "from": "properties",
+          "key": "mqUser",
+          "content": "mq.login.default.user"
+        }
+      ]
+    },
+    {
+      "key": "RABBITMQ_DEFAULT_PASS",
+      "const": false,
+      "value": "mqPwd",
+      "rules": [
+        {
+          "from": "properties",
+          "key": "mqPwd",
+          "content": "mq.login.default.pwd"
+        }
+      ]
+    },
+    {
+      "key": "RABBITMQ_ERLANG_COOKIE",
+      "const": true,
+      "value": "rmq-cookie"
+    },
+    {
+      "key": "ERL_EPMD_PORT",
+      "const": true,
+      "value": "12901"
+    },
+    {
+      "key": "RABBITMQ_TCP_PORT",
+      "const": true,
+      "value": "12902"
+    },
+    {
+      "key": "RABBITMQ_MANAGEMENT_PORT",
+      "const": true,
+      "value": "12903"
+    },
+    {
+      "key": "RABBITMQ_DIST_PORT",
+      "const": true,
+      "value": "12904"
+    },
+    {
+      "key": "RABBITMQ_LOGS",
+      "const": true,
+      "value": "/var/log/rabbitmq/rabbit.log"
+    },
+    {
+      "key": "RABBITMQ_WEB_STOMP_PORT",
+      "const": false,
+      "value": "rabbitmqWebStompPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "rabbitmqWebStompPort",
+          "content": "RABBITMQ_WEB_STOMP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "RABBITMQ_STOMP_PORT",
+      "const": false,
+      "value": "rabbitmqStompPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "rabbitmqStompPort",
+          "content": "RABBITMQ_STOMP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "VAR_NAMESPACE",
+      "const": false,
+      "value": "productName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productName",
+          "content": "productName"
+        }
+      ]
+    }
+  ]
+}
