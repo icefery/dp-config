@@ -2,100 +2,101 @@ import { SHARED_STATE } from '@/store'
 import request from '../utils/request'
 
 export interface IDeployDetails {
-  deployOrder: {
-    serviceName: string
-    mustSucceed: boolean
-    order: number
-  }[]
-  deployDetails: {
-    serviceName: string
-    templateJson: string
-    netMode: string
-    calicoYaml: string
-    calicoArgs: string
-    preShell: string
-    minMemory: string
-    priorityClass: string
-    limitsMemory: string
-    templateYaml: string
-    imageTag: string
-    minDeployNumber: number
-    sameNodeScale: boolean
-    diffNodeScale: boolean
-    hasCfgFlag: boolean
-    waitTime: number
-  }[]
-  upgradeOrder: {
-    first: string[]
-    last: string[]
+  name: string
+  module: 'deployDetails'
+  json: {
+    deployOrder: {
+      serviceName: string
+      mustSucceed: boolean
+      order: number
+    }[]
+    deployDetails: {
+      serviceName: string
+      templateJson: string
+      netMode: string
+      calicoYaml: string
+      calicoArgs: string
+      preShell: string
+      minMemory: string
+      priorityClass: string
+      limitsMemory: string
+      templateYaml: string
+      imageTag: string
+      minDeployNumber: number
+      sameNodeScale: boolean
+      diffNodeScale: boolean
+      hasCfgFlag: boolean
+      waitTime: number
+    }[]
+    upgradeOrder: {
+      first: string[]
+      last: string[]
+    }
   }
 }
 
 export interface IPortMng {
-  portPreAssign: {
-    portType: string
-    calicoPortType: string
-    serviceName: string
-  }[]
-  portRange: {
-    key: string
-    range: string
-  }[]
-  portStep: string[]
-  portNodeDiff: string[]
+  name: string
+  module: 'portMng'
+  json: {
+    portPreAssign: {
+      portType: string
+      calicoPortType: string
+      serviceName: string
+    }[]
+    portRange: {
+      key: string
+      range: string
+    }[]
+    portStep: string[]
+    portNodeDiff: string[]
+  }
 }
 
 export interface IArgsTemplate {
-  templateName: string
-  desc: string
-  shellParams: string[]
-  commonEnvs: string[]
-  allParams: {
-    key: string
-    const: boolean
-    value: string
-    rules: {
-      from: string
+  name: string
+  module: 'argsTemplate'
+  json: {
+    templateName: string
+    desc: string
+    shellParams: string[]
+    commonEnvs: string[]
+    allParams: {
       key: string
-      content: string
+      const: boolean
+      value: string
+      rules: {
+        from: string
+        key: string
+        content: string
+      }[]
     }[]
-  }[]
+  }
 }
 
-export interface IConfigFile<T extends IDeployDetails | IPortMng | IArgsTemplate> {
-  filename: string
-  type: 'deployDetails' | 'portMng' | 'argsTemplate'
-  json: T
-}
-
+// 接口响应类型
 export interface IR {
-  _id: string
+  _id?: string
   name: string
   fileString: string
   size: number
   type: 'json' | 'xml'
 }
 
-export const fetchFileList = async () => {
-  await request<IR[]>({ url: '/admin/api/OriginJson' }).then(response => {
-    SHARED_STATE.list = response.data
-      .map(it => {
-        const json = JSON.parse(it.fileString)
-        let type
-        if (json['deployOrder'] && json['deployDetails']) {
-          type = 'deployDetails'
-        } else if (json['portPreAssign' && json['portRange']]) {
-          type = 'portMng'
-        } else if (json['templateName' && json['allParams']]) {
-          type = 'argsTemplate'
-        }
-        if (type) {
-          return { filename: it.name, type, json }
-        } else {
-          return null
-        }
-      })
-      .filter(it => it !== null) as IConfigFile<IDeployDetails | IPortMng | IArgsTemplate>[]
-    return response.data
-  })
+// 加载文件列表
+export async function fetchFileList() {
+  await request<IR[]>({
+    url: '/admin/api/OriginJson',
+    method: 'GET'
+  }).then(response => (SHARED_STATE.list = response.data))
+}
+
+// 上传文件
+export async function uploadFile(todos: IR[]) {
+  await request<void>({ url: '/admin/api/OriginJson', method: 'POST', data: todos }).then(response => fetchFileList())
+}
+
+// 删除文件
+export async function deleteFile(id: string) {
+  await request<void>({ url: `/admin/api/OriginJson/${id}`, method: 'DELETE' }).then(response => fetchFileList())
 }

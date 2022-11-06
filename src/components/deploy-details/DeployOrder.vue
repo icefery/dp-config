@@ -1,26 +1,26 @@
 <script lang="ts" setup>
+import { DEPLOY_DETAILS_STATE } from '@/store'
 import { Delete, Plus } from '@element-plus/icons-vue'
-import { state } from './store'
 
 // 删除
 const handleDelete = (index: number) => {
-  if (state.current) {
-    state.current.json.deployOrder.splice(index, 1)
+  if (DEPLOY_DETAILS_STATE.current) {
+    DEPLOY_DETAILS_STATE.current.json.deployOrder.splice(index, 1)
   }
 }
 
 // 增加
 const handleAdd = () => {
-  if (state.current) {
+  if (DEPLOY_DETAILS_STATE.current) {
     // 求数据中最大的 order
-    const order = state.current.json.deployOrder.map(it => it.order).reduce((max, curr) => (max > curr ? max : curr), 0)
-    state.current.json.deployOrder.push({ serviceName: '', mustSucceed: false, order: order + 1 })
+    const order = DEPLOY_DETAILS_STATE.current?.json.deployOrder.map(it => it.order).reduce((max, curr) => (max > curr ? max : curr), 0)
+    DEPLOY_DETAILS_STATE.current.json.deployOrder.push({ serviceName: '', mustSucceed: false, order: order + 1 })
   }
 }
 </script>
 
 <template>
-  <el-table :data="state.current?.json.deployOrder" border max-height="300px" scrollbar-always-on>
+  <el-table :data="DEPLOY_DETAILS_STATE.current?.json.deployOrder" border max-height="300px" scrollbar-always-on>
     <!-- 操作列 -->
     <el-table-column align="center" fixed="left" width="50">
       <template #header>

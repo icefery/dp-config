@@ -1,23 +1,19 @@
 <script lang="ts" setup>
-import { fetchFileList, type IArgsTemplate } from '@/api/json'
+import { ARGS_TEMPLATE_STATE, SHARED_CONFIG_LIST } from '@/store'
 import { Download } from '@element-plus/icons-vue'
+import { ElButton, ElCard, ElForm, ElFormItem, ElOption, ElSelect } from 'element-plus'
 import FileSaver from 'file-saver'
-import { onMounted } from 'vue'
 import AllParams from './AllParams.vue'
 import CommonEnvs from './CommonEnvs.vue'
 import Desc from './Desc.vue'
 import ShellParams from './ShellParams.vue'
-import { state } from './store'
 import TemplateName from './TemplateName.vue'
-
-// 加载数据
-onMounted(() => fetchFileList<IArgsTemplate>('argsTemplate').then(data => (state.list = data)))
 
 // 导出文件
 const handleExport = () => {
-  if (state.current) {
-    const blob = new Blob([JSON.stringify(state.current.json)], { type: 'text/json' })
-    FileSaver.saveAs(blob, state.current.filename)
+  if (ARGS_TEMPLATE_STATE.current) {
+    const blob = new Blob([JSON.stringify(ARGS_TEMPLATE_STATE.current.json)], { type: 'text/json' })
+    FileSaver.saveAs(blob, ARGS_TEMPLATE_STATE.current.name)
   }
 }
 </script>
@@ -25,8 +21,8 @@ const handleExport = () => {
 <template>
   <el-card>
     <template #header>
-      <el-select v-model="state.current">
-        <el-option v-for="item in state.list" :key="item.filename" :label="item.filename" :value="item" />
+      <el-select v-model="ARGS_TEMPLATE_STATE.current">
+        <el-option v-for="item in SHARED_CONFIG_LIST.filter(it => it.module === 'argsTemplate')" :key="item.name" :label="item.name" :value="item" />
       </el-select>
       <el-button :icon="Download" circle @click="handleExport()"></el-button>
     </template>

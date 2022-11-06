@@ -1,10 +1,11 @@
 <script lang="ts" setup>
+import { ARGS_TEMPLATE_STATE } from '@/store'
+import { ElInput } from 'element-plus'
 import { computed } from 'vue'
-import { state } from './store'
 
 const shellParams = computed<string>({
-  get: () => (state.current ? state.current.json.shellParams.join(',') : ''),
-  set: value => state.current && (state.current.json.shellParams = value.split(','))
+  get: () => (ARGS_TEMPLATE_STATE.current ? ARGS_TEMPLATE_STATE.current.json.shellParams.join(',') : ''),
+  set: value => ARGS_TEMPLATE_STATE.current && (ARGS_TEMPLATE_STATE.current.json.shellParams = value.split(','))
 })
 </script>
 

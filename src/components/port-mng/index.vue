@@ -1,23 +1,17 @@
 <script lang="ts" setup>
-import type { IPortMng } from '@/api/json'
-import { fetchFileList } from '@/api/json'
-import { state } from '@/components/port-mng/store'
+import { PORT_MNG_STATE, SHARED_CONFIG_LIST } from '@/store'
 import { Download } from '@element-plus/icons-vue'
 import FileSaver from 'file-saver'
-import { onMounted } from 'vue'
 import PortNodeDiff from './PortNodeDiff.vue'
 import PortPreAssign from './PortPreAssign.vue'
 import PortRange from './PortRange.vue'
 import PortStep from './PortStep.vue'
 
-// 加载数据
-onMounted(() => fetchFileList<IPortMng>('portMng').then(data => (state.list = data)))
-
 // 导出文件
 const handleExport = () => {
-  if (state.current) {
-    const blob = new Blob([JSON.stringify(state.current.json)], { type: 'text/json' })
-    FileSaver.saveAs(blob, state.current.filename)
+  if (PORT_MNG_STATE.current) {
+    const blob = new Blob([JSON.stringify(PORT_MNG_STATE.current.json)], { type: 'text/json' })
+    FileSaver.saveAs(blob, PORT_MNG_STATE.current.name)
   }
 }
 </script>
@@ -26,10 +20,8 @@ const handleExport = () => {
   <el-card>
     <!-- header 插槽 -->
     <template #header>
-      <el-select v-model="state.current">
-        <template v-for="it of state.list">
-          <el-option v-for="item in state.list" :key="item.filename" :label="item.filename" :value="item" />
-        </template>
+      <el-select v-model="PORT_MNG_STATE.current">
+        <el-option v-for="item in SHARED_CONFIG_LIST.filter(it => it.module === 'portMng')" :key="item.name" :label="item.name" :value="item" />
       </el-select>
       <el-button :icon="Download" @click="handleExport()" />
     </template>

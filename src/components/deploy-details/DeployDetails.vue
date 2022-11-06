@@ -1,18 +1,19 @@
 <script lang="ts" setup>
+import { DEPLOY_DETAILS_STATE } from '@/store'
 import { Delete, Plus } from '@element-plus/icons-vue'
-import { state } from './store'
+import { ElButton, ElInput, ElInputNumber, ElOption, ElSelect, ElSwitch, ElTable, ElTableColumn } from 'element-plus'
 
 // 删除
 const handleDelete = (index: number) => {
-  if (state.current) {
-    state.current.json.deployDetails.splice(index, 1)
+  if (DEPLOY_DETAILS_STATE.current) {
+    DEPLOY_DETAILS_STATE.current.json.deployDetails.splice(index, 1)
   }
 }
 
 // 增加
 const handleAdd = () => {
-  if (state.current) {
-    state.current.json.deployDetails.push({
+  if (DEPLOY_DETAILS_STATE.current) {
+    DEPLOY_DETAILS_STATE.current.json.deployDetails.push({
       serviceName: '',
       templateJson: '',
       netMode: 'host',
@@ -35,7 +36,7 @@ const handleAdd = () => {
 </script>
 
 <template>
-  <el-table :data="state.current?.json.deployDetails" border max-height="300px" scrollbar-always-on>
+  <el-table :data="DEPLOY_DETAILS_STATE.current?.json.deployDetails" border max-height="300px" scrollbar-always-on>
     <!-- 操作列 -->
     <el-table-column align="center" fixed="left" width="50">
       <template #header>

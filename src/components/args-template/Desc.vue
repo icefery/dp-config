@@ -1,10 +1,11 @@
 <script lang="ts" setup>
+import { ARGS_TEMPLATE_STATE } from '@/store'
+import { ElInput } from 'element-plus'
 import { computed } from 'vue'
-import { state } from './store'
 
 const desc = computed<string>({
-  get: () => (state.current ? state.current.json.desc : ''),
-  set: value => state.current && (state.current.json.desc = value)
+  get: () => (ARGS_TEMPLATE_STATE.current ? ARGS_TEMPLATE_STATE.current.json.desc : ''),
+  set: value => ARGS_TEMPLATE_STATE.current && (ARGS_TEMPLATE_STATE.current.json.desc = value)
 })
 </script>
 

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { state } from '@/components/port-mng/store'
+import { PORT_MNG_STATE } from '@/store'
 import { computed } from 'vue'
 
 const portStep = computed<string>({
-  get: () => (state.current ? state.current.json.portStep.join(',') : ''),
-  set: value => state.current && (state.current.json.portStep = value.split(','))
+  get: () => (PORT_MNG_STATE.current ? PORT_MNG_STATE.current.json.portStep.join(',') : ''),
+  set: value => PORT_MNG_STATE.current && (PORT_MNG_STATE.current.json.portStep = value.split(','))
 })
 </script>
 <template>

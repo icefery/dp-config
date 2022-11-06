@@ -3,9 +3,12 @@ const fs = require('fs')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const express = require('express')
+const uuid = require('uuid')
 
+// 文件列表
 const DATA = []
 
+// 递归读取文件
 function findFileList(where, fileList = []) {
   fs.readdirSync(where).forEach(name => {
     const full = path.join(where, name)
@@ -15,7 +18,7 @@ function findFileList(where, fileList = []) {
     } else if (path.extname(full) === '.json') {
       const fileString = fs.readFileSync(full, 'utf8')
       const type = 'json'
-      const _id = full
+      const _id = uuid.v4()
       fileList.push({ _id, name, fileString, type })
     }
   })
@@ -23,6 +26,7 @@ function findFileList(where, fileList = []) {
 }
 
 function main() {
+  // 加载文件列表
   DATA.push(...findFileList(path.join(__dirname, './json')))
 
   const port = 8000
@@ -37,9 +41,8 @@ function main() {
 
   // 创建
   app.post('/admin/api/OriginJson', (req, res, next) => {
-    const todo = req.body
-    const _id = path.join(__dirname, './json/todo', todo.name)
-    DATA.push({ ...todo, _id })
+    const todos = req.body.map(it => ({ ...it, _id: uuid.v4() }))
+    DATA.push(...todos)
     res.json({ code: '0', message: '', data: 'success' })
   })
 

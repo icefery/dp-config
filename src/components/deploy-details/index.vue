@@ -1,45 +1,59 @@
 <script lang="ts" setup>
-import { fetchFileList, type IDeployDetails } from '@/api/json'
+import { DEPLOY_DETAILS_STATE, SHARED_CONFIG_LIST } from '@/store'
 import { Download } from '@element-plus/icons-vue'
 import { ElButton, ElCard, ElForm, ElFormItem, ElOption, ElSelect } from 'element-plus'
 import FileSaver from 'file-saver'
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import DeployDetails from './DeployDetails.vue'
 import DeployOrder from './DeployOrder.vue'
-import { state } from './store'
-
-// 加载数据
-onMounted(() => fetchFileList<IDeployDetails>('deployDetails').then(data => (state.list = data)))
 
 // 导出文件
 const handleExport = () => {
-  if (state.current) {
-    const blob = new Blob([JSON.stringify(state.current.json)], { type: 'text/json' })
-    FileSaver.saveAs(blob, state.current.filename)
+  if (DEPLOY_DETAILS_STATE.current) {
+    const blob = new Blob([JSON.stringify(DEPLOY_DETAILS_STATE.current.json)], { type: 'text/json' })
+    FileSaver.saveAs(blob, DEPLOY_DETAILS_STATE.current.name)
   }
 }
 
 const upgradeOrderFirst = computed<string>({
-  get: () => (state.current?.json?.upgradeOrder?.first || []).join(','),
+  get: () => {
+    // 当前配置文件存在 && 当前配置文件存在 upgradeOrder 字段
+    if (DEPLOY_DETAILS_STATE.current && DEPLOY_DETAILS_STATE.current.json.upgradeOrder) {
+      return DEPLOY_DETAILS_STATE.current.json.upgradeOrder.first.join(',')
+    } else {
+      return ''
+    }
+  },
   set: value => {
-    if (state.current) {
-      if (state.current.json.upgradeOrder) {
-        state.current.json.upgradeOrder.first = value.split(',')
+    // 当前配置文件存在
+    if (DEPLOY_DETAILS_STATE.current) {
+      // 当前配置文件存在 upgradeOrder 字段
+      if (DEPLOY_DETAILS_STATE.current.json.upgradeOrder) {
+        DEPLOY_DETAILS_STATE.current.json.upgradeOrder.first = value.split(',')
       } else {
-        state.current.json.upgradeOrder = { first: value.split(','), last: [] }
+        DEPLOY_DETAILS_STATE.current.json.upgradeOrder = { first: value.split(','), last: [] }
       }
     }
   }
 })
 
 const upgradeOrderLast = computed<string>({
-  get: () => (state.current?.json?.upgradeOrder?.last || []).join(','),
+  get: () => {
+    // 当前配置文件存在 && 当前配置文件存在 upgradeOrder 字段
+    if (DEPLOY_DETAILS_STATE.current && DEPLOY_DETAILS_STATE.current.json.upgradeOrder) {
+      return DEPLOY_DETAILS_STATE.current.json.upgradeOrder.last.join(',')
+    } else {
+      return ''
+    }
+  },
   set: value => {
-    if (state.current) {
-      if (state.current.json.upgradeOrder) {
-        state.current.json.upgradeOrder.last = value.split(',')
+    // 当前配置文件存在
+    if (DEPLOY_DETAILS_STATE.current) {
+      // 当前配置文件存在 upgradeOrder 字段
+      if (DEPLOY_DETAILS_STATE.current.json.upgradeOrder) {
+        DEPLOY_DETAILS_STATE.current.json.upgradeOrder.last = value.split(',')
       } else {
-        state.current.json.upgradeOrder = { first: [], last: value.split(',') }
+        DEPLOY_DETAILS_STATE.current.json.upgradeOrder = { first: [], last: value.split(',') }
       }
     }
   }
@@ -50,8 +64,8 @@ const upgradeOrderLast = computed<string>({
   <el-card>
     <template #header>
       <!-- 选择文件 -->
-      <el-select v-model="state.current">
-        <el-option v-for="item in state.list" :key="item.filename" :label="item.filename" :value="item" />
+      <el-select v-model="DEPLOY_DETAILS_STATE.current">
+        <el-option v-for="item in SHARED_CONFIG_LIST.filter(it => it.module === 'deployDetails')" :key="item.name" :label="item.name" :value="item" />
       </el-select>
       <!-- 导出 -->
       <el-button :icon="Download" circle @click="handleExport()"></el-button>

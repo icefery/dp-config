@@ -1,55 +1,55 @@
 <script lang="ts" setup>
 import type { IArgsTemplate } from '@/api/json'
+import { ARGS_TEMPLATE_STATE } from '@/store'
 import { Delete, Plus } from '@element-plus/icons-vue'
-import { state } from './store'
 
 interface IAllParamsScope {
-  row: IArgsTemplate['allParams'][number]
+  row: IArgsTemplate['json']['allParams'][number]
   $index: number
 }
 
 interface IRulesScope {
-  row: IArgsTemplate['allParams'][number]['rules'][number]
+  row: IArgsTemplate['json']['allParams'][number]['rules'][number]
   $index: number
 }
 
 // allParams 删除
 const handleAllParamsDelete = (allParamsIndex: number) => {
-  if (state.current) {
-    state.current.json.allParams.splice(allParamsIndex, 1)
+  if (ARGS_TEMPLATE_STATE.current) {
+    ARGS_TEMPLATE_STATE.current.json.allParams.splice(allParamsIndex, 1)
   }
 }
 
 // allParams 增加
 const handleAllParamsAdd = () => {
-  if (state.current) {
-    state.current.json.allParams.push({ key: '', const: false, value: '', rules: [] })
+  if (ARGS_TEMPLATE_STATE.current) {
+    ARGS_TEMPLATE_STATE.current.json.allParams.push({ key: '', const: false, value: '', rules: [] })
   }
 }
 
 // rules 删除
 const handleRulesDelete = (allParamsIndex: number, rulesIndex: number) => {
-  if (state.current) {
-    if (state.current.json.allParams[allParamsIndex].rules) {
-      state.current.json.allParams[allParamsIndex].rules.splice(rulesIndex, 1)
+  if (ARGS_TEMPLATE_STATE.current) {
+    if (ARGS_TEMPLATE_STATE.current.json.allParams[allParamsIndex].rules) {
+      ARGS_TEMPLATE_STATE.current.json.allParams[allParamsIndex].rules.splice(rulesIndex, 1)
     }
   }
 }
 
 // rules 增加
 const handleRulesAdd = (allParamsIndex: number) => {
-  if (state.current) {
-    if (state.current.json.allParams[allParamsIndex].rules) {
-      state.current.json.allParams[allParamsIndex].rules.push({ from: '', key: '', content: '' })
+  if (ARGS_TEMPLATE_STATE.current) {
+    if (ARGS_TEMPLATE_STATE.current.json.allParams[allParamsIndex].rules) {
+      ARGS_TEMPLATE_STATE.current.json.allParams[allParamsIndex].rules.push({ from: '', key: '', content: '' })
     } else {
-      state.current.json.allParams[allParamsIndex].rules = [{ from: '', key: '', content: '' }]
+      ARGS_TEMPLATE_STATE.current.json.allParams[allParamsIndex].rules = [{ from: '', key: '', content: '' }]
     }
   }
 }
 </script>
 
 <template>
-  <el-table :data="state.current?.json.allParams" border max-height="300px" scrollbar-always-on>
+  <el-table :data="ARGS_TEMPLATE_STATE.current?.json.allParams" border max-height="300px" scrollbar-always-on>
     <!-- allParams 操作列 -->
     <el-table-column align="center" fixed="left" width="50">
       <template #header>

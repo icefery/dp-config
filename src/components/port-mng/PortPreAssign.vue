@@ -1,29 +1,29 @@
 <script lang="ts" setup>
 import type { IPortMng } from '@/api/json'
-import { state } from '@/components/port-mng/store'
+import { PORT_MNG_STATE } from '@/store'
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElInput, ElTable, ElTableColumn } from 'element-plus'
 
 interface Scope {
-  row: IPortMng['portPreAssign'][number]
+  row: IPortMng['json']['portPreAssign'][number]
   $index: number
 }
 
 const handleDelete = (index: number) => {
-  if (state.current) {
-    state.current.json.portPreAssign.splice(index, 1)
+  if (PORT_MNG_STATE.current) {
+    PORT_MNG_STATE.current.json.portPreAssign.splice(index, 1)
   }
 }
 
 const handleAdd = () => {
-  if (state.current) {
-    state.current.json.portPreAssign.push({ portType: '', calicoPortType: '', serviceName: '' })
+  if (PORT_MNG_STATE.current) {
+    PORT_MNG_STATE.current.json.portPreAssign.push({ portType: '', calicoPortType: '', serviceName: '' })
   }
 }
 </script>
 
 <template>
-  <el-table :data="state.current?.json.portPreAssign" border max-height="300px" scrollbar-always-on>
+  <el-table :data="PORT_MNG_STATE.current?.json.portPreAssign" border max-height="300px" scrollbar-always-on>
     <!-- 操作列 -->
     <el-table-column align="center" fixed="left" width="50">
       <template #header>
