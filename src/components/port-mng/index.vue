@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { IPortMng } from '@/api/json'
-import { findJSON } from '@/api/json'
+import { fetchFileList } from '@/api/json'
 import { state } from '@/components/port-mng/store'
 import { Download } from '@element-plus/icons-vue'
 import FileSaver from 'file-saver'
@@ -11,7 +11,7 @@ import PortRange from './PortRange.vue'
 import PortStep from './PortStep.vue'
 
 // 加载数据
-onMounted(() => findJSON<IPortMng>('portMng').then(data => (state.list = data)))
+onMounted(() => fetchFileList<IPortMng>('portMng').then(data => (state.list = data)))
 
 // 导出文件
 const handleExport = () => {

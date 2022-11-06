@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { findJSON, type IArgsTemplate } from '@/api/json'
+import { fetchFileList, type IArgsTemplate } from '@/api/json'
 import { Download } from '@element-plus/icons-vue'
 import FileSaver from 'file-saver'
 import { onMounted } from 'vue'
@@ -11,7 +11,7 @@ import { state } from './store'
 import TemplateName from './TemplateName.vue'
 
 // 加载数据
-onMounted(() => findJSON<IArgsTemplate>('argsTemplate').then(data => (state.list = data)))
+onMounted(() => fetchFileList<IArgsTemplate>('argsTemplate').then(data => (state.list = data)))
 
 // 导出文件
 const handleExport = () => {

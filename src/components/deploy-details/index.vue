@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { findJSON, type IDeployDetails } from '@/api/json'
+import { fetchFileList, type IDeployDetails } from '@/api/json'
 import { Download } from '@element-plus/icons-vue'
 import { ElButton, ElCard, ElForm, ElFormItem, ElOption, ElSelect } from 'element-plus'
 import FileSaver from 'file-saver'
@@ -9,7 +9,7 @@ import DeployOrder from './DeployOrder.vue'
 import { state } from './store'
 
 // 加载数据
-onMounted(() => findJSON<IDeployDetails>('deployDetails').then(data => (state.list = data)))
+onMounted(() => fetchFileList<IDeployDetails>('deployDetails').then(data => (state.list = data)))
 
 // 导出文件
 const handleExport = () => {
