@@ -19,9 +19,9 @@ export interface IDeployDetails {
     templateYaml: string
     imageTag: string
     minDeployNumber: number
-    sameNodeScale: false
-    diffNodeScale: false
-    hasCfgFlag: string
+    sameNodeScale: boolean
+    diffNodeScale: boolean
+    hasCfgFlag: boolean
     waitTime: number
   }[]
   upgradeOrder: {
@@ -67,8 +67,9 @@ export interface IConfigFile<T extends IDeployDetails | IPortMng | IArgsTemplate
   json: T
 }
 
-export const findJSON = async <T extends IDeployDetails | IPortMng | IArgsTemplate>(type: IConfigFile<T>['type']) =>
-  await request<IConfigFile<T>[]>({
+export const findJSON = async <T extends IDeployDetails | IPortMng | IArgsTemplate>(type: IConfigFile<T>['type']) => {
+  return await request<IConfigFile<T>[]>({
     url: '/json',
     params: { type }
   }).then(response => response.data)
+}

@@ -1,9 +1,9 @@
-<script setup>
+<script lang="ts" setup>
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { state } from './store'
 
 // 删除
-const handleDelete = index => {
+const handleDelete = (index: number) => {
   if (state.current) {
     state.current.json.deployOrder.splice(index, 1)
   }
@@ -20,7 +20,17 @@ const handleAdd = () => {
 </script>
 
 <template>
-  <el-table :data="state.current?.json.deployOrder" border max-height="500px" scrollbar-always-on>
+  <el-table :data="state.current?.json.deployOrder" border max-height="300px" scrollbar-always-on>
+    <!-- 操作列 -->
+    <el-table-column align="center" fixed="left" width="50">
+      <template #header>
+        <el-button :icon="Plus" circle type="primary" @click="handleAdd()" />
+      </template>
+      <template #default="scope">
+        <el-button :icon="Delete" circle type="danger" @click="handleDelete(scope.$index)" />
+      </template>
+    </el-table-column>
+    <!-- 数据列 -->
     <el-table-column align="center" label="serviceName" prop="serviceName" width="150">
       <template #default="scope">
         <el-input v-model="scope.row.serviceName" spellcheck="false"></el-input>
@@ -34,15 +44,6 @@ const handleAdd = () => {
     <el-table-column align="center" label="order" prop="order" width="150">
       <template #default="scope">
         <el-input-number v-model="scope.row.order" />
-      </template>
-    </el-table-column>
-    <!-- 操作列 -->
-    <el-table-column align="center" fixed="left" width="50">
-      <template #header>
-        <el-button :icon="Plus" circle type="primary" @click="handleAdd()" />
-      </template>
-      <template #default="scope">
-        <el-button :icon="Delete" circle type="danger" @click="handleDelete(scope.$index)" />
       </template>
     </el-table-column>
   </el-table>

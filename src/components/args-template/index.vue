@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { onMounted } from 'vue'
-import { Download } from '@element-plus/icons-vue'
 import { findJSON, type IArgsTemplate } from '@/api/json'
-import TemplateName from './TemplateName.vue'
+import { Download } from '@element-plus/icons-vue'
+import FileSaver from 'file-saver'
+import { onMounted } from 'vue'
+import AllParams from './AllParams.vue'
+import CommonEnvs from './CommonEnvs.vue'
 import Desc from './Desc.vue'
 import ShellParams from './ShellParams.vue'
-import CommonEnvs from './CommonEnvs.vue'
-import AllParams from './AllParams.vue'
 import { state } from './store'
-import FileSaver from 'file-saver'
+import TemplateName from './TemplateName.vue'
 
 // 加载数据
 onMounted(() => findJSON<IArgsTemplate>('argsTemplate').then(data => (state.list = data)))

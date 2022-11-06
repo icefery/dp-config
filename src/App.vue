@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import DeployDetails from './components/deploy-details/index.vue'
-import PortMng from './components/port-mng'
 import ArgsTemplate from './components/args-template/index.vue'
+import DeployDetails from './components/deploy-details/index.vue'
+import PortMng from './components/port-mng/index.vue'
 </script>
 
 <template>

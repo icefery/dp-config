@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import { computed, onMounted } from 'vue'
-import { ElButton, ElCard, ElForm, ElFormItem, ElOption, ElSelect } from 'element-plus'
-import { Download } from '@element-plus/icons-vue'
 import { findJSON, type IDeployDetails } from '@/api/json'
-import DeployOrder from './deploy-order.vue'
-import DeployDetails from './deploy-details.vue'
+import { Download } from '@element-plus/icons-vue'
+import { ElButton, ElCard, ElForm, ElFormItem, ElOption, ElSelect } from 'element-plus'
 import FileSaver from 'file-saver'
-
+import { computed, onMounted } from 'vue'
+import DeployDetails from './DeployDetails.vue'
+import DeployOrder from './DeployOrder.vue'
 import { state } from './store'
 
 // 加载数据
