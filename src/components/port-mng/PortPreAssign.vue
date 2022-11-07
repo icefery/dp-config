@@ -36,12 +36,12 @@ const handleAdd = () => {
     <!-- 数据列 -->
     <el-table-column label="serviceName" prop="serviceName" width="150">
       <template #default="scope: Scope">
-        <el-input v-model="scope.row.serviceName" />
+        <el-input v-model="scope.row.serviceName" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column label="portType" prop="portType">
       <template #default="scope: Scope">
-        <el-input v-model="scope.row.portType" />
+        <el-input v-model="scope.row.portType" spellcheck="false" />
       </template>
     </el-table-column>
   </el-table>

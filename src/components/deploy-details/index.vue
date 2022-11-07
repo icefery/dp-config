@@ -81,11 +81,11 @@ const upgradeOrderLast = computed<string>({
       </el-form-item>
       <!-- upgradeOrder.first 属性 -->
       <el-form-item label="upgradeOrder.first">
-        <el-input v-model="upgradeOrderFirst" />
+        <el-input v-model="upgradeOrderFirst" spellcheck="false" />
       </el-form-item>
       <!-- upgradeOrder.last 属性 -->
       <el-form-item label="upgradeOrder.last">
-        <el-input v-model="upgradeOrderLast" />
+        <el-input v-model="upgradeOrderLast" spellcheck="false" />
       </el-form-item>
     </el-form>
   </el-card>

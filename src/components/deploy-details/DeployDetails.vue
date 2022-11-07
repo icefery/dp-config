@@ -47,6 +47,11 @@ const handleAdd = () => {
       </template>
     </el-table-column>
     <!-- 数据列 -->
+    <el-table-column align="center" label="serviceName" prop="serviceName" width="150">
+      <template #default="scope">
+        <el-input v-model="scope.row.serviceName" spellcheck="false"></el-input>
+      </template>
+    </el-table-column>
     <el-table-column align="center" label="templateJson" prop="templateJson" width="150">
       <template #default="scope">
         <el-input v-model="scope.row.templateJson" spellcheck="false"></el-input>

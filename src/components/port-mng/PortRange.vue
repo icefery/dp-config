@@ -35,12 +35,12 @@ const handleAdd = () => {
     <!-- 数据列 -->
     <el-table-column label="key" prop="key" width="150">
       <template #default="scope: Scope">
-        <el-input v-model="scope.row.key" />
+        <el-input v-model="scope.row.key" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column label="range" prop="range">
       <template #default="scope: Scope">
-        <el-input v-model="scope.row.range" />
+        <el-input v-model="scope.row.range" spellcheck="false" />
       </template>
     </el-table-column>
   </el-table>

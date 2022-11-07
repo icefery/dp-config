@@ -10,5 +10,5 @@ const desc = computed<string>({
 </script>
 
 <template>
-  <el-input v-model="desc" />
+  <el-input v-model="desc" spellcheck="false" />
 </template>

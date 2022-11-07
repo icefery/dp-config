@@ -71,7 +71,7 @@ const handleDelete = (index: number) => {
     </el-table-column>
     <el-table-column label="name" prop="name">
       <template #default="scope: { row: IR }">
-        <el-input v-model="scope.row.name" readonly />
+        <el-input v-model="scope.row.name" readonly spellcheck="false" />
       </template>
     </el-table-column>
   </el-table>

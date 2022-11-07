@@ -9,5 +9,5 @@ const templateName = computed<string>({
 </script>
 
 <template>
-  <el-input v-model="templateName" />
+  <el-input v-model="templateName" spellcheck="false" />
 </template>

@@ -8,5 +8,5 @@ const portStep = computed<string>({
 })
 </script>
 <template>
-  <el-input v-model="portStep" />
+  <el-input v-model="portStep" spellcheck="false" />
 </template>
