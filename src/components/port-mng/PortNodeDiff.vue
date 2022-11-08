@@ -9,5 +9,5 @@ const portNodeDiff = computed({
 </script>
 
 <template>
-  <el-input v-model="portNodeDiff" spellcheck="false" />
+  <el-input v-model="portNodeDiff" />
 </template>

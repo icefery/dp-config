@@ -6,6 +6,7 @@ import FileSaver from 'file-saver'
 import AllParams from './AllParams.vue'
 import CommonEnvs from './CommonEnvs.vue'
 import Desc from './Desc.vue'
+import ServiceEnvs from './ServiceEnvs.vue'
 import ShellParams from './ShellParams.vue'
 import TemplateName from './TemplateName.vue'
 
@@ -38,6 +39,9 @@ const handleExport = () => {
       </el-form-item>
       <el-form-item label="commonEnvs">
         <CommonEnvs />
+      </el-form-item>
+      <el-form-item label="serviceEnvs">
+        <ServiceEnvs />
       </el-form-item>
       <el-form-item label="allParams">
         <AllParams />

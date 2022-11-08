@@ -48,8 +48,12 @@ export interface IPortMng {
       key: string
       range: string
     }[]
-    portStep: string[]
+    portStep: {
+      key: string
+      step: string
+    }[]
     portNodeDiff: string[]
+    portNodeSame: string[]
   }
 }
 
@@ -61,6 +65,10 @@ export interface IArgsTemplate {
     desc: string
     shellParams: string[]
     commonEnvs: string[]
+    serviceEnvs: {
+      serviceName: string
+      envs: string[]
+    }[]
     allParams: {
       key: string
       const: boolean

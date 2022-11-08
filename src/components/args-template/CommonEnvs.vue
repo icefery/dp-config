@@ -10,5 +10,5 @@ const commonEnvs = computed<string>({
 </script>
 
 <template>
-  <el-input v-model="commonEnvs" spellcheck="false" />
+  <el-input v-model="commonEnvs" />
 </template>

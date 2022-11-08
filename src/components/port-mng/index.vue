@@ -3,6 +3,7 @@ import { PORT_MNG_STATE, SHARED_CONFIG_LIST } from '@/store'
 import { Download } from '@element-plus/icons-vue'
 import FileSaver from 'file-saver'
 import PortNodeDiff from './PortNodeDiff.vue'
+import PortNodeSame from './PortNodeSame.vue'
 import PortPreAssign from './PortPreAssign.vue'
 import PortRange from './PortRange.vue'
 import PortStep from './PortStep.vue'
@@ -39,6 +40,9 @@ const handleExport = () => {
         </el-form-item>
         <el-form-item label="portNodeDiff">
           <PortNodeDiff />
+        </el-form-item>
+        <el-form-item label="portNodeSame">
+          <PortNodeSame />
         </el-form-item>
       </el-form>
     </template>

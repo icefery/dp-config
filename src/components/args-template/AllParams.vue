@@ -77,17 +77,17 @@ const handleRulesAdd = (allParamsIndex: number) => {
           <!-- rules 数据列 -->
           <el-table-column label="from" prop="from" width="150">
             <template #default="rulesScope: IRulesScope">
-              <el-input v-model="rulesScope.row.from" spellcheck="false" />
+              <el-input v-model="rulesScope.row.from" />
             </template>
           </el-table-column>
           <el-table-column label="key" prop="key" width="150">
             <template #default="rulesScope: IRulesScope">
-              <el-input v-model="rulesScope.row.key" spellcheck="false" />
+              <el-input v-model="rulesScope.row.key" />
             </template>
           </el-table-column>
           <el-table-column label="content" prop="content" width="150">
             <template #default="rulesScope: IRulesScope">
-              <el-input v-model="rulesScope.row.content" spellcheck="false" />
+              <el-input v-model="rulesScope.row.content" />
             </template>
           </el-table-column>
         </el-table>
@@ -96,7 +96,7 @@ const handleRulesAdd = (allParamsIndex: number) => {
     <!-- allParams 数据列 -->
     <el-table-column align="center" label="key" prop="key" width="150">
       <template #default="scope: IAllParamsScope">
-        <el-input v-model="scope.row.key" spellcheck="false" />
+        <el-input v-model="scope.row.key" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="const" prop="const" width="150">
@@ -106,7 +106,7 @@ const handleRulesAdd = (allParamsIndex: number) => {
     </el-table-column>
     <el-table-column align="center" label="value" prop="value">
       <template #default="scope: IAllParamsScope">
-        <el-input v-model="scope.row.value" spellcheck="false" />
+        <el-input v-model="scope.row.value" />
       </template>
     </el-table-column>
   </el-table>

@@ -56,7 +56,7 @@ const handleDelete = (index: number) => {
   </el-upload>
   <!-- 手动上传按钮 -->
   <el-button :icon="UploadFilled" style="width: 100%" @click="handleUpload()" />
-  <el-table :data="SHARED_STATE.list" border scrollbar-always-on>
+  <el-table :data="SHARED_STATE.list" border scrollbar-always-on max-height="300px">
     <!-- 操作列 -->
     <el-table-column align="center" fixed="left" width="50">
       <template #default="scope">
@@ -71,7 +71,7 @@ const handleDelete = (index: number) => {
     </el-table-column>
     <el-table-column label="name" prop="name">
       <template #default="scope: { row: IR }">
-        <el-input v-model="scope.row.name" readonly spellcheck="false" />
+        <el-input v-model="scope.row.name" readonly />
       </template>
     </el-table-column>
   </el-table>

@@ -10,5 +10,5 @@ const shellParams = computed<string>({
 </script>
 
 <template>
-  <el-input v-model="shellParams" spellcheck="false" />
+  <el-input v-model="shellParams" />
 </template>
