@@ -1,7 +1,11 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import type { IArgsTemplate } from '@/api/json'
 import { ARGS_TEMPLATE_STATE } from '@/store'
 import { Delete, Plus } from '@element-plus/icons-vue'
+import { computed } from 'vue'
+import { and } from '../../utils/validation'
+import ValidationFailure from '../validation/ValidationFailure'
+import ValidationSuccess from '../validation/ValidationSuccess'
 
 interface IAllParamsScope {
   row: IArgsTemplate['json']['allParams'][number]
@@ -46,6 +50,22 @@ const handleRulesAdd = (allParamsIndex: number) => {
     }
   }
 }
+
+// allParamsKey 校验
+const allParamsKeyStatus = computed(() => (index: number) => {
+  if (ARGS_TEMPLATE_STATE.current) {
+    const row = ARGS_TEMPLATE_STATE.current.json.allParams[index]
+    const others = ARGS_TEMPLATE_STATE.current.json.allParams.filter((it, idx) => idx !== index)
+    const condition = and([
+      row.key !== '', // 非空
+      others.findIndex(it => it.key === row.key) === -1 // 唯一
+    ])
+    if (!condition) {
+      return <ValidationFailure />
+    }
+  }
+  return <ValidationSuccess />
+})
 </script>
 
 <template>
@@ -94,19 +114,19 @@ const handleRulesAdd = (allParamsIndex: number) => {
       </template>
     </el-table-column>
     <!-- allParams 数据列 -->
-    <el-table-column align="center" label="key" prop="key" width="150">
+    <el-table-column align="center" label="key" prop="key" width="250">
       <template #default="scope: IAllParamsScope">
-        <el-input v-model="scope.row.key" />
+        <el-input v-model="scope.row.key" :suffix-icon="allParamsKeyStatus(scope.$index)" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="const" prop="const" width="150">
       <template #default="scope: IAllParamsScope">
-        <el-switch v-model="scope.row.const" />
+        <el-switch v-model="scope.row.const" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="value" prop="value">
       <template #default="scope: IAllParamsScope">
-        <el-input v-model="scope.row.value" />
+        <el-input v-model="scope.row.value" spellcheck="false" />
       </template>
     </el-table-column>
   </el-table>

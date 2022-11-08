@@ -1,8 +1,11 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import type { IPortMng } from '@/api/json'
 import { PORT_MNG_STATE } from '@/store'
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElInput, ElTable, ElTableColumn } from 'element-plus'
+import { computed } from 'vue'
+import ValidationFailure from '../validation/ValidationFailure'
+import ValidationSuccess from '../validation/ValidationSuccess'
 
 interface Scope {
   row: IPortMng['json']['portRange'][number]
@@ -19,6 +22,50 @@ const handleAdd = () => {
     PORT_MNG_STATE.current.json.portRange.push({ key: '', range: '' })
   }
 }
+
+// range 校验
+const rangeStatus = computed(() => (index: number) => {
+  if (PORT_MNG_STATE.current) {
+    const all = PORT_MNG_STATE.current.json.portRange.map(it => {
+      const key = it.key
+      const ports = it.range
+        .replace(/(\[|\])/g, '')
+        .split(',')
+        .map(segment => {
+          const [left, right] = segment.split('-').map(point => Number.parseInt(point))
+          const result = []
+          for (let i = left; i <= right; i++) {
+            result.push(i)
+          }
+          return result
+        })
+        .flatMap(segment => [...segment])
+      return { key, ports }
+    })
+
+    const row = all[index]
+
+    if (row.ports.length === 0) {
+      return <ValidationFailure />
+    }
+
+    if (row.ports.filter(it => it < 1 || it > 65535).length !== 0) {
+      return <ValidationFailure />
+    }
+
+    const others = all.filter((it, idx) => idx !== index)
+
+    for (const rowPort of row.ports) {
+      for (const other of others) {
+        const intersect = other.ports.filter(it => it === rowPort)
+        if (intersect.length !== 0) {
+          return <ValidationFailure />
+        }
+      }
+    }
+  }
+  return <ValidationSuccess />
+})
 </script>
 
 <template>
@@ -35,12 +82,12 @@ const handleAdd = () => {
     <!-- 数据列 -->
     <el-table-column label="key" prop="key" width="150">
       <template #default="scope: Scope">
-        <el-input v-model="scope.row.key" />
+        <el-input v-model="scope.row.key" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column label="range" prop="range">
       <template #default="scope: Scope">
-        <el-input v-model="scope.row.range" />
+        <el-input v-model="scope.row.range" :suffix-icon="rangeStatus(scope.$index)" spellcheck="false" />
       </template>
     </el-table-column>
   </el-table>

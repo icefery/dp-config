@@ -56,7 +56,7 @@ const handleDelete = (index: number) => {
   </el-upload>
   <!-- 手动上传按钮 -->
   <el-button :icon="UploadFilled" style="width: 100%" @click="handleUpload()" />
-  <el-table :data="SHARED_STATE.list" border scrollbar-always-on max-height="300px">
+  <el-table :data="SHARED_STATE.list" border max-height="300px" scrollbar-always-on>
     <!-- 操作列 -->
     <el-table-column align="center" fixed="left" width="50">
       <template #default="scope">

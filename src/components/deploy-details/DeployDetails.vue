@@ -1,7 +1,17 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
+import type { IDeployDetails } from '@/api/json'
 import { DEPLOY_DETAILS_STATE } from '@/store'
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElInput, ElInputNumber, ElOption, ElSelect, ElSwitch, ElTable, ElTableColumn } from 'element-plus'
+import { computed } from 'vue'
+import { and } from '../../utils/validation'
+import ValidationFailure from '../validation/ValidationFailure'
+import ValidationSuccess from '../validation/ValidationSuccess'
+
+interface Scope {
+  row: IDeployDetails['json']['deployDetails'][number]
+  $index: number
+}
 
 // 删除
 const handleDelete = (index: number) => {
@@ -33,6 +43,114 @@ const handleAdd = () => {
     })
   }
 }
+
+// serviceName 校验
+const serviceNameStatus = computed(() => (index: number) => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    const row = DEPLOY_DETAILS_STATE.current.json.deployDetails[index]
+    const others = DEPLOY_DETAILS_STATE.current.json.deployDetails.filter((it, idx) => idx !== index)
+    const condition = and([
+      row.serviceName !== '', // service 非空
+      row.serviceName.charCodeAt(0) >= 97 && row.serviceName.charCodeAt(0) <= 122, // 首字母小写
+      others.findIndex(it => it.serviceName === row.serviceName) === -1 // 唯一
+    ])
+    if (!condition) {
+      return <ValidationFailure />
+    }
+  }
+  return <ValidationSuccess />
+})
+
+// templateJson 校验
+const templateJsonStatus = computed(() => (index: number) => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    const row = DEPLOY_DETAILS_STATE.current.json.deployDetails[index]
+    if (row.netMode === 'host') {
+      const condition = and([row.templateJson !== ''])
+      if (!condition) {
+        return <ValidationFailure />
+      }
+    }
+  }
+  return <ValidationSuccess />
+})
+// templateYaml 校验
+const templateYamlStatus = computed(() => (index: number) => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    const row = DEPLOY_DETAILS_STATE.current.json.deployDetails[index]
+    if (row.netMode === 'host') {
+      const condition = and([row.templateYaml !== ''])
+      if (!condition) {
+        return <ValidationFailure />
+      }
+    }
+  }
+  return <ValidationSuccess />
+})
+
+// calicoArgs 校验
+const calicoArgsStatus = computed(() => (index: number) => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    const row = DEPLOY_DETAILS_STATE.current.json.deployDetails[index]
+    if (row.netMode === 'calico') {
+      const condition = and([row.calicoArgs !== ''])
+      if (!condition) {
+        return <ValidationFailure />
+      }
+    }
+  }
+  return <ValidationSuccess />
+})
+
+// calicoYaml
+const calicoYamlStatus = computed(() => (index: number) => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    const row = DEPLOY_DETAILS_STATE.current.json.deployDetails[index]
+    if (row.netMode === 'calico') {
+      const condition = and([row.calicoYaml !== ''])
+      if (!condition) {
+        return <ValidationFailure />
+      }
+    }
+  }
+  return <ValidationSuccess />
+})
+
+// minMemory 校验
+const minMemoryStatus = computed(() => (index: number) => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    const row = DEPLOY_DETAILS_STATE.current.json.deployDetails[index]
+    const condition = and([row.minMemory !== ''])
+    if (!condition) {
+      return <ValidationFailure />
+    }
+  }
+  return <ValidationSuccess />
+})
+
+// limitsMemory 校验
+const limitsMemoryStatus = computed(() => (index: number) => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    const row = DEPLOY_DETAILS_STATE.current.json.deployDetails[index]
+    const condition = and([row.limitsMemory !== ''])
+    if (!condition) {
+      return <ValidationFailure />
+    }
+  }
+  return <ValidationSuccess />
+})
+
+// imageTag 校验
+const imageTagStatus = computed(() => (index: number) => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    const row = DEPLOY_DETAILS_STATE.current.json.deployDetails[index]
+    const condition = and([row.imageTag !== ''])
+    if (!condition) {
+      return <ValidationFailure />
+    }
+  }
+  return <ValidationSuccess />
+})
 </script>
 
 <template>
@@ -42,23 +160,23 @@ const handleAdd = () => {
       <template #header>
         <el-button :icon="Plus" circle type="primary" @click="handleAdd()" />
       </template>
-      <template #default="scope">
+      <template #default="scope: Scope">
         <el-button :icon="Delete" circle type="danger" @click="handleDelete(scope.$index)" />
       </template>
     </el-table-column>
     <!-- 数据列 -->
     <el-table-column align="center" label="serviceName" prop="serviceName" width="150">
-      <template #default="scope">
-        <el-input v-model="scope.row.serviceName" spellcheck="false"></el-input>
+      <template #default="scope: Scope">
+        <el-input v-model="scope.row.serviceName" :suffix-icon="serviceNameStatus(scope.$index)" spellcheck="false"></el-input>
       </template>
     </el-table-column>
     <el-table-column align="center" label="templateJson" prop="templateJson" width="150">
-      <template #default="scope">
-        <el-input v-model="scope.row.templateJson" spellcheck="false"></el-input>
+      <template #default="scope: Scope">
+        <el-input v-model="scope.row.templateJson" :suffix-icon="templateJsonStatus(scope.$index)" spellcheck="false"></el-input>
       </template>
     </el-table-column>
     <el-table-column align="center" label="netMode" prop="netMode" width="150">
-      <template #default="scope">
+      <template #default="scope: Scope">
         <el-select v-model="scope.row.netMode">
           <el-option label="host" value="host" />
           <el-option label="calico" value="calico" />
@@ -66,27 +184,27 @@ const handleAdd = () => {
       </template>
     </el-table-column>
     <el-table-column align="center" label="calicoYaml" prop="calicoYaml" width="150">
-      <template #default="scope">
-        <el-input v-model="scope.row.calicoYaml" spellcheck="false"></el-input>
+      <template #default="scope: Scope">
+        <el-input v-model="scope.row.calicoYaml" :suffix-icon="calicoYamlStatus(scope.$index)" spellcheck="false"></el-input>
       </template>
     </el-table-column>
     <el-table-column align="center" label="calicoArgs" prop="calicoArgs" width="150">
-      <template #default="scope">
-        <el-input v-model="scope.row.calicoArgs" spellcheck="false"></el-input>
+      <template #default="scope: Scope">
+        <el-input v-model="scope.row.calicoArgs" :suffix-icon="calicoArgsStatus(scope.$index)" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="preShell" prop="preShell" width="150">
-      <template #default="scope">
+      <template #default="scope: Scope">
         <el-input v-model="scope.row.preShell" spellcheck="false"></el-input>
       </template>
     </el-table-column>
     <el-table-column align="center" label="minMemory" prop="minMemory" width="150">
-      <template #default="scope">
-        <el-input v-model="scope.row.minMemory" spellcheck="false"></el-input>
+      <template #default="scope: Scope">
+        <el-input v-model="scope.row.minMemory" :suffix-icon="minMemoryStatus(scope.$index)" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="priorityClass" prop="priorityClass" width="150">
-      <template #default="scope">
+      <template #default="scope: Scope">
         <el-select v-model="scope.row.priorityClass">
           <el-option label="high-priority" value="high-priority" />
           <el-option label="low-priority" value="low-priority" />
@@ -94,42 +212,42 @@ const handleAdd = () => {
       </template>
     </el-table-column>
     <el-table-column align="center" label="limitsMemory" prop="limitsMemory" width="150">
-      <template #default="scope">
-        <el-input v-model="scope.row.limitsMemory" spellcheck="false"></el-input>
+      <template #default="scope: Scope">
+        <el-input v-model="scope.row.limitsMemory" :suffix-icon="limitsMemoryStatus(scope.$index)" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="templateYaml" prop="templateYaml" width="150">
-      <template #default="scope">
-        <el-input v-model="scope.row.templateYaml" spellcheck="false"></el-input>
+      <template #default="scope: Scope">
+        <el-input v-model="scope.row.templateYaml" :suffix-icon="templateYamlStatus(scope.$index)" spellcheck="false"></el-input>
       </template>
     </el-table-column>
     <el-table-column align="center" label="imageTag" prop="imageTag" width="150">
-      <template #default="scope">
-        <el-input v-model="scope.row.imageTag" spellcheck="false"></el-input>
+      <template #default="scope: Scope">
+        <el-input v-model="scope.row.imageTag" :suffix-icon="imageTagStatus(scope.$index)" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="minDeployNumber" prop="minDeployNumber" width="150">
-      <template #default="scope">
+      <template #default="scope: Scope">
         <el-input-number v-model="scope.row.waitTime" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="sameNodeScale" prop="sameNodeScale" width="150">
-      <template #default="scope">
+      <template #default="scope: Scope">
         <el-switch v-model="scope.row.sameNodeScale" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="diffNodeScale" prop="diffNodeScale" width="150">
-      <template #default="scope">
+      <template #default="scope: Scope">
         <el-switch v-model="scope.row.diffNodeScale" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="hasCfgFlag" prop="hasCfgFlag" width="150">
-      <template #default="scope">
+      <template #default="scope: Scope">
         <el-switch v-model="scope.row.hasCfgFlag" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="waitTime" prop="waitTime" width="150">
-      <template #default="scope">
+      <template #default="scope: Scope">
         <el-input-number v-model="scope.row.waitTime" />
       </template>
     </el-table-column>

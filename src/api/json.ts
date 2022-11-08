@@ -13,7 +13,7 @@ export interface IDeployDetails {
     deployDetails: {
       serviceName: string
       templateJson: string
-      netMode: string
+      netMode: 'host' | 'calico'
       calicoYaml: string
       calicoArgs: string
       preShell: string

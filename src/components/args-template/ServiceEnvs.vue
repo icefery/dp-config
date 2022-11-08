@@ -17,7 +17,12 @@ const handleDelete = (index: number) => {
 
 const handleAdd = () => {
   if (ARGS_TEMPLATE_STATE.current) {
-    ARGS_TEMPLATE_STATE.current.json.serviceEnvs.push({ serviceName: '', envs: [] })
+    const todo = { serviceName: '', envs: [] }
+    if (ARGS_TEMPLATE_STATE.current.json.serviceEnvs) {
+      ARGS_TEMPLATE_STATE.current.json.serviceEnvs.push(todo)
+    } else {
+      ARGS_TEMPLATE_STATE.current.json.serviceEnvs = [todo]
+    }
   }
 }
 </script>
@@ -39,10 +44,9 @@ const handleAdd = () => {
         <el-input v-model="scope.row.serviceName" />
       </template>
     </el-table-column>
-
     <el-table-column label="envs" prop="envs">
       <template #default="scope: Scope">
-        <el-input v-model="scope.row.envs" />
+        <el-input v-model="scope.row.envs" spellcheck="false" />
       </template>
     </el-table-column>
   </el-table>
