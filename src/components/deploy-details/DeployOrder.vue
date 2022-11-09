@@ -2,7 +2,11 @@
 import type { IDeployDetails } from '@/api/json'
 import { DEPLOY_DETAILS_STATE } from '@/store'
 import type { IScope } from '@/types/element-plus'
+import { and } from '@/utils/validation'
 import { Delete, Plus } from '@element-plus/icons-vue'
+import { computed } from 'vue'
+import ValidationFailure from '../validation/ValidationFailure'
+import ValidationSuccess from '../validation/ValidationSuccess'
 
 // 删除
 const handleDelete = (index: number) => {
@@ -19,6 +23,21 @@ const handleAdd = () => {
     DEPLOY_DETAILS_STATE.current.json.deployOrder.push({ serviceName: '', mustSucceed: false, order: order + 1 })
   }
 }
+
+const serviceNameStatus = computed(() => (index: number) => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    const row = DEPLOY_DETAILS_STATE.current.json.deployOrder[index]
+    const others = DEPLOY_DETAILS_STATE.current.json.deployOrder.filter((it, idx) => idx !== index)
+    const condition = and([
+      DEPLOY_DETAILS_STATE.current.json.deployDetails.filter(it => it.serviceName === row.serviceName).length > 0, // serviceName 必须在 deployDetails 中存在
+      others.findIndex(it => it.serviceName === row.serviceName) === -1 // 唯一
+    ])
+    if (!condition) {
+      return <ValidationFailure />
+    }
+  }
+  return <ValidationSuccess />
+})
 </script>
 
 <template>
@@ -35,7 +54,7 @@ const handleAdd = () => {
     <!-- 数据列 -->
     <el-table-column align="center" label="serviceName" prop="serviceName" width="150">
       <template #default="scope: IScope<IDeployDetails['json']['deployOrder'][number]>">
-        <el-input v-model="scope.row.serviceName" spellcheck="false" />
+        <el-input v-model="scope.row.serviceName" :suffix-icon="serviceNameStatus(scope.$index)" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="mustSucceed" prop="mustSucceed" width="150">

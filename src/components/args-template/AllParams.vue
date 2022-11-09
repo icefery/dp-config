@@ -70,6 +70,22 @@ const allParamsKeyStatus = computed(() => (index: number) => {
         <el-button :icon="Delete" circle type="danger" @click="handleAllParamsDelete(allParamsScope.$index)" />
       </template>
     </el-table-column>
+    <!-- allParams 数据列 -->
+    <el-table-column align="center" label="key" prop="key" width="250">
+      <template #default="scope: IScope<IArgsTemplate['json']['allParams'][number]>">
+        <el-input v-model="scope.row.key" :suffix-icon="allParamsKeyStatus(scope.$index)" spellcheck="false" />
+      </template>
+    </el-table-column>
+    <el-table-column align="center" label="const" prop="const" width="150">
+      <template #default="scope: IScope<IArgsTemplate['json']['allParams'][number]>">
+        <el-switch v-model="scope.row.const" />
+      </template>
+    </el-table-column>
+    <el-table-column align="center" label="value" prop="value">
+      <template #default="scope: IScope<IArgsTemplate['json']['allParams'][number]>">
+        <el-input v-model="scope.row.value" spellcheck="false" />
+      </template>
+    </el-table-column>
     <!-- allParams 展开列 -->
     <el-table-column align="center" label="rules" prop="rules" type="expand">
       <template #default="allParamsScope: IScope<IArgsTemplate['json']['allParams'][number]>">
@@ -86,38 +102,22 @@ const allParamsKeyStatus = computed(() => (index: number) => {
             </template>
           </el-table-column>
           <!-- rules 数据列 -->
-          <el-table-column label="from" prop="from" width="150">
+          <el-table-column align="center" label="from" prop="from" width="200">
             <template #default="rulesScope: IScope<IArgsTemplate['json']['allParams'][number]['rules'][number]>">
               <el-input v-model="rulesScope.row.from" spellcheck="false" />
             </template>
           </el-table-column>
-          <el-table-column label="key" prop="key" width="150">
+          <el-table-column align="center" label="key" prop="key" width="150">
             <template #default="rulesScope: IScope<IArgsTemplate['json']['allParams'][number]['rules'][number]>">
               <el-input v-model="rulesScope.row.key" spellcheck="false" />
             </template>
           </el-table-column>
-          <el-table-column label="content" prop="content" width="150">
+          <el-table-column align="center" label="content" prop="content" width="150">
             <template #default="rulesScope: IScope<IArgsTemplate['json']['allParams'][number]['rules'][number]>">
               <el-input v-model="rulesScope.row.content" spellcheck="false" />
             </template>
           </el-table-column>
         </el-table>
-      </template>
-    </el-table-column>
-    <!-- allParams 数据列 -->
-    <el-table-column align="center" label="key" prop="key" width="250">
-      <template #default="scope: IScope<IArgsTemplate['json']['allParams'][number]>">
-        <el-input v-model="scope.row.key" :suffix-icon="allParamsKeyStatus(scope.$index)" spellcheck="false" />
-      </template>
-    </el-table-column>
-    <el-table-column align="center" label="const" prop="const" width="150">
-      <template #default="scope: IScope<IArgsTemplate['json']['allParams'][number]>">
-        <el-switch v-model="scope.row.const" />
-      </template>
-    </el-table-column>
-    <el-table-column align="center" label="value" prop="value">
-      <template #default="scope: IScope<IArgsTemplate['json']['allParams'][number]>">
-        <el-input v-model="scope.row.value" spellcheck="false" />
       </template>
     </el-table-column>
   </el-table>

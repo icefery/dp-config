@@ -1,9 +1,11 @@
 <script lang="tsx" setup>
 import { DEPLOY_DETAILS_STATE, SHARED_CONFIG_LIST } from '@/store'
 import { Download } from '@element-plus/icons-vue'
-import { ElButton, ElCard, ElForm, ElFormItem, ElOption, ElSelect } from 'element-plus'
+import { ElButton, ElCard, ElForm, ElFormItem, ElInput, ElOption, ElSelect } from 'element-plus'
 import FileSaver from 'file-saver'
 import { computed } from 'vue'
+import ValidationFailure from '../validation/ValidationFailure'
+import ValidationSuccess from '../validation/ValidationSuccess'
 import DeployDetails from './DeployDetails.vue'
 import DeployOrder from './DeployOrder.vue'
 
@@ -60,6 +62,52 @@ const upgradeOrderLast = computed<string>({
     }
   }
 })
+
+// upgradeOrder.first 校验
+const upgradeOrderFirstStatus = computed(() => () => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    if (!DEPLOY_DETAILS_STATE.current.json.upgradeOrder) {
+      return <ValidationSuccess />
+    }
+    if (DEPLOY_DETAILS_STATE.current.json.upgradeOrder.first.filter(it => it !== '').length === 0) {
+      return <ValidationSuccess />
+    }
+    for (const serviceName of DEPLOY_DETAILS_STATE.current.json.upgradeOrder.first) {
+      const existing = DEPLOY_DETAILS_STATE.current.json.deployDetails.findIndex(it => it.serviceName === serviceName) >= 0
+      if (!existing) {
+        return <ValidationFailure />
+      }
+      const intersect = DEPLOY_DETAILS_STATE.current.json.upgradeOrder.last.filter(it => it === serviceName)
+      if (intersect.length !== 0) {
+        return <ValidationFailure />
+      }
+    }
+  }
+  return <ValidationSuccess />
+})
+
+// upgradeOrder.last 校验
+const upgradeOrderLastStatus = computed(() => () => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    if (!DEPLOY_DETAILS_STATE.current.json.upgradeOrder) {
+      return <ValidationSuccess />
+    }
+    if (DEPLOY_DETAILS_STATE.current.json.upgradeOrder.last.filter(it => it !== '').length === 0) {
+      return <ValidationSuccess />
+    }
+    for (const serviceName of DEPLOY_DETAILS_STATE.current.json.upgradeOrder.last) {
+      const existing = DEPLOY_DETAILS_STATE.current.json.deployDetails.findIndex(it => it.serviceName === serviceName) >= 0
+      if (!existing) {
+        return <ValidationFailure />
+      }
+      const intersect = DEPLOY_DETAILS_STATE.current.json.upgradeOrder.first.filter(it => it === serviceName)
+      if (intersect.length !== 0) {
+        return <ValidationFailure />
+      }
+    }
+  }
+  return <ValidationSuccess />
+})
 </script>
 
 <template>
@@ -85,11 +133,11 @@ const upgradeOrderLast = computed<string>({
       </el-form-item>
       <!-- upgradeOrder.first 属性 -->
       <el-form-item label="upgradeOrder.first">
-        <el-input v-model="upgradeOrderFirst" spellcheck="false" />
+        <el-input v-model="upgradeOrderFirst" :suffix-icon="upgradeOrderFirstStatus" spellcheck="false" />
       </el-form-item>
       <!-- upgradeOrder.last 属性 -->
       <el-form-item label="upgradeOrder.last">
-        <el-input v-model="upgradeOrderLast" spellcheck="false" />
+        <el-input v-model="upgradeOrderLast" :suffix-icon="upgradeOrderLastStatus" spellcheck="false" />
       </el-form-item>
     </el-form>
   </el-card>
