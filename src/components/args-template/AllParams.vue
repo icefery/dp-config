@@ -1,21 +1,12 @@
 <script lang="tsx" setup>
 import type { IArgsTemplate } from '@/api/json'
+import ValidationFailure from '@/components/validation/ValidationFailure'
+import ValidationSuccess from '@/components/validation/ValidationSuccess'
 import { ARGS_TEMPLATE_STATE } from '@/store'
+import type { IScope } from '@/types/element-plus'
+import { and } from '@/utils/validation'
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { computed } from 'vue'
-import { and } from '../../utils/validation'
-import ValidationFailure from '../validation/ValidationFailure'
-import ValidationSuccess from '../validation/ValidationSuccess'
-
-interface IAllParamsScope {
-  row: IArgsTemplate['json']['allParams'][number]
-  $index: number
-}
-
-interface IRulesScope {
-  row: IArgsTemplate['json']['allParams'][number]['rules'][number]
-  $index: number
-}
 
 // allParams 删除
 const handleAllParamsDelete = (allParamsIndex: number) => {
@@ -75,39 +66,39 @@ const allParamsKeyStatus = computed(() => (index: number) => {
       <template #header>
         <el-button :icon="Plus" circle type="primary" @click="handleAllParamsAdd()" />
       </template>
-      <template #default="allParamsScope: IAllParamsScope">
+      <template #default="allParamsScope: IScope<IArgsTemplate['json']['allParams'][number]>">
         <el-button :icon="Delete" circle type="danger" @click="handleAllParamsDelete(allParamsScope.$index)" />
       </template>
     </el-table-column>
     <!-- allParams 展开列 -->
     <el-table-column align="center" label="rules" prop="rules" type="expand">
-      <template #default="allParamsScope: IAllParamsScope">
+      <template #default="allParamsScope: IScope<IArgsTemplate['json']['allParams'][number]>">
         <el-table :data="allParamsScope.row.rules" border max-height="300px" scrollbar-always-on>
           <!-- rules 占位列 -->
-          <el-table-column align="center" fixed="left" width="50"></el-table-column>
+          <el-table-column align="center" fixed="left" width="50" />
           <!-- 操作列 -->
           <el-table-column align="center" fixed="left" width="50">
             <template #header>
               <el-button :icon="Plus" circle type="primary" @click="handleRulesAdd(allParamsScope.$index)" />
             </template>
-            <template #default="rulesScope: IRulesScope">
+            <template #default="rulesScope: IScope<IArgsTemplate['json']['allParams'][number]['rules'][number]>">
               <el-button :icon="Delete" circle type="danger" @click="handleRulesDelete(allParamsScope.$index, rulesScope.$index)" />
             </template>
           </el-table-column>
           <!-- rules 数据列 -->
           <el-table-column label="from" prop="from" width="150">
-            <template #default="rulesScope: IRulesScope">
-              <el-input v-model="rulesScope.row.from" />
+            <template #default="rulesScope: IScope<IArgsTemplate['json']['allParams'][number]['rules'][number]>">
+              <el-input v-model="rulesScope.row.from" spellcheck="false" />
             </template>
           </el-table-column>
           <el-table-column label="key" prop="key" width="150">
-            <template #default="rulesScope: IRulesScope">
-              <el-input v-model="rulesScope.row.key" />
+            <template #default="rulesScope: IScope<IArgsTemplate['json']['allParams'][number]['rules'][number]>">
+              <el-input v-model="rulesScope.row.key" spellcheck="false" />
             </template>
           </el-table-column>
           <el-table-column label="content" prop="content" width="150">
-            <template #default="rulesScope: IRulesScope">
-              <el-input v-model="rulesScope.row.content" />
+            <template #default="rulesScope: IScope<IArgsTemplate['json']['allParams'][number]['rules'][number]>">
+              <el-input v-model="rulesScope.row.content" spellcheck="false" />
             </template>
           </el-table-column>
         </el-table>
@@ -115,17 +106,17 @@ const allParamsKeyStatus = computed(() => (index: number) => {
     </el-table-column>
     <!-- allParams 数据列 -->
     <el-table-column align="center" label="key" prop="key" width="250">
-      <template #default="scope: IAllParamsScope">
+      <template #default="scope: IScope<IArgsTemplate['json']['allParams'][number]>">
         <el-input v-model="scope.row.key" :suffix-icon="allParamsKeyStatus(scope.$index)" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="const" prop="const" width="150">
-      <template #default="scope: IAllParamsScope">
-        <el-switch v-model="scope.row.const" spellcheck="false" />
+      <template #default="scope: IScope<IArgsTemplate['json']['allParams'][number]>">
+        <el-switch v-model="scope.row.const" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="value" prop="value">
-      <template #default="scope: IAllParamsScope">
+      <template #default="scope: IScope<IArgsTemplate['json']['allParams'][number]>">
         <el-input v-model="scope.row.value" spellcheck="false" />
       </template>
     </el-table-column>

@@ -1,13 +1,9 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import type { IPortMng } from '@/api/json'
 import { PORT_MNG_STATE } from '@/store'
+import type { IScope } from '@/types/element-plus'
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElInput, ElTable, ElTableColumn } from 'element-plus'
-
-interface Scope {
-  row: IPortMng['json']['portPreAssign'][number]
-  $index: number
-}
 
 const handleDelete = (index: number) => {
   if (PORT_MNG_STATE.current) {
@@ -29,26 +25,24 @@ const handleAdd = () => {
       <template #header>
         <el-button :icon="Plus" circle type="primary" @click="handleAdd()" />
       </template>
-      <template #default="scope">
+      <template #default="scope: IScope<IPortMng['json']['portPreAssign'][number]>">
         <el-button :icon="Delete" circle type="danger" @click="handleDelete(scope.$index)" />
       </template>
     </el-table-column>
     <!-- 数据列 -->
     <el-table-column label="serviceName" prop="serviceName" width="150">
-      <template #default="scope: Scope">
-        <el-input v-model="scope.row.serviceName" />
+      <template #default="scope: IScope<IPortMng['json']['portPreAssign'][number]>">
+        <el-input v-model="scope.row.serviceName" spellcheck="false" />
       </template>
     </el-table-column>
-
     <el-table-column label="calicoPortType" prop="calicoPortType" width="300">
-      <template #default="scope: Scope">
-        <el-input v-model="scope.row.calicoPortType" />
+      <template #default="scope: IScope<IPortMng['json']['portPreAssign'][number]>">
+        <el-input v-model="scope.row.calicoPortType" spellcheck="false" />
       </template>
     </el-table-column>
-
     <el-table-column label="portType" prop="portType">
-      <template #default="scope: Scope">
-        <el-input v-model="scope.row.portType" />
+      <template #default="scope: IScope<IPortMng['json']['portPreAssign'][number]>">
+        <el-input v-model="scope.row.portType" spellcheck="false" />
       </template>
     </el-table-column>
   </el-table>

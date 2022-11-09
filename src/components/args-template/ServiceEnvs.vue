@@ -1,13 +1,9 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import type { IArgsTemplate } from '@/api/json'
 import { ARGS_TEMPLATE_STATE } from '@/store'
+import type { IScope } from '@/types/element-plus'
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElInput, ElTable, ElTableColumn } from 'element-plus'
-
-interface Scope {
-  row: IArgsTemplate['json']['serviceEnvs'][number]
-  $index: number
-}
 
 const handleDelete = (index: number) => {
   if (ARGS_TEMPLATE_STATE.current) {
@@ -34,18 +30,18 @@ const handleAdd = () => {
       <template #header>
         <el-button :icon="Plus" circle type="primary" @click="handleAdd()" />
       </template>
-      <template #default="scope">
+      <template #default="scope: IScope<IArgsTemplate['json']['serviceEnvs'][number]>">
         <el-button :icon="Delete" circle type="danger" @click="handleDelete(scope.$index)" />
       </template>
     </el-table-column>
     <!-- 数据列 -->
     <el-table-column label="serviceName" prop="serviceName" width="150">
-      <template #default="scope: Scope">
-        <el-input v-model="scope.row.serviceName" />
+      <template #default="scope: IScope<IArgsTemplate['json']['serviceEnvs'][number]>">
+        <el-input v-model="scope.row.serviceName" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column label="envs" prop="envs">
-      <template #default="scope: Scope">
+      <template #default="scope: IScope<IArgsTemplate['json']['serviceEnvs'][number]>">
         <el-input v-model="scope.row.envs" spellcheck="false" />
       </template>
     </el-table-column>

@@ -1,5 +1,5 @@
 import { SHARED_STATE } from '@/store'
-import request from '../utils/request'
+import request from '@/utils/request'
 
 export interface IDeployDetails {
   name: string

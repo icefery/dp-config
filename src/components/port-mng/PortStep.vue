@@ -1,13 +1,9 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import type { IPortMng } from '@/api/json'
 import { PORT_MNG_STATE } from '@/store'
+import type { IScope } from '@/types/element-plus'
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElInput, ElTable, ElTableColumn } from 'element-plus'
-
-interface Scope {
-  row: IPortMng['json']['portStep'][number]
-  $index: number
-}
 
 const handleDelete = (index: number) => {
   if (PORT_MNG_STATE.current) {
@@ -34,13 +30,13 @@ const handleAdd = () => {
     </el-table-column>
     <!-- 数据列 -->
     <el-table-column label="key" prop="key" width="150">
-      <template #default="scope: Scope">
-        <el-input v-model="scope.row.key" />
+      <template #default="scope: IScope<IPortMng['json']['portStep'][number]>">
+        <el-input v-model="scope.row.key" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column label="step" prop="step">
-      <template #default="scope: Scope">
-        <el-input v-model="scope.row.step" />
+      <template #default="scope: IScope<IPortMng['json']['portStep'][number]>">
+        <el-input v-model="scope.row.step" spellcheck="false" />
       </template>
     </el-table-column>
   </el-table>

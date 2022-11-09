@@ -1,5 +1,7 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
+import type { IDeployDetails } from '@/api/json'
 import { DEPLOY_DETAILS_STATE } from '@/store'
+import type { IScope } from '@/types/element-plus'
 import { Delete, Plus } from '@element-plus/icons-vue'
 
 // 删除
@@ -26,23 +28,23 @@ const handleAdd = () => {
       <template #header>
         <el-button :icon="Plus" circle type="primary" @click="handleAdd()" />
       </template>
-      <template #default="scope">
+      <template #default="scope: IScope<IDeployDetails['json']['deployOrder'][number]>">
         <el-button :icon="Delete" circle type="danger" @click="handleDelete(scope.$index)" />
       </template>
     </el-table-column>
     <!-- 数据列 -->
     <el-table-column align="center" label="serviceName" prop="serviceName" width="150">
-      <template #default="scope">
-        <el-input v-model="scope.row.serviceName" spellcheck="false"></el-input>
+      <template #default="scope: IScope<IDeployDetails['json']['deployOrder'][number]>">
+        <el-input v-model="scope.row.serviceName" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="mustSucceed" prop="mustSucceed" width="150">
-      <template #default="scope">
+      <template #default="scope: IScope<IDeployDetails['json']['deployOrder'][number]>">
         <el-switch v-model="scope.row.mustSucceed" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="order" prop="order" width="150">
-      <template #default="scope">
+      <template #default="scope: IScope<IDeployDetails['json']['deployOrder'][number]>">
         <el-input-number v-model="scope.row.order" />
       </template>
     </el-table-column>

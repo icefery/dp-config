@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { ARGS_TEMPLATE_STATE } from '@/store'
 import { computed } from 'vue'
 
@@ -9,5 +9,5 @@ const templateName = computed<string>({
 </script>
 
 <template>
-  <el-input v-model="templateName" />
+  <el-input v-model="templateName" spellcheck="false" />
 </template>

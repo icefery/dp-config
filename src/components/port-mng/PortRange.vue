@@ -1,16 +1,12 @@
 <script lang="tsx" setup>
 import type { IPortMng } from '@/api/json'
+import ValidationFailure from '@/components/validation/ValidationFailure'
+import ValidationSuccess from '@/components/validation/ValidationSuccess'
 import { PORT_MNG_STATE } from '@/store'
+import type { IScope } from '@/types/element-plus'
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElInput, ElTable, ElTableColumn } from 'element-plus'
 import { computed } from 'vue'
-import ValidationFailure from '../validation/ValidationFailure'
-import ValidationSuccess from '../validation/ValidationSuccess'
-
-interface Scope {
-  row: IPortMng['json']['portRange'][number]
-  $index: number
-}
 
 const handleDelete = (index: number) => {
   if (PORT_MNG_STATE.current) {
@@ -29,7 +25,7 @@ const rangeStatus = computed(() => (index: number) => {
     const all = PORT_MNG_STATE.current.json.portRange.map(it => {
       const key = it.key
       const ports = it.range
-        .replace(/(\[|\])/g, '')
+        .replace(/([\[\]])/g, '')
         .split(',')
         .map(segment => {
           const [left, right] = segment.split('-').map(point => Number.parseInt(point))
@@ -81,12 +77,12 @@ const rangeStatus = computed(() => (index: number) => {
     </el-table-column>
     <!-- 数据列 -->
     <el-table-column label="key" prop="key" width="150">
-      <template #default="scope: Scope">
+      <template #default="scope: IScope<IPortMng['json']['portRange'][number]>">
         <el-input v-model="scope.row.key" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column label="range" prop="range">
-      <template #default="scope: Scope">
+      <template #default="scope: IScope<IPortMng['json']['portRange'][number]>">
         <el-input v-model="scope.row.range" :suffix-icon="rangeStatus(scope.$index)" spellcheck="false" />
       </template>
     </el-table-column>

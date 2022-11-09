@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import ArgsTemplate from './components/args-template/index.vue'
 import DeployDetails from './components/deploy-details/index.vue'
 import FileManager from './components/file-manager/index.vue'
@@ -6,7 +6,7 @@ import PortMng from './components/port-mng/index.vue'
 </script>
 
 <template>
-  <el-config-provider size="small" spellcheck="false">
+  <el-config-provider size="small">
     <el-container>
       <el-aside>
         <FileManager />
@@ -14,7 +14,7 @@ import PortMng from './components/port-mng/index.vue'
       <el-main>
         <el-tabs type="border-card">
           <el-tab-pane label="deployDetails">
-            <DeployDetails></DeployDetails>
+            <DeployDetails />
           </el-tab-pane>
           <el-tab-pane label="portMng">
             <PortMng />

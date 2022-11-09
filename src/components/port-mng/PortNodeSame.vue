@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { PORT_MNG_STATE } from '@/store'
 import { computed } from 'vue'
 

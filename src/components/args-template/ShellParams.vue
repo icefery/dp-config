@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { ARGS_TEMPLATE_STATE } from '@/store'
 import { ElInput } from 'element-plus'
 import { computed } from 'vue'
@@ -10,5 +10,5 @@ const shellParams = computed<string>({
 </script>
 
 <template>
-  <el-input v-model="shellParams" />
+  <el-input v-model="shellParams" spellcheck="false" />
 </template>

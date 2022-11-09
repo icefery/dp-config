@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { DEPLOY_DETAILS_STATE, SHARED_CONFIG_LIST } from '@/store'
 import { Download } from '@element-plus/icons-vue'
 import { ElButton, ElCard, ElForm, ElFormItem, ElOption, ElSelect } from 'element-plus'
@@ -15,6 +15,7 @@ const handleExport = () => {
   }
 }
 
+// upgradeOrder.first 字段
 const upgradeOrderFirst = computed<string>({
   get: () => {
     // 当前配置文件存在 && 当前配置文件存在 upgradeOrder 字段
@@ -37,6 +38,7 @@ const upgradeOrderFirst = computed<string>({
   }
 })
 
+// upgradeOrder.last 字段
 const upgradeOrderLast = computed<string>({
   get: () => {
     // 当前配置文件存在 && 当前配置文件存在 upgradeOrder 字段
@@ -65,10 +67,12 @@ const upgradeOrderLast = computed<string>({
     <template #header>
       <!-- 选择文件 -->
       <el-select v-model="DEPLOY_DETAILS_STATE.current">
-        <el-option v-for="item in SHARED_CONFIG_LIST.filter(it => it.module === 'deployDetails')" :key="item.name" :label="item.name" :value="item" />
+        <template v-for="item in SHARED_CONFIG_LIST.filter(it => it.module === 'deployDetails')" :key="item.name">
+          <el-option :label="item.name" :value="item" />
+        </template>
       </el-select>
       <!-- 导出 -->
-      <el-button :icon="Download" circle @click="handleExport()"></el-button>
+      <el-button :icon="Download" circle @click="handleExport()" />
     </template>
     <el-form label-width="100px">
       <!-- deployOrder 属性 -->
@@ -81,11 +85,11 @@ const upgradeOrderLast = computed<string>({
       </el-form-item>
       <!-- upgradeOrder.first 属性 -->
       <el-form-item label="upgradeOrder.first">
-        <el-input v-model="upgradeOrderFirst" />
+        <el-input v-model="upgradeOrderFirst" spellcheck="false" />
       </el-form-item>
       <!-- upgradeOrder.last 属性 -->
       <el-form-item label="upgradeOrder.last">
-        <el-input v-model="upgradeOrderLast" />
+        <el-input v-model="upgradeOrderLast" spellcheck="false" />
       </el-form-item>
     </el-form>
   </el-card>

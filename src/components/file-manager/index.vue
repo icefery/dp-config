@@ -1,8 +1,9 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { deleteFile, fetchFileList, type IR, uploadFile } from '@/api/json'
 import { SHARED_STATE } from '@/store'
+import type { IScope } from '@/types/element-plus'
 import { Delete, UploadFilled } from '@element-plus/icons-vue'
-import { ElButton, ElIcon, ElTable, ElTableColumn, ElTag, ElUpload, type UploadInstance, type UploadUserFile } from 'element-plus'
+import { ElButton, ElIcon, ElInput, ElTable, ElTableColumn, ElTag, ElUpload, type UploadInstance, type UploadUserFile } from 'element-plus'
 import { onMounted, reactive, ref } from 'vue'
 
 const state = reactive<{ files: UploadUserFile[] }>({ files: [] })
@@ -49,29 +50,29 @@ const handleDelete = (index: number) => {
 
 <template>
   <!-- 文件上传区域 -->
-  <el-upload ref="uploadRef" v-model:file-list="state.files" :auto-upload="false" action="" class="upload-demo" drag multiple>
+  <el-upload ref="uploadRef" v-model:file-list="state.files" :auto-upload="false" class="upload-demo" drag multiple>
     <el-icon class="el-icon--upload">
       <upload-filled />
     </el-icon>
   </el-upload>
   <!-- 手动上传按钮 -->
   <el-button :icon="UploadFilled" style="width: 100%" @click="handleUpload()" />
-  <el-table :data="SHARED_STATE.list" border max-height="300px" scrollbar-always-on>
+  <el-table :data="SHARED_STATE.list" border max-height="300px" scrollbar-always-on style="margin-top: 10px">
     <!-- 操作列 -->
     <el-table-column align="center" fixed="left" width="50">
-      <template #default="scope">
+      <template #default="scope: IScope<IR>">
         <el-button :icon="Delete" circle type="danger" @click="handleDelete(scope.$index)" />
       </template>
     </el-table-column>
     <!-- 数据列 -->
-    <el-table-column align="center" label="type" prop="type" width="60">
-      <template #default="scope: { row: IR }">
+    <el-table-column align="center" label="type" prop="type" width="80">
+      <template #default="scope: IScope<IR>">
         <el-tag>{{ scope.row.type }}</el-tag>
       </template>
     </el-table-column>
     <el-table-column label="name" prop="name">
-      <template #default="scope: { row: IR }">
-        <el-input v-model="scope.row.name" readonly />
+      <template #default="scope: IScope<IR>">
+        <el-input v-model="scope.row.name" readonly spellcheck="false" />
       </template>
     </el-table-column>
   </el-table>

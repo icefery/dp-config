@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { PORT_MNG_STATE, SHARED_CONFIG_LIST } from '@/store'
 import { Download } from '@element-plus/icons-vue'
 import FileSaver from 'file-saver'
@@ -22,7 +22,9 @@ const handleExport = () => {
     <!-- header 插槽 -->
     <template #header>
       <el-select v-model="PORT_MNG_STATE.current">
-        <el-option v-for="item in SHARED_CONFIG_LIST.filter(it => it.module === 'portMng')" :key="item.name" :label="item.name" :value="item" />
+        <template v-for="item in SHARED_CONFIG_LIST.filter(it => it.module === 'portMng')" :key="item.name">
+          <el-option :label="item.name" :value="item" />
+        </template>
       </el-select>
       <el-button :icon="Download" @click="handleExport()" />
     </template>

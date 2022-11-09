@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { PORT_MNG_STATE } from '@/store'
 import { computed } from 'vue'
 
@@ -9,5 +9,5 @@ const portNodeDiff = computed({
 </script>
 
 <template>
-  <el-input v-model="portNodeDiff" />
+  <el-input v-model="portNodeDiff" spellcheck="false" />
 </template>

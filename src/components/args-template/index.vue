@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { ARGS_TEMPLATE_STATE, SHARED_CONFIG_LIST } from '@/store'
 import { Download } from '@element-plus/icons-vue'
 import { ElButton, ElCard, ElForm, ElFormItem, ElOption, ElSelect } from 'element-plus'
@@ -23,9 +23,11 @@ const handleExport = () => {
   <el-card>
     <template #header>
       <el-select v-model="ARGS_TEMPLATE_STATE.current">
-        <el-option v-for="item in SHARED_CONFIG_LIST.filter(it => it.module === 'argsTemplate')" :key="item.name" :label="item.name" :value="item" />
+        <template v-for="item of SHARED_CONFIG_LIST.filter(it => it.module === 'argsTemplate')" :key="item.name">
+          <el-option :label="item.name" :value="item" />
+        </template>
       </el-select>
-      <el-button :icon="Download" circle @click="handleExport()"></el-button>
+      <el-button :icon="Download" circle @click="handleExport()" />
     </template>
     <el-form label-width="100px">
       <el-form-item label="templateName">
