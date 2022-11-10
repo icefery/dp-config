@@ -12,7 +12,7 @@ import PortMng from './components/port-mng/index.vue'
         <FileManager style="height: 100%" />
       </el-aside>
       <el-main>
-        <el-tabs type="border-card" style="height: 100%">
+        <el-tabs style="height: 100%" type="border-card">
           <el-tab-pane label="deployDetails">
             <DeployDetails />
           </el-tab-pane>

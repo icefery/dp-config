@@ -99,6 +99,15 @@ const calicoPortTypeStatus = computed(() => (index: number) => {
   }
   return <ValidationSuccess />
 })
+
+const serviceNameOptions = computed(() => (index: number) => {
+  if (PORT_MNG_STATE.current && DEPLOY_DETAILS_STATE.current) {
+    const a = DEPLOY_DETAILS_STATE.current.json.deployDetails.map(it => it.serviceName)
+    const b = PORT_MNG_STATE.current.json.portPreAssign.filter((it, idx) => idx !== index).map(it => it.serviceName)
+    return a.filter(it => !b.includes(it))
+  }
+  return []
+})
 </script>
 
 <template>
@@ -115,7 +124,11 @@ const calicoPortTypeStatus = computed(() => (index: number) => {
     <!-- 数据列 -->
     <el-table-column label="serviceName" prop="serviceName" width="150">
       <template #default="scope: IScope<IPortMng['json']['portPreAssign'][number]>">
-        <el-input v-model="scope.row.serviceName" :suffix-icon="serviceNameStatus(scope.$index)" spellcheck="false" />
+        <el-select v-model="scope.row.serviceName">
+          <template v-for="item of serviceNameOptions(scope.$index)">
+            <el-option :label="item" :value="item" />
+          </template>
+        </el-select>
       </template>
     </el-table-column>
     <el-table-column label="calicoPortType" prop="calicoPortType" width="300">

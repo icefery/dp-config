@@ -26,7 +26,7 @@ const handleExport = () => {
           <el-option :label="item.name" :value="item" />
         </template>
       </el-select>
-      <el-button :icon="Download" @click="handleExport()" />
+      <el-button :icon="Download" circle @click="handleExport()" />
     </template>
     <!-- default 插槽-->
     <template #default>

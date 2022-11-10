@@ -3,6 +3,7 @@ import type { IArgsTemplate } from '@/api/json'
 import { ARGS_TEMPLATE_STATE } from '@/store'
 import type { IScope } from '@/types/element-plus'
 import { Delete, Plus } from '@element-plus/icons-vue'
+import { computed } from '@vue/reactivity'
 import { ElButton, ElInput, ElTable, ElTableColumn } from 'element-plus'
 
 const handleDelete = (index: number) => {
@@ -21,6 +22,15 @@ const handleAdd = () => {
     }
   }
 }
+
+const preShellEnvs = computed(() => (index: number) => ({
+  get: () => (ARGS_TEMPLATE_STATE.current ? (ARGS_TEMPLATE_STATE.current.json.serviceEnvs[index].preShellEnvs || []).join(',') : ''),
+  set: (value: string) => {
+    if (ARGS_TEMPLATE_STATE.current) {
+      ARGS_TEMPLATE_STATE.current.json.serviceEnvs[index].preShellEnvs = value.split(',')
+    }
+  }
+}))
 </script>
 
 <template>
@@ -40,14 +50,15 @@ const handleAdd = () => {
         <el-input v-model="scope.row.serviceName" spellcheck="false" />
       </template>
     </el-table-column>
+
     <el-table-column label="envs" prop="envs">
       <template #default="scope: IScope<IArgsTemplate['json']['serviceEnvs'][number]>">
-        <el-input v-model="scope.row.envs" spellcheck="false" />
+        <el-input :model-value="(scope.row.envs || []).join(',')" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column label="preShellEnvs" prop="preShellEnvs">
       <template #default="scope: IScope<IArgsTemplate['json']['serviceEnvs'][number]>">
-        <el-input v-model="scope.row.preShellEnvs" spellcheck="false" />
+        <el-input :model-value="(scope.row.preShellEnvs || []).join(',')" spellcheck="false" />
       </template>
     </el-table-column>
   </el-table>

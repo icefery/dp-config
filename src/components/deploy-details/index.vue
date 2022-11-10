@@ -1,9 +1,9 @@
 <script lang="tsx" setup>
 import { DEPLOY_DETAILS_STATE, SHARED_CONFIG_LIST } from '@/store'
 import { Download } from '@element-plus/icons-vue'
-import { ElButton, ElCard, ElForm, ElFormItem, ElInput, ElOption, ElSelect } from 'element-plus'
+import { ElButton, ElCard, ElForm, ElFormItem, ElOption, ElSelect } from 'element-plus'
 import FileSaver from 'file-saver'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import ValidationFailure from '../validation/ValidationFailure'
 import ValidationSuccess from '../validation/ValidationSuccess'
 import DeployDetails from './DeployDetails.vue'
@@ -151,7 +151,7 @@ const upgradeOrderLastOptions = computed(() => {
       </el-form-item>
       <!-- upgradeOrder.first 属性 -->
       <el-form-item label="upgradeOrder.first">
-        <el-select v-model="upgradeOrderFirst" multiple filterable style="width: 100%">
+        <el-select v-model="upgradeOrderFirst" filterable multiple style="width: 100%">
           <template v-for="item of upgradeOrderFirstOptions">
             <el-option :label="item" :value="item" />
           </template>
@@ -159,7 +159,7 @@ const upgradeOrderLastOptions = computed(() => {
       </el-form-item>
       <!-- upgradeOrder.last 属性 -->
       <el-form-item label="upgradeOrder.last">
-        <el-select v-model="upgradeOrderLast" multiple filterable style="width: 100%">
+        <el-select v-model="upgradeOrderLast" filterable multiple style="width: 100%">
           <template v-for="item of upgradeOrderLastOptions">
             <el-option :label="item" :value="item" />
           </template>

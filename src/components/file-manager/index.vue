@@ -60,7 +60,7 @@ const handleDelete = (index: number) => {
       </el-icon>
     </el-upload>
     <!-- 手动上传按钮 -->
-    <el-button style="width: 100%; height: 50px" @click="handleUpload()" auto-insert-space>上传</el-button>
+    <el-button auto-insert-space style="width: 100%; height: 50px" @click="handleUpload()">上传</el-button>
     <el-table :data="SHARED_STATE.list" border scrollbar-always-on style="margin-top: 10px">
       <!-- 操作列 -->
       <el-table-column align="center" fixed="left" width="50">

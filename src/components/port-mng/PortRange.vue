@@ -98,6 +98,26 @@ const rangeStatus = computed(() => (index: number) => {
   // }
   // return <ValidationSuccess />
 })
+
+const keyOptions = computed(() => (index: number) => {
+  if (PORT_MNG_STATE.current) {
+    const a = Array.from(
+      new Set(
+        //
+        PORT_MNG_STATE.current.json.portPreAssign
+          //
+          .map(it => [...(it.calicoPortType || '').split(','), ...(it.portType || '').split(',')])
+          //
+          .flatMap(it => [...it])
+          //
+          .filter(it => it !== '')
+      )
+    )
+    const b = PORT_MNG_STATE.current.json.portRange.filter((it, idx) => idx !== index).map(it => it.key)
+    return a.filter(it => !b.includes(it))
+  }
+  return []
+})
 </script>
 
 <template>
@@ -114,7 +134,11 @@ const rangeStatus = computed(() => (index: number) => {
     <!-- 数据列 -->
     <el-table-column label="key" prop="key" width="450">
       <template #default="scope: IScope<IPortMng['json']['portRange'][number]>">
-        <el-input v-model="scope.row.key" spellcheck="false" />
+        <el-select v-model="scope.row.key" style="width: 100%">
+          <template v-for="item of keyOptions(scope.$index)">
+            <el-option :label="item" :value="item" />
+          </template>
+        </el-select>
       </template>
     </el-table-column>
     <el-table-column label="range" prop="range">

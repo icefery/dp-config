@@ -6,7 +6,7 @@ import { ARGS_TEMPLATE_STATE } from '@/store'
 import type { IScope } from '@/types/element-plus'
 import { and } from '@/utils/validation'
 import { Delete, Plus } from '@element-plus/icons-vue'
-import { computed } from 'vue'
+import { computed, watchEffect } from 'vue'
 
 // allParams 删除
 const handleAllParamsDelete = (allParamsIndex: number) => {
@@ -57,6 +57,37 @@ const allParamsKeyStatus = computed(() => (index: number) => {
   }
   return <ValidationSuccess />
 })
+
+const allParamsKeyOptions = computed(() => (index: number) => {
+  if (ARGS_TEMPLATE_STATE.current) {
+    const a = Array.from(
+      new Set([
+        //
+        ...ARGS_TEMPLATE_STATE.current.json.shellParams,
+        //
+        ...ARGS_TEMPLATE_STATE.current.json.commonEnvs
+        //
+        // ...ARGS_TEMPLATE_STATE.current.json.serviceEnvs.map(it => [...(it.envs || []), ...(it.preShellEnvs || [])]).flatMap(it => [...it])
+      ])
+    )
+    const b = ARGS_TEMPLATE_STATE.current.json.allParams.filter((it, idx) => idx !== index).map(it => it.key)
+    return a.filter(it => !b.includes(it))
+  }
+  return []
+})
+
+watchEffect(() => {
+  if (ARGS_TEMPLATE_STATE.current) {
+    ARGS_TEMPLATE_STATE.current.json.allParams
+      .filter(it => !it.const)
+      .forEach(it => {
+        it.value = it.rules
+          .filter(r => r.key !== '')
+          .map(r => r.key)
+          .join(';')
+      })
+  }
+})
 </script>
 
 <template>
@@ -73,7 +104,11 @@ const allParamsKeyStatus = computed(() => (index: number) => {
     <!-- allParams 数据列 -->
     <el-table-column align="center" label="key" prop="key" width="250">
       <template #default="scope: IScope<IArgsTemplate['json']['allParams'][number]>">
-        <el-input v-model="scope.row.key" :suffix-icon="allParamsKeyStatus(scope.$index)" spellcheck="false" />
+        <el-select v-model="scope.row.key" filterable="">
+          <template v-for="item of allParamsKeyOptions(scope.$index)" :key="item">
+            <el-option :label="item" :value="item" />
+          </template>
+        </el-select>
       </template>
     </el-table-column>
     <el-table-column align="center" label="const" prop="const" width="150">
@@ -83,7 +118,7 @@ const allParamsKeyStatus = computed(() => (index: number) => {
     </el-table-column>
     <el-table-column align="center" label="value" prop="value">
       <template #default="scope: IScope<IArgsTemplate['json']['allParams'][number]>">
-        <el-input v-model="scope.row.value" spellcheck="false" />
+        <el-input v-model="scope.row.value" :disabled="!scope.row.const" spellcheck="false" />
       </template>
     </el-table-column>
     <!-- allParams 展开列 -->
@@ -102,6 +137,11 @@ const allParamsKeyStatus = computed(() => (index: number) => {
             </template>
           </el-table-column>
           <!-- rules 数据列 -->
+          <el-table-column align="center" label="key" prop="key" width="200">
+            <template #default="rulesScope: IScope<IArgsTemplate['json']['allParams'][number]['rules'][number]>">
+              <el-input v-model="rulesScope.row.key" spellcheck="false" />
+            </template>
+          </el-table-column>
           <el-table-column align="center" label="from" prop="from" width="150">
             <template #default="rulesScope: IScope<IArgsTemplate['json']['allParams'][number]['rules'][number]>">
               <el-select v-model="rulesScope.row.from">
@@ -120,11 +160,6 @@ const allParamsKeyStatus = computed(() => (index: number) => {
                 <el-option label="onePort" value="onePort" />
                 <el-option label="nginxSpecialHandle" value="nginxSpecialHandle" />
               </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column align="center" label="key" prop="key" width="250">
-            <template #default="rulesScope: IScope<IArgsTemplate['json']['allParams'][number]['rules'][number]>">
-              <el-input v-model="rulesScope.row.key" spellcheck="false" />
             </template>
           </el-table-column>
           <el-table-column align="center" label="content" prop="content" width="250">

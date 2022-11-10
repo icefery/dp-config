@@ -4,6 +4,7 @@ import { PORT_MNG_STATE } from '@/store'
 import type { IScope } from '@/types/element-plus'
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElInput, ElTable, ElTableColumn } from 'element-plus'
+import { computed } from 'vue'
 
 const handleDelete = (index: number) => {
   if (PORT_MNG_STATE.current) {
@@ -15,6 +16,26 @@ const handleAdd = () => {
     PORT_MNG_STATE.current.json.portStep.push({ key: '', step: '' })
   }
 }
+
+const portStepOptions = computed(() => (index: number) => {
+  if (PORT_MNG_STATE.current) {
+    const a = Array.from(
+      new Set(
+        //
+        PORT_MNG_STATE.current.json.portPreAssign
+          //
+          .map(it => [...(it.calicoPortType || '').split(','), ...(it.portType || '').split(',')])
+          //
+          .flatMap(it => [...it])
+          //
+          .filter(it => it !== '')
+      )
+    )
+    const b = PORT_MNG_STATE.current.json.portStep.filter((it, idx) => idx !== index).map(it => it.key)
+    return a.filter(it => !b.includes(it))
+  }
+  return []
+})
 </script>
 
 <template>
@@ -29,9 +50,13 @@ const handleAdd = () => {
       </template>
     </el-table-column>
     <!-- 数据列 -->
-    <el-table-column label="key" prop="key" width="150">
+    <el-table-column label="key" prop="key" width="450">
       <template #default="scope: IScope<IPortMng['json']['portStep'][number]>">
-        <el-input v-model="scope.row.key" spellcheck="false" />
+        <el-select v-model="scope.row.key" style="width: 100%">
+          <template v-for="item of portStepOptions(scope.$index)">
+            <el-option :label="item" :value="item" />
+          </template>
+        </el-select>
       </template>
     </el-table-column>
     <el-table-column label="step" prop="step">
