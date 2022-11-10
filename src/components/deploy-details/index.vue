@@ -114,7 +114,7 @@ const upgradeOrderLastStatus = computed(() => () => {
   <el-card>
     <template #header>
       <!-- 选择文件 -->
-      <el-select v-model="DEPLOY_DETAILS_STATE.current">
+      <el-select v-model="DEPLOY_DETAILS_STATE.current" value-key="name">
         <template v-for="item in SHARED_CONFIG_LIST.filter(it => it.module === 'deployDetails')" :key="item.name">
           <el-option :label="item.name" :value="item" />
         </template>

@@ -13,7 +13,7 @@ const handleDelete = (index: number) => {
 
 const handleAdd = () => {
   if (ARGS_TEMPLATE_STATE.current) {
-    const todo = { serviceName: '', envs: [] }
+    const todo = { serviceName: '', envs: [], preShellEnvs: [] }
     if (ARGS_TEMPLATE_STATE.current.json.serviceEnvs) {
       ARGS_TEMPLATE_STATE.current.json.serviceEnvs.push(todo)
     } else {
@@ -43,6 +43,11 @@ const handleAdd = () => {
     <el-table-column label="envs" prop="envs">
       <template #default="scope: IScope<IArgsTemplate['json']['serviceEnvs'][number]>">
         <el-input v-model="scope.row.envs" spellcheck="false" />
+      </template>
+    </el-table-column>
+    <el-table-column label="preShellEnvs" prop="preShellEnvs">
+      <template #default="scope: IScope<IArgsTemplate['json']['serviceEnvs'][number]>">
+        <el-input v-model="scope.row.preShellEnvs" spellcheck="false" />
       </template>
     </el-table-column>
   </el-table>

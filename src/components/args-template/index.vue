@@ -22,7 +22,7 @@ const handleExport = () => {
 <template>
   <el-card>
     <template #header>
-      <el-select v-model="ARGS_TEMPLATE_STATE.current">
+      <el-select v-model="ARGS_TEMPLATE_STATE.current" value-key="name">
         <template v-for="item of SHARED_CONFIG_LIST.filter(it => it.module === 'argsTemplate')" :key="item.name">
           <el-option :label="item.name" :value="item" />
         </template>

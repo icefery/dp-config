@@ -21,7 +21,7 @@ const handleExport = () => {
   <el-card>
     <!-- header 插槽 -->
     <template #header>
-      <el-select v-model="PORT_MNG_STATE.current">
+      <el-select v-model="PORT_MNG_STATE.current" value-key="name">
         <template v-for="item in SHARED_CONFIG_LIST.filter(it => it.module === 'portMng')" :key="item.name">
           <el-option :label="item.name" :value="item" />
         </template>

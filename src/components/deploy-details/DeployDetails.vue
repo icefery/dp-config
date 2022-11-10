@@ -166,17 +166,22 @@ const imageTagStatus = computed(() => (index: number) => {
         <el-input v-model="scope.row.serviceName" :suffix-icon="serviceNameStatus(scope.$index)" spellcheck="false"></el-input>
       </template>
     </el-table-column>
-    <el-table-column align="center" label="templateJson" prop="templateJson" width="150">
-      <template #default="scope: IScope<IDeployDetails['json']['deployDetails'][number]>">
-        <el-input v-model="scope.row.templateJson" :suffix-icon="templateJsonStatus(scope.$index)" spellcheck="false"></el-input>
-      </template>
-    </el-table-column>
     <el-table-column align="center" label="netMode" prop="netMode" width="150">
       <template #default="scope: IScope<IDeployDetails['json']['deployDetails'][number]>">
         <el-select v-model="scope.row.netMode">
           <el-option label="host" value="host" />
           <el-option label="calico" value="calico" />
         </el-select>
+      </template>
+    </el-table-column>
+    <el-table-column align="center" label="templateJson" prop="templateJson" width="150">
+      <template #default="scope: IScope<IDeployDetails['json']['deployDetails'][number]>">
+        <el-input v-model="scope.row.templateJson" :suffix-icon="templateJsonStatus(scope.$index)" spellcheck="false"></el-input>
+      </template>
+    </el-table-column>
+    <el-table-column align="center" label="templateYaml" prop="templateYaml" width="150">
+      <template #default="scope: IScope<IDeployDetails['json']['deployDetails'][number]>">
+        <el-input v-model="scope.row.templateYaml" :suffix-icon="templateYamlStatus(scope.$index)" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="calicoYaml" prop="calicoYaml" width="150">
@@ -210,11 +215,6 @@ const imageTagStatus = computed(() => (index: number) => {
     <el-table-column align="center" label="limitsMemory" prop="limitsMemory" width="150">
       <template #default="scope: IScope<IDeployDetails['json']['deployDetails'][number]>">
         <el-input v-model="scope.row.limitsMemory" :suffix-icon="limitsMemoryStatus(scope.$index)" spellcheck="false" />
-      </template>
-    </el-table-column>
-    <el-table-column align="center" label="templateYaml" prop="templateYaml" width="150">
-      <template #default="scope: IScope<IDeployDetails['json']['deployDetails'][number]>">
-        <el-input v-model="scope.row.templateYaml" :suffix-icon="templateYamlStatus(scope.$index)" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="imageTag" prop="imageTag" width="150">

@@ -68,6 +68,7 @@ export interface IArgsTemplate {
     serviceEnvs: {
       serviceName: string
       envs: string[]
+      preShellEnvs: string[]
     }[]
     allParams: {
       key: string

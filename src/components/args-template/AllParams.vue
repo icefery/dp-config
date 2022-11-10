@@ -102,17 +102,32 @@ const allParamsKeyStatus = computed(() => (index: number) => {
             </template>
           </el-table-column>
           <!-- rules 数据列 -->
-          <el-table-column align="center" label="from" prop="from" width="200">
+          <el-table-column align="center" label="from" prop="from" width="150">
             <template #default="rulesScope: IScope<IArgsTemplate['json']['allParams'][number]['rules'][number]>">
-              <el-input v-model="rulesScope.row.from" spellcheck="false" />
+              <el-select v-model="rulesScope.row.from">
+                <el-option label="codeMap" value="codeMap" />
+                <el-option label="properties" value="properties" />
+                <el-option label="sql" value="sql" />
+                <el-option label="serviceAttr" value="serviceAttr" />
+                <el-option label="portFile" value="portFile" />
+                <el-option label="portsFile" value="portsFile" />
+                <el-option label="servicesPort" value="servicesPort" />
+                <el-option label="ipPortAttr" value="ipPortAttr" />
+                <el-option label="const" value="const" />
+                <el-option label="specialIpPort" value="specialIpPort" />
+                <el-option label="deployDetailAttr" value="deployDetailAttr" />
+                <el-option label="valueFrom" value="valueFrom" />
+                <el-option label="onePort" value="onePort" />
+                <el-option label="nginxSpecialHandle" value="nginxSpecialHandle" />
+              </el-select>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="key" prop="key" width="150">
+          <el-table-column align="center" label="key" prop="key" width="250">
             <template #default="rulesScope: IScope<IArgsTemplate['json']['allParams'][number]['rules'][number]>">
               <el-input v-model="rulesScope.row.key" spellcheck="false" />
             </template>
           </el-table-column>
-          <el-table-column align="center" label="content" prop="content" width="150">
+          <el-table-column align="center" label="content" prop="content" width="250">
             <template #default="rulesScope: IScope<IArgsTemplate['json']['allParams'][number]['rules'][number]>">
               <el-input v-model="rulesScope.row.content" spellcheck="false" />
             </template>

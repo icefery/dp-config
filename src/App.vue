@@ -9,10 +9,10 @@ import PortMng from './components/port-mng/index.vue'
   <el-config-provider size="small">
     <el-container>
       <el-aside>
-        <FileManager />
+        <FileManager style="height: 100%" />
       </el-aside>
       <el-main>
-        <el-tabs type="border-card">
+        <el-tabs type="border-card" style="height: 100%">
           <el-tab-pane label="deployDetails">
             <DeployDetails />
           </el-tab-pane>

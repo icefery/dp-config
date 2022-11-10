@@ -33,7 +33,7 @@ function main() {
   const app = express()
 
   app.use(cors())
-  app.use(bodyParser.json())
+  app.use(bodyParser.json({ limit: `${1024 * 10}kb` }))
   app.use(bodyParser.urlencoded())
 
   // 查询

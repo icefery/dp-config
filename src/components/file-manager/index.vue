@@ -13,6 +13,9 @@ const uploadRef = ref<UploadInstance>()
 onMounted(() => fetchFileList())
 
 const handleUpload = async () => {
+  if (state.files.length === 0) {
+    return
+  }
   // element-plus 文件类型到接口文件类型转换
   const convert = (file: UploadUserFile) => {
     return new Promise<IR>((resolve, reject) => {
@@ -49,31 +52,33 @@ const handleDelete = (index: number) => {
 </script>
 
 <template>
-  <!-- 文件上传区域 -->
-  <el-upload ref="uploadRef" v-model:file-list="state.files" :auto-upload="false" class="upload-demo" drag multiple>
-    <el-icon class="el-icon--upload">
-      <upload-filled />
-    </el-icon>
-  </el-upload>
-  <!-- 手动上传按钮 -->
-  <el-button :icon="UploadFilled" style="width: 100%" @click="handleUpload()" />
-  <el-table :data="SHARED_STATE.list" border max-height="300px" scrollbar-always-on style="margin-top: 10px">
-    <!-- 操作列 -->
-    <el-table-column align="center" fixed="left" width="50">
-      <template #default="scope: IScope<IR>">
-        <el-button :icon="Delete" circle type="danger" @click="handleDelete(scope.$index)" />
-      </template>
-    </el-table-column>
-    <!-- 数据列 -->
-    <el-table-column align="center" label="type" prop="type" width="80">
-      <template #default="scope: IScope<IR>">
-        <el-tag>{{ scope.row.type }}</el-tag>
-      </template>
-    </el-table-column>
-    <el-table-column label="name" prop="name">
-      <template #default="scope: IScope<IR>">
-        <el-input v-model="scope.row.name" readonly spellcheck="false" />
-      </template>
-    </el-table-column>
-  </el-table>
+  <div style="margin-top: 20.5px">
+    <!-- 文件上传区域 -->
+    <el-upload ref="uploadRef" v-model:file-list="state.files" :auto-upload="false" class="upload-demo" drag multiple>
+      <el-icon class="el-icon--upload">
+        <upload-filled />
+      </el-icon>
+    </el-upload>
+    <!-- 手动上传按钮 -->
+    <el-button style="width: 100%; height: 50px" @click="handleUpload()" auto-insert-space>上传</el-button>
+    <el-table :data="SHARED_STATE.list" border scrollbar-always-on style="margin-top: 10px">
+      <!-- 操作列 -->
+      <el-table-column align="center" fixed="left" width="50">
+        <template #default="scope: IScope<IR>">
+          <el-button :icon="Delete" circle type="danger" @click="handleDelete(scope.$index)" />
+        </template>
+      </el-table-column>
+      <!-- 数据列 -->
+      <el-table-column align="center" label="type" prop="type" width="80">
+        <template #default="scope: IScope<IR>">
+          <el-tag>{{ scope.row.type }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="name" prop="name">
+        <template #default="scope: IScope<IR>">
+          <el-input v-model="scope.row.name" readonly spellcheck="false" />
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
