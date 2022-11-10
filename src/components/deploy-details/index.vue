@@ -3,7 +3,7 @@ import { DEPLOY_DETAILS_STATE, SHARED_CONFIG_LIST } from '@/store'
 import { Download } from '@element-plus/icons-vue'
 import { ElButton, ElCard, ElForm, ElFormItem, ElInput, ElOption, ElSelect } from 'element-plus'
 import FileSaver from 'file-saver'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import ValidationFailure from '../validation/ValidationFailure'
 import ValidationSuccess from '../validation/ValidationSuccess'
 import DeployDetails from './DeployDetails.vue'
@@ -18,13 +18,13 @@ const handleExport = () => {
 }
 
 // upgradeOrder.first 字段
-const upgradeOrderFirst = computed<string>({
+const upgradeOrderFirst = computed<string[]>({
   get: () => {
     // 当前配置文件存在 && 当前配置文件存在 upgradeOrder 字段
     if (DEPLOY_DETAILS_STATE.current && DEPLOY_DETAILS_STATE.current.json.upgradeOrder) {
-      return DEPLOY_DETAILS_STATE.current.json.upgradeOrder.first.join(',')
+      return DEPLOY_DETAILS_STATE.current.json.upgradeOrder.first
     } else {
-      return ''
+      return []
     }
   },
   set: value => {
@@ -32,22 +32,22 @@ const upgradeOrderFirst = computed<string>({
     if (DEPLOY_DETAILS_STATE.current) {
       // 当前配置文件存在 upgradeOrder 字段
       if (DEPLOY_DETAILS_STATE.current.json.upgradeOrder) {
-        DEPLOY_DETAILS_STATE.current.json.upgradeOrder.first = value.split(',')
+        DEPLOY_DETAILS_STATE.current.json.upgradeOrder.first = value
       } else {
-        DEPLOY_DETAILS_STATE.current.json.upgradeOrder = { first: value.split(','), last: [] }
+        DEPLOY_DETAILS_STATE.current.json.upgradeOrder = { first: value, last: [] }
       }
     }
   }
 })
 
 // upgradeOrder.last 字段
-const upgradeOrderLast = computed<string>({
+const upgradeOrderLast = computed<string[]>({
   get: () => {
     // 当前配置文件存在 && 当前配置文件存在 upgradeOrder 字段
     if (DEPLOY_DETAILS_STATE.current && DEPLOY_DETAILS_STATE.current.json.upgradeOrder) {
-      return DEPLOY_DETAILS_STATE.current.json.upgradeOrder.last.join(',')
+      return DEPLOY_DETAILS_STATE.current.json.upgradeOrder.last
     } else {
-      return ''
+      return []
     }
   },
   set: value => {
@@ -55,9 +55,9 @@ const upgradeOrderLast = computed<string>({
     if (DEPLOY_DETAILS_STATE.current) {
       // 当前配置文件存在 upgradeOrder 字段
       if (DEPLOY_DETAILS_STATE.current.json.upgradeOrder) {
-        DEPLOY_DETAILS_STATE.current.json.upgradeOrder.last = value.split(',')
+        DEPLOY_DETAILS_STATE.current.json.upgradeOrder.last = value
       } else {
-        DEPLOY_DETAILS_STATE.current.json.upgradeOrder = { first: [], last: value.split(',') }
+        DEPLOY_DETAILS_STATE.current.json.upgradeOrder = { first: [], last: value }
       }
     }
   }
@@ -108,6 +108,24 @@ const upgradeOrderLastStatus = computed(() => () => {
   }
   return <ValidationSuccess />
 })
+
+const upgradeOrderFirstOptions = computed(() => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    const a = DEPLOY_DETAILS_STATE.current.json.deployDetails.map(it => it.serviceName)
+    const b = (DEPLOY_DETAILS_STATE.current.json.upgradeOrder || { fist: [], last: [] }).last
+    return a.filter(it => !b.includes(it))
+  }
+  return []
+})
+
+const upgradeOrderLastOptions = computed(() => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    const a = DEPLOY_DETAILS_STATE.current.json.deployDetails.map(it => it.serviceName)
+    const b = (DEPLOY_DETAILS_STATE.current.json.upgradeOrder || { first: [], last: [] }).first
+    return a.filter(it => !b.includes(it))
+  }
+  return []
+})
 </script>
 
 <template>
@@ -133,11 +151,19 @@ const upgradeOrderLastStatus = computed(() => () => {
       </el-form-item>
       <!-- upgradeOrder.first 属性 -->
       <el-form-item label="upgradeOrder.first">
-        <el-input v-model="upgradeOrderFirst" :suffix-icon="upgradeOrderFirstStatus" spellcheck="false" />
+        <el-select v-model="upgradeOrderFirst" multiple filterable style="width: 100%">
+          <template v-for="item of upgradeOrderFirstOptions">
+            <el-option :label="item" :value="item" />
+          </template>
+        </el-select>
       </el-form-item>
       <!-- upgradeOrder.last 属性 -->
       <el-form-item label="upgradeOrder.last">
-        <el-input v-model="upgradeOrderLast" :suffix-icon="upgradeOrderLastStatus" spellcheck="false" />
+        <el-select v-model="upgradeOrderLast" multiple filterable style="width: 100%">
+          <template v-for="item of upgradeOrderLastOptions">
+            <el-option :label="item" :value="item" />
+          </template>
+        </el-select>
       </el-form-item>
     </el-form>
   </el-card>

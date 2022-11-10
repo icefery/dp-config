@@ -38,6 +38,15 @@ const serviceNameStatus = computed(() => (index: number) => {
   }
   return <ValidationSuccess />
 })
+
+const serviceNameOptions = computed(() => (index: number) => {
+  if (DEPLOY_DETAILS_STATE.current) {
+    const a = DEPLOY_DETAILS_STATE.current.json.deployDetails.map(it => it.serviceName)
+    const b = DEPLOY_DETAILS_STATE.current.json.deployOrder.filter((it, idx) => idx !== index).map(it => it.serviceName)
+    return a.filter(it => !b.includes(it))
+  }
+  return []
+})
 </script>
 
 <template>
@@ -54,7 +63,12 @@ const serviceNameStatus = computed(() => (index: number) => {
     <!-- 数据列 -->
     <el-table-column align="center" label="serviceName" prop="serviceName" width="150">
       <template #default="scope: IScope<IDeployDetails['json']['deployOrder'][number]>">
-        <el-input v-model="scope.row.serviceName" :suffix-icon="serviceNameStatus(scope.$index)" spellcheck="false" />
+        <el-select v-model="scope.row.serviceName" filterable>
+          <template v-for="item of serviceNameOptions(scope.$index)">
+            <el-option :label="item" :value="item" />
+          </template>
+        </el-select>
+        <!-- <el-input v-model="scope.row.serviceName" :suffix-icon="serviceNameStatus(scope.$index)" spellcheck="false" /> -->
       </template>
     </el-table-column>
     <el-table-column align="center" label="mustSucceed" prop="mustSucceed" width="150">
