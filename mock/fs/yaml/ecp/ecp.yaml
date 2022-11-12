@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: VAR_POD_NAME
+  namespace: VAR_NAMESPACE
+  labels:
+    app: k8s-VAR_POD_NAME
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-VAR_POD_NAME
+  template:
+    metadata:
+      labels:
+        app: k8s-VAR_POD_NAME
+    spec:
+      hostNetwork: true
+      volumes:
+        - name: log-VAR_SERVICE_NAME
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/log/VAR_SERVICE_NAME/VAR_POD_NAME
+        - name: data-VAR_SERVICE_NAME
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/data/VAR_SERVICE_NAME/VAR_POD_NAME
+        - name: hbp-unix-log
+          hostPath:
+            path: /var/run/.hbp
+      containers:
+        - name: VAR_SERVICE_NAME
+          image: hbp/VAR_IMAGE_NAME:VAR_VERSION_NO
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+                - ls
+            initialDelaySeconds: 300
+            periodSeconds: 120
+            timeoutSeconds: 300
+            failureThreshold: 3
+            successThreshold: 1
+          resources:
+            limits:
+              memory: '750Mi'
+            requests:
+              memory: '100Mi'
+          volumeMounts:
+            - name: log-VAR_SERVICE_NAME
+              mountPath: /var/log
+            - name: data-VAR_SERVICE_NAME
+              mountPath: /opt/data
+            - mountPath: /var/run/.hbp
+              name: hbp-unix-log
+          env:
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: INTERNAL_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: HBP_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName

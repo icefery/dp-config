@@ -1,0 +1,1718 @@
+{
+  "templateName": "common",
+  "desc": "common deploy args",
+  "shellParams": ["VAR_POD_NAME", "VAR_NODE_NAME", "VAR_SERVICE_NAME", "VAR_IMAGE_NAME", "VAR_VERSION_NO", "VAR_HARBOR_ADDRESS", "VAR_HBP_VERSION", "VAR_HBP_IMAGE_NAME", "VAR_PRODUCT_NAME", "VAR_IMAGE_PRETAG", "VAR_NAMESPACE", "VAR_INIT_ALPINE_VERSION_NO", "VAR_ETCD_ADDR", "VAR_REDIS_ADDR", "VAR_RABBITMQ_ADDR"],
+  "commonEnvs": [
+    "HBP_MQ_URL",
+    "HBP_RUNNING_MODE",
+    "HBP_RPC_SERVER_ADDRESS",
+    "HBP_GO_SIDECAR_SERVER_PORT",
+    "HBP_C_SIDECAR_SERVER_PORT",
+    "HBP_GO_DEBUG_PORT",
+    "HBP_C_DEBUG_PORT",
+    "HBP_MSG_QUEUE_IP_C",
+    "HBP_MSG_QUEUE_IP_GO",
+    "HBP_CONFIG_ID",
+    "HBP_NODE_NAME",
+    "HBP_POD_NAME",
+    "HBP_POD_ID",
+    "SERVICE_ID",
+    "HBP_CACHE_POOL_SIZE",
+    "HBP_CACHE_MIN_CONNS",
+    "HBP_EXTRA_UNIX_LOG",
+    "GODEBUG",
+    "ETCD_ADDR",
+    "MY_POD_NAMESPACE",
+    "MY_POD_NAME",
+    "PRODUCT_NAME",
+    "NETWORK_MODE",
+    "POD_IP"
+  ],
+  "serviceEnvs": [
+    {
+      "serviceName": "ums",
+      "envs": ["UMS_HTTP_PORT", "UMS_HTTPS_PORT", "GMS_HTTPS_GMK_PORT", "INTERNAL_IP"]
+    },
+    {
+      "serviceName": "kms",
+      "envs": ["INTERNAL_IP", "KMS_HTTPS_LOCAL_PORT"]
+    },
+    {
+      "serviceName": "idms",
+      "envs": ["INTERNAL_IP", "IDMS_HTTPS_PORT"]
+    },
+    {
+      "serviceName": "gmkms",
+      "envs": ["INTERNAL_IP", "GMKMS_HTTPS_LOCAL_PORT"]
+    },
+    {
+      "serviceName": "dmc",
+      "envs": ["SYS_EXTERNAL_IP", "DMC_PCRF_COMMON_PORT", "DMC_PCRF_RX_PORT", "DMC_PCRF_BMSC_PORT", "HBP_DEBUG_MODE"]
+    },
+    {
+      "serviceName": "pnasc",
+      "envs": ["INTERNAL_IP", "PNASC_TCP_PORT"]
+    },
+    {
+      "serviceName": "pres",
+      "envs": ["INTERNAL_IP", "PRES_TCP_PORT"]
+    },
+    {
+      "serviceName": "dss",
+      "envs": ["INTERNAL_IP", "DSS_HTTPS_PORT"]
+    },
+    {
+      "serviceName": "frs",
+      "envs": ["INTERNAL_IP", "FRS_HTTP_PORT", "FRS_HTTPS_PORT"]
+    },
+    {
+      "serviceName": "dms",
+      "envs": ["INTERNAL_IP", "DMS_HTTP_PORT"]
+    },
+    {
+      "serviceName": "nrm",
+      "envs": ["HBP_SERVICE_STATE_REPORT", "NRM_HTTP_PORT"]
+    },
+    {
+      "serviceName": "graf",
+      "envs": ["GRAF_HEARTBEAT_PORT", "HBP_DEPEND_CACHE_INIT"]
+    },
+    {
+      "serviceName": "mgw",
+      "envs": ["MS_TYPE", "MS_MQ_URL", "INTERNAL_IP", "MS_BASE_PORT", "MS_NODE_ID", "MS_MGW_COUNT", "MS_MGW_INTERNAL_IP", "MS_MGW_BASE_PORT", "MS_MGW_NODE_ID", "HBP_DEBUG_MODE"]
+    },
+    {
+      "serviceName": "siplbs",
+      "envs": ["INTERNAL_IP", "SYS_EXTERNAL_IP", "SIPLBS_UE_PF_PORT", "MaxPoolLen", "AGREETYPE"]
+    },
+    {
+      "serviceName": "isiplbs",
+      "envs": ["INTERNAL_IP", "SYS_EXTERNAL_IP"]
+    },
+    {
+      "serviceName": "sipns",
+      "envs": ["SYS_EXTERNAL_IP", "HBP_DEBUG_MODE"]
+    },
+    {
+      "serviceName": "isipns",
+      "envs": ["SYS_EXTERNAL_IP", "HBP_DEBUG_MODE"]
+    },
+    {
+      "serviceName": "sipaas",
+      "envs": ["HBP_DEBUG_MODE", "APP_SERVICE_NAME"]
+    },
+    {
+      "serviceName": "dbs",
+      "envs": ["USER_AMOUNT", "ETCD_HOST", "ETCD_PORT", "PRODUCT_TYPE", "DB_CONN_PORT", "DB_MIDDLEWARE_PORT", "EXTERNAL_IP", "DCS_MONITOR_PORT", "DCS_SYS_TICK_PORT", "DBS_SSH_PORT", "DBS_LISTEN_SERVER_PORT", "HBP_RESTAPI_SERVER_PORT", "DBS_ADDR"],
+      "preShellEnvs": ["NFS_SERVER_IP", "SHARE_VOLUME_DIR", "VAR_SERVICE_NAME", "VAR_NAMESPACE"]
+    },
+    {
+      "serviceName": "llf",
+      "envs": ["INTERNAL_IP", "LOG_VIEW_SERVER_PORT"]
+    },
+    {
+      "serviceName": "gofd",
+      "envs": ["GOFD_HEALTH_PORT"]
+    },
+    {
+      "serviceName": "wpagent",
+      "envs": ["PRODUCT_ID", "WP_HOST_PORT", "DATABASE_HOST", "DATABASE_PORT", "HBP_DEPEND_CACHE_INIT", "MQ_RETRY_TIMES", "NONEED_CONFIG", "REDIS_ADDR", "WPAGENT_HTTP_SERVICE_PORT", "CDWGW_HTTP_SERVICE_PORT", "CDWGW_HTTPS_SERVICE_PORT", "YSP_KUBE_ADDR", "MQ_SERVICE_PORT", "MQ_HOST", "YSP_KUBE_HTTP_SERVICE_PORT"]
+    },
+    {
+      "serviceName": "ahs",
+      "envs": ["PRODUCT_ID", "WP_HOST_PORT", "DATABASE_HOST", "DATABASE_PORT", "RESOURCE_PACKAGE_PATH", "PRODUCT_VERSION", "AHS_HTTP_SERVICE_PORT", "AHS_HTTPS_SERVICE_PORT", "CDWGW_HTTP_SERVICE_PORT", "CDWGW_HTTPS_SERVICE_PORT", "YSP_KUBE_ADDR", "MQ_SERVICE_PORT", "YSP_KUBE_HTTP_SERVICE_PORT"]
+    },
+    {
+      "serviceName": "tms",
+      "envs": ["DATABASE_HOST", "DATABASE_PORT", "TMS_HTTP_SERVICE_PORT"]
+    }
+  ],
+  "allParams": [
+    {
+      "key": "VAR_IMAGE_PRETAG",
+      "const": true,
+      "value": "mcs"
+    },
+    {
+      "key": "VAR_PRODUCT_NAME",
+      "const": false,
+      "value": "productType;-;productId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productType",
+          "content": "productType"
+        },
+        {
+          "from": "codeMap",
+          "key": "productId",
+          "content": "productId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_POD_NAME",
+      "const": false,
+      "value": "serviceName;-;podId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        },
+        {
+          "from": "codeMap",
+          "key": "podId",
+          "content": "podId"
+        }
+      ]
+    },
+    {
+      "key": "VAR_NODE_NAME",
+      "const": false,
+      "value": "nodeName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "nodeName",
+          "content": "nodeName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_HBP_IMAGE_NAME",
+      "const": false,
+      "value": "hbpImageName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "hbpImageName",
+          "content": "hbpImageName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_SERVICE_NAME",
+      "const": false,
+      "value": "serviceName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceName",
+          "content": "serviceName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_IMAGE_NAME",
+      "const": false,
+      "value": "imageName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "imageName",
+          "content": "imageName"
+        }
+      ]
+    },
+    {
+      "key": "VAR_VERSION_NO",
+      "const": false,
+      "value": "versionNo",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "versionNo",
+          "content": "versionNo"
+        }
+      ]
+    },
+    {
+      "key": "VAR_HARBOR_ADDRESS",
+      "const": false,
+      "value": "harborAddress",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "harborAddress",
+          "content": "harborAddress"
+        }
+      ]
+    },
+    {
+      "key": "VAR_HBP_VERSION",
+      "const": false,
+      "value": "hbpVersion",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "hbpVersion",
+          "content": "hbpVersion"
+        }
+      ]
+    },
+    {
+      "key": "HBP_MQ_URL",
+      "const": false,
+      "value": "mqHost;:;mqNodePort",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "mqHost",
+          "content": "internalIp"
+        },
+        {
+          "from": "onePort",
+          "key": "mqNodePort",
+          "content": "rabbitmq*RABBITMQ_TCP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "HBP_RUNNING_MODE",
+      "const": true,
+      "value": "release"
+    },
+    {
+      "key": "HBP_RPC_SERVER_ADDRESS",
+      "const": false,
+      "value": "internalIp;:;rpcPort",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "internalIp",
+          "content": "internalIp"
+        },
+        {
+          "from": "portFile",
+          "key": "rpcPort",
+          "content": "RPC_PORT"
+        }
+      ]
+    },
+    {
+      "key": "HBP_GO_SIDECAR_SERVER_PORT",
+      "const": false,
+      "value": "goPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "goPort",
+          "content": "GO_PORT"
+        }
+      ]
+    },
+    {
+      "key": "HBP_C_SIDECAR_SERVER_PORT",
+      "const": false,
+      "value": "cPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "cPort",
+          "content": "C_PORT"
+        }
+      ]
+    },
+    {
+      "key": "HBP_GO_DEBUG_PORT",
+      "const": false,
+      "value": "goDebugPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "goDebugPort",
+          "content": "GO_DEBUG_PORT"
+        }
+      ]
+    },
+    {
+      "key": "HBP_C_DEBUG_PORT",
+      "const": false,
+      "value": "cDebugPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "cDebugPort",
+          "content": "C_DEBUG_PORT"
+        }
+      ]
+    },
+    {
+      "key": "HBP_MSG_QUEUE_IP_C",
+      "const": false,
+      "value": "internalIp;:;msgQueueIPCPort",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "internalIp",
+          "content": "internalIp"
+        },
+        {
+          "from": "portFile",
+          "key": "msgQueueIPCPort",
+          "content": "HBP_MSG_QUEUE_IP_C"
+        }
+      ]
+    },
+    {
+      "key": "HBP_MSG_QUEUE_IP_GO",
+      "const": false,
+      "value": "internalIp;:;msgQueueIpGoPort",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "internalIp",
+          "content": "internalIp"
+        },
+        {
+          "from": "portFile",
+          "key": "msgQueueIpGoPort",
+          "content": "HBP_MSG_QUEUE_IP_GO"
+        }
+      ]
+    },
+    {
+      "key": "HBP_CONFIG_ID",
+      "const": false,
+      "value": "serviceId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceId",
+          "content": "serviceId"
+        }
+      ]
+    },
+    {
+      "key": "HBP_DISTIMER_REGISTRY",
+      "const": true,
+      "value": "0"
+    },
+    {
+      "key": "HBP_DISTIMER_EXECUTER",
+      "const": true,
+      "value": "0"
+    },
+    {
+      "key": "HBP_NODE_NAME",
+      "const": false,
+      "value": "nodeName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "nodeName",
+          "content": "nodeName"
+        }
+      ]
+    },
+    {
+      "key": "HBP_POD_NAME",
+      "const": false,
+      "value": "podName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "podName",
+          "content": "serviceName"
+        }
+      ]
+    },
+    {
+      "key": "HBP_POD_ID",
+      "const": false,
+      "value": "podId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "podId",
+          "content": "podId"
+        }
+      ]
+    },
+    {
+      "key": "SERVICE_ID",
+      "const": false,
+      "value": "serviceId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "serviceId",
+          "content": "serviceId"
+        }
+      ]
+    },
+    {
+      "key": "HBP_CACHE_POOL_SIZE",
+      "const": true,
+      "value": "0"
+    },
+    {
+      "key": "HBP_CACHE_MIN_CONNS",
+      "const": true,
+      "value": "2"
+    },
+    {
+      "key": "UMS_HTTP_PORT",
+      "const": false,
+      "value": "umsHttpPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "umsHttpPort",
+          "content": "UMS_HTTP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "UMS_HTTPS_PORT",
+      "const": false,
+      "value": "umsHttpsPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "umsHttpsPort",
+          "content": "UMS_HTTPS_PORT"
+        }
+      ]
+    },
+    {
+      "key": "INTERNAL_IP",
+      "const": false,
+      "value": "internalIp",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "internalIp",
+          "content": "internalIp"
+        }
+      ]
+    },
+    {
+      "key": "SYS_EXTERNAL_IP",
+      "const": false,
+      "value": "externalIp",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "externalIp",
+          "content": "externalIp"
+        }
+      ]
+    },
+    {
+      "key": "KMS_HTTPS_LOCAL_PORT",
+      "const": false,
+      "value": "kmsHttpsLocalPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "kmsHttpsLocalPort",
+          "content": "KMS_HTTPS_LOCAL_PORT"
+        }
+      ]
+    },
+    {
+      "key": "IDMS_HTTPS_PORT",
+      "const": false,
+      "value": "idmsHttpsPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "idmsHttpsPort",
+          "content": "IDMS_HTTPS_PORT"
+        }
+      ]
+    },
+    {
+      "key": "GMS_HTTP_PORT",
+      "const": false,
+      "value": "gmsHttpsPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "gmsHttpsPort",
+          "content": "GMS_HTTP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "GMS_HTTPS_UE_PORT",
+      "const": false,
+      "value": "gmsHttpsUePort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "gmsHttpsUePort",
+          "content": "GMS_HTTPS_UE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "GMS_HTTPS_GMK_PORT",
+      "const": false,
+      "value": "gmsHttpsGmkPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "gmsHttpsGmkPort",
+          "content": "GMS_HTTPS_GMK_PORT"
+        }
+      ]
+    },
+    {
+      "key": "GMKMS_HTTPS_LOCAL_PORT",
+      "const": false,
+      "value": "gmkmsHttpsLocalPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "gmkmsHttpsLocalPort",
+          "content": "GMKMS_HTTPS_LOCAL_PORT"
+        }
+      ]
+    },
+    {
+      "key": "DMC_PCRF_COMMON_PORT",
+      "const": false,
+      "value": "dmcPcrfCommonPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "dmcPcrfCommonPort",
+          "content": "DMC_PCRF_COMMON_PORT"
+        }
+      ]
+    },
+    {
+      "key": "DMC_PCRF_RX_PORT",
+      "const": false,
+      "value": "dmcPcrfRxPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "dmcPcrfRxPort",
+          "content": "DMC_PCRF_RX_PORT"
+        }
+      ]
+    },
+    {
+      "key": "DMC_PCRF_BMSC_PORT",
+      "const": false,
+      "value": "dmcPcrfBmscPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "dmcPcrfBmscPort",
+          "content": "DMC_PCRF_BMSC_PORT"
+        }
+      ]
+    },
+    {
+      "key": "UDM_HTTP_LOCAL_PORT",
+      "const": false,
+      "value": "udmHttpLocalPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "udmHttpLocalPort",
+          "content": "UDM_PORT"
+        }
+      ]
+    },
+    {
+      "key": "GDM_HTTP_LOCAL_PORT",
+      "const": false,
+      "value": "gdmHttpLocalPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "gdmHttpLocalPort",
+          "content": "GDM_PORT"
+        }
+      ]
+    },
+    {
+      "key": "PNASC_TCP_PORT",
+      "const": false,
+      "value": "pnascTcpPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "pnascTcpPort",
+          "content": "PNASC_TCP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "PRES_HTTP_PORT",
+      "const": false,
+      "value": "presHttpPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "presHttpPort",
+          "content": "PRES_HTTP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "PRES_TCP_PORT",
+      "const": false,
+      "value": "presTcpPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "presTcpPort",
+          "content": "PRES_TCP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "DSS_HTTPS_PORT",
+      "const": false,
+      "value": "dssHttpsPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "dssHttpsPort",
+          "content": "DSS_PORT"
+        }
+      ]
+    },
+    {
+      "key": "FRS_HTTP_PORT",
+      "const": false,
+      "value": "frsHttpPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "frsHttpPort",
+          "content": "FRS_HTTP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "FRS_HTTPS_PORT",
+      "const": false,
+      "value": "frsHttpsPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "frsHttpsPort",
+          "content": "FRS_HTTPS_PORT"
+        }
+      ]
+    },
+    {
+      "key": "DMS_HTTP_PORT",
+      "const": false,
+      "value": "dmsHttpPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "dmsHttpPort",
+          "content": "DMS_HTTP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "HBP_SERVICE_STATE_REPORT",
+      "const": true,
+      "value": "1"
+    },
+    {
+      "key": "NRM_HTTP_PORT",
+      "const": false,
+      "value": "nrmHttpPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "nrmHttpPort",
+          "content": "NRM_HTTP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "GRAF_HEARTBEAT_PORT",
+      "const": false,
+      "value": "grafHeartbeatPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "grafHeartbeatPort",
+          "content": "GRAF_HEARTBEAT_PORT"
+        }
+      ]
+    },
+    {
+      "key": "MS_TYPE",
+      "const": true,
+      "value": "0"
+    },
+    {
+      "key": "MS_MQ_URL",
+      "const": false,
+      "value": "mqHost;:;mqPort",
+      "rules": [
+        {
+          "from": "sql",
+          "key": "mqHost",
+          "content": {
+            "conditions": [
+              {
+                "key": "service_name",
+                "value": "rabbitmq"
+              },
+              {
+                "key": "node_type",
+                "value": "POD"
+              }
+            ],
+            "resultAttr": "node_ip",
+            "resultType": "List",
+            "resultAll": true,
+            "operate": "select",
+            "tblName": "top_info"
+          }
+        },
+        {
+          "from": "serviceAttr",
+          "key": "mqPort",
+          "content": "rabbitmq.RABBITMQ_TCP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "MS_BASE_PORT",
+      "const": false,
+      "value": "msBasePort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "msBasePort",
+          "content": "MS_BASE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "MS_NODE_ID",
+      "const": false,
+      "value": "msNodeId",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "msNodeId",
+          "content": "MS_NODE_ID"
+        }
+      ]
+    },
+    {
+      "key": "MS_MGW_COUNT",
+      "const": false,
+      "value": "msMgwCount",
+      "rules": [
+        {
+          "from": "sql",
+          "key": "msMgwCount",
+          "content": {
+            "conditions": [
+              {
+                "key": "service_name",
+                "value": "mgw"
+              },
+              {
+                "key": "node_type",
+                "value": "CORE"
+              }
+            ],
+            "resultAttr": "*",
+            "resultType": "Integer",
+            "resultAll": true,
+            "operate": "count",
+            "tblName": "top_info"
+          }
+        }
+      ]
+    },
+    {
+      "key": "MS_MGW_INTERNAL_IP",
+      "const": false,
+      "value": "msMgwInternalIp",
+      "rules": [
+        {
+          "from": "sql",
+          "key": "msMgwInternalIp",
+          "content": {
+            "conditions": [
+              {
+                "key": "service_name",
+                "value": "mgw"
+              },
+              {
+                "key": "node_type",
+                "value": "POD"
+              }
+            ],
+            "resultAttr": "node_ip",
+            "resultType": "List",
+            "resultAll": true,
+            "operate": "select",
+            "tblName": "top_info"
+          }
+        }
+      ]
+    },
+    {
+      "key": "MS_MGW_BASE_PORT",
+      "const": false,
+      "value": "msMgwBasePort",
+      "rules": [
+        {
+          "from": "servicesPort",
+          "key": "msMgwBasePort",
+          "content": "mgw*MS_BASE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "MS_MGW_NODE_ID",
+      "const": false,
+      "value": "msMgwNodeId",
+      "rules": [
+        {
+          "from": "servicesPort",
+          "key": "msMgwNodeId",
+          "content": "mgw*MS_NODE_ID"
+        }
+      ]
+    },
+    {
+      "key": "SIPLBS_UE_PF_PORT",
+      "const": false,
+      "value": "siplbsUePfPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "siplbsUePfPort",
+          "content": "SIPLBS_UE_PF_PORT"
+        }
+      ]
+    },
+    {
+      "key": "MaxPoolLen",
+      "const": true,
+      "value": "100"
+    },
+    {
+      "key": "APP_SERVICE_NAME",
+      "const": true,
+      "value": "sipgw"
+    },
+    {
+      "key": "SIPLBS_CMS_PORT",
+      "const": false,
+      "value": "siplbsCmsPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "siplbsCmsPort",
+          "content": "SIPLBS_CMS_PORT"
+        }
+      ]
+    },
+    {
+      "key": "SIPLBS_GMS_PORT",
+      "const": false,
+      "value": "siplbsGmsPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "siplbsGmsPort",
+          "content": "SIPLBS_GMS_PORT"
+        }
+      ]
+    },
+    {
+      "key": "SIPLBS_CF_PORT",
+      "const": false,
+      "value": "siplbsCfPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "siplbsCfPort",
+          "content": "SIPLBS_CF_PORT"
+        }
+      ]
+    },
+    {
+      "key": "NGINX_BIND_SYS_PORT",
+      "const": false,
+      "value": "nginxBingSysPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "nginxBingSysPort",
+          "content": "NGINX_BIND_SYS_PORT"
+        }
+      ]
+    },
+    {
+      "key": "NGINX_BIND_PF_PORT",
+      "const": false,
+      "value": "nginxBindPfPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "nginxBindPfPort",
+          "content": "NGINX_BIND_PF_PORT"
+        }
+      ]
+    },
+    {
+      "key": "NGINX_BIND_CF_PORT",
+      "const": false,
+      "value": "nginxBindCfPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "nginxBindCfPort",
+          "content": "NGINX_BIND_CF_PORT"
+        }
+      ]
+    },
+    {
+      "key": "NGINX_BIND_CMS_PORT",
+      "const": false,
+      "value": "nginxBindCmsPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "nginxBindCmsPort",
+          "content": "NGINX_BIND_CMS_PORT"
+        }
+      ]
+    },
+    {
+      "key": "NGINX_BIND_CF_INNER_PORT",
+      "const": false,
+      "value": "nginxBindCfInnerPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "nginxBindCfInnerPort",
+          "content": "NGINX_BIND_CF_INNER_PORT"
+        }
+      ]
+    },
+    {
+      "key": "NGINX_BIND_GMS_PORT",
+      "const": false,
+      "value": "nginxBindGmsPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "nginxBindGmsPort",
+          "content": "NGINX_BIND_GMS_PORT"
+        }
+      ]
+    },
+    {
+      "key": "NGINX_BIND_PSTN_PORT",
+      "const": false,
+      "value": "nginxBindPstnPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "nginxBindPstnPort",
+          "content": "NGINX_BIND_PSTN_PORT"
+        }
+      ]
+    },
+    {
+      "key": "SIPNS_PF_UE_PORT",
+      "const": false,
+      "value": "sipnsPfUePort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "sipnsPfUePort",
+          "content": "SIPNS_PF_UE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "NGINX_SIPNS_CF_PORT",
+      "const": false,
+      "value": "nginxSipnsCfPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "nginxSipnsCfPort",
+          "content": "NGINX_SIPNS_CF_PORT"
+        }
+      ]
+    },
+    {
+      "key": "NGINX_SIPNS_CMS_PORT",
+      "const": false,
+      "value": "nginxSipnsCmsPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "nginxSipnsCmsPort",
+          "content": "NGINX_SIPNS_CMS_PORT"
+        }
+      ]
+    },
+    {
+      "key": "NGINX_SIPNS_GMS_PORT",
+      "const": false,
+      "value": "nginxSipnsGmsPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "nginxSipnsGmsPort",
+          "content": "NGINX_SIPNS_GMS_PORT"
+        }
+      ]
+    },
+    {
+      "key": "USER_AMOUNT",
+      "const": true,
+      "value": "1"
+    },
+    {
+      "key": "ETCD_HOST",
+      "const": false,
+      "value": "etcdHost",
+      "rules": [
+        {
+          "from": "sql",
+          "key": "etcdHost",
+          "content": {
+            "conditions": [
+              {
+                "key": "service_name",
+                "value": "etcd"
+              },
+              {
+                "key": "node_type",
+                "value": "POD"
+              }
+            ],
+            "resultAttr": "node_ip",
+            "resultType": "List",
+            "resultAll": true,
+            "operate": "select",
+            "tblName": "top_info"
+          }
+        }
+      ]
+    },
+    {
+      "key": "ETCD_PORT",
+      "const": false,
+      "value": "etcdPort",
+      "rules": [
+        {
+          "from": "serviceAttr",
+          "key": "etcdPort",
+          "content": "etcd.ETCD_CLIENT_PORT"
+        }
+      ]
+    },
+    {
+      "key": "HBP_EXTRA_UNIX_LOG",
+      "const": true,
+      "value": ""
+    },
+    {
+      "key": "AGREETYPE",
+      "const": true,
+      "value": "UDP"
+    },
+    {
+      "key": "GODEBUG",
+      "const": true,
+      "value": "madvdontneed=1"
+    },
+    {
+      "key": "LOG_VIEW_SERVER_PORT",
+      "const": false,
+      "value": "logViewServerPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "logViewServerPort",
+          "content": "LOG_VIEW_SERVER_PORT"
+        }
+      ]
+    },
+    {
+      "key": "ETCD_ADDR",
+      "const": false,
+      "value": "etcdIpPort",
+      "rules": [
+        {
+          "key": "etcdIpPort",
+          "from": "ipPortAttr",
+          "content": {
+            "joiner": ",",
+            "serviceName": "etcd",
+            "portType": "ETCD_CLIENT_PORT",
+            "default": "12250"
+          }
+        }
+      ]
+    },
+    {
+      "key": "DBS_ADDR",
+      "const": false,
+      "value": "dbsIpPort",
+      "rules": [
+        {
+          "key": "dbsIpPort",
+          "from": "ipPortAttr",
+          "content": {
+            "joiner": ",",
+            "serviceName": "dbs",
+            "portType": "DBS_CONN_PORT",
+            "default": "11015"
+          }
+        }
+      ]
+    },
+    {
+      "key": "HBP_DEBUG_MODE",
+      "const": true,
+      "value": "false"
+    },
+    {
+      "key": "HBP_DEPEND_CACHE_INIT",
+      "const": true,
+      "value": "false"
+    },
+    {
+      "key": "MY_POD_NAMESPACE",
+      "const": false,
+      "value": "namespace",
+      "rules": [
+        {
+          "key": "namespace",
+          "from": "valueFrom",
+          "content": "metadata.namespace"
+        }
+      ]
+    },
+    {
+      "key": "MY_POD_NAME",
+      "const": false,
+      "value": "podRealName",
+      "rules": [
+        {
+          "key": "podRealName",
+          "from": "valueFrom",
+          "content": "metadata.name"
+        }
+      ]
+    },
+    {
+      "key": "PRODUCT_NAME",
+      "const": false,
+      "value": "productName",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productName",
+          "content": "productName"
+        }
+      ]
+    },
+    {
+      "key": "NETWORK_MODE",
+      "const": false,
+      "value": "networkMode",
+      "rules": [
+        {
+          "from": "deployDetailAttr",
+          "key": "networkMode",
+          "content": "netMode"
+        }
+      ]
+    },
+    {
+      "key": "VAR_NAMESPACE",
+      "const": false,
+      "value": "namespace",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "namespace",
+          "content": "namespace"
+        }
+      ]
+    },
+    {
+      "key": "PRODUCT_TYPE",
+      "const": false,
+      "value": "productType",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productType",
+          "content": "productType"
+        }
+      ]
+    },
+    {
+      "key": "DB_CONN_PORT",
+      "const": false,
+      "value": "dbConnPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "dbConnPort",
+          "content": "DBS_CONN_PORT"
+        }
+      ]
+    },
+    {
+      "key": "DB_MIDDLEWARE_PORT",
+      "const": false,
+      "value": "dbMiddleWareConnPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "dbMiddleWareConnPort",
+          "content": "DBS_MIDDLEWARE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "EXTERNAL_IP",
+      "const": false,
+      "value": "externalIp",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "externalIp",
+          "content": "externalIp"
+        }
+      ]
+    },
+    {
+      "key": "NFS_SERVER_IP",
+      "const": false,
+      "value": "dpHost",
+      "rules": [
+        {
+          "from": "properties",
+          "key": "dpHost",
+          "content": "dpHost"
+        }
+      ]
+    },
+    {
+      "key": "SHARE_VOLUME_DIR",
+      "const": false,
+      "value": "productResource;businessDir",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productResource",
+          "content": "productResource"
+        },
+        {
+          "from": "const",
+          "key": "businessDir",
+          "content": "/dbs"
+        }
+      ]
+    },
+    {
+      "key": "DCS_MONITOR_PORT",
+      "const": false,
+      "value": "dcsMonitorPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "dcsMonitorPort",
+          "content": "DCS_MONITOR_PORT"
+        }
+      ]
+    },
+    {
+      "key": "DCS_SYS_TICK_PORT",
+      "const": false,
+      "value": "dcsSysTickPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "dcsSysTickPort",
+          "content": "DCS_SYS_TICK_PORT"
+        }
+      ]
+    },
+    {
+      "key": "DBS_SSH_PORT",
+      "const": false,
+      "value": "dbsSshPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "dbsSshPort",
+          "content": "DBS_SSH_PORT"
+        }
+      ]
+    },
+    {
+      "key": "DBS_LISTEN_SERVER_PORT",
+      "const": false,
+      "value": "dbsListerServerPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "dbsListerServerPort",
+          "content": "DBS_LISTEN_SERVER_PORT"
+        }
+      ]
+    },
+    {
+      "key": "POD_IP",
+      "const": false,
+      "value": "podIp",
+      "rules": [
+        {
+          "key": "podIp",
+          "from": "valueFrom",
+          "content": "status.podIP"
+        }
+      ]
+    },
+    {
+      "key": "GOFD_HEALTH_PORT",
+      "const": false,
+      "value": "goFdPort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "goFdPort",
+          "content": "GOFD_HEALTH_PORT"
+        }
+      ]
+    },
+    {
+      "key": "HBP_RESTAPI_SERVER_PORT",
+      "const": false,
+      "value": "HBP_RESTAPI_SERVER_PORT",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "HBP_RESTAPI_SERVER_PORT",
+          "content": "C_DEBUG_PORT"
+        }
+      ]
+    },
+    {
+      "key": "PRODUCT_ID",
+      "const": false,
+      "value": "productId",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productId",
+          "content": "productId"
+        }
+      ]
+    },
+    {
+      "key": "WP_HOST_PORT",
+      "const": false,
+      "value": "wpHostPort",
+      "rules": [
+        {
+          "key": "wpHostPort",
+          "from": "ipPortAttr",
+          "content": {
+            "joiner": ",",
+            "serviceName": "wp",
+            "portType": "WP_HTTP_PORT",
+            "productType": "YsP",
+            "default": "12150"
+          }
+        }
+      ]
+    },
+    {
+      "key": "DATABASE_HOST",
+      "const": false,
+      "value": "dbHost",
+      "rules": [
+        {
+          "from": "sql",
+          "key": "dbHost",
+          "content": {
+            "conditions": [
+              {
+                "key": "service_name",
+                "value": "cdwdb"
+              },
+              {
+                "key": "node_type",
+                "value": "POD"
+              }
+            ],
+            "resultAttr": "node_ip",
+            "resultType": "List",
+            "resultAll": false,
+            "operate": "select",
+            "tblName": "top_info"
+          }
+        }
+      ]
+    },
+    {
+      "key": "DATABASE_PORT",
+      "const": true,
+      "value": "11016"
+    },
+    {
+      "key": "VAR_INIT_ALPINE_VERSION_NO",
+      "const": true,
+      "value": "V1.0.02.000"
+    },
+    {
+      "key": "VAR_ETCD_ADDR",
+      "const": false,
+      "value": "etcdAddr",
+      "rules": [
+        {
+          "key": "etcdAddr",
+          "from": "ipPortAttr",
+          "content": {
+            "joiner": ",",
+            "serviceName": "etcd",
+            "portType": "ETCD_CLIENT_PORT",
+            "default": "12250"
+          }
+        }
+      ]
+    },
+    {
+      "key": "VAR_REDIS_ADDR",
+      "const": false,
+      "value": "redisAddr",
+      "rules": [
+        {
+          "key": "redisAddr",
+          "from": "ipPortAttr",
+          "content": {
+            "joiner": ",",
+            "serviceName": "redis",
+            "portType": "REDIS_PORT",
+            "default": ""
+          }
+        }
+      ]
+    },
+    {
+      "key": "VAR_RABBITMQ_ADDR",
+      "const": false,
+      "value": "mqHost;:;mqNodePort",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "mqHost",
+          "content": "internalIp"
+        },
+        {
+          "from": "onePort",
+          "key": "mqNodePort",
+          "content": "rabbitmq*RABBITMQ_TCP_PORT"
+        }
+      ]
+    },
+    {
+      "key": "MQ_RETRY_TIMES",
+      "const": true,
+      "value": "1"
+    },
+    {
+      "key": "RESOURCE_PACKAGE_PATH",
+      "const": false,
+      "value": "productResource",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productResource",
+          "content": "productResource"
+        }
+      ]
+    },
+    {
+      "key": "PRODUCT_VERSION",
+      "const": false,
+      "value": "productVersion",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "productVersion",
+          "content": "productVersion"
+        }
+      ]
+    },
+    {
+      "key": "NONEED_CONFIG",
+      "const": true,
+      "value": "1"
+    },
+    {
+      "key": "REDIS_ADDR",
+      "const": false,
+      "value": "redisAddr",
+      "rules": [
+        {
+          "key": "redisAddr",
+          "from": "ipPortAttr",
+          "content": {
+            "joiner": ",",
+            "serviceName": "redis",
+            "portType": "REDIS_PORT",
+            "default": ""
+          }
+        }
+      ]
+    },
+    {
+      "key": "WPAGENT_HTTP_SERVICE_PORT",
+      "const": false,
+      "value": "wpagentHttpServicePort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "wpagentHttpServicePort",
+          "content": "WPAGENT_HTTP_SERVICE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "CDWGW_HTTP_SERVICE_PORT",
+      "const": false,
+      "value": "cdwgwHttpPort",
+      "rules": [
+        {
+          "from": "onePort",
+          "key": "cdwgwHttpPort",
+          "content": "cdwgw*CDWGW_HTTP_SERVICE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "CDWGW_HTTPS_SERVICE_PORT",
+      "const": false,
+      "value": "cdwgwHttpsPort",
+      "rules": [
+        {
+          "from": "onePort",
+          "key": "cdwgwHttpsPort",
+          "content": "cdwgw*CDWGW_HTTPS_SERVICE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "AHS_HTTP_SERVICE_PORT",
+      "const": false,
+      "value": "ahsHttpServicePort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "ahsHttpServicePort",
+          "content": "AHS_HTTP_SERVICE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "AHS_HTTPS_SERVICE_PORT",
+      "const": false,
+      "value": "ahsHttpsServicePort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "ahsHttpsServicePort",
+          "content": "AHS_HTTPS_SERVICE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "TMS_HTTP_SERVICE_PORT",
+      "const": false,
+      "value": "tmsHttpServicePort",
+      "rules": [
+        {
+          "from": "portFile",
+          "key": "tmsHttpServicePort",
+          "content": "TMS_HTTP_SERVICE_PORT"
+        }
+      ]
+    },
+    {
+      "key": "YSP_KUBE_ADDR",
+      "const": false,
+      "value": "yspKubeAddr",
+      "rules": [
+        {
+          "from": "sql",
+          "key": "yspKubeAddr",
+          "content": {
+            "conditions": [
+              {
+                "key": "service_name",
+                "value": "ysp-kube"
+              },
+              {
+                "key": "node_type",
+                "value": "POD"
+              }
+            ],
+            "resultAttr": "node_ip",
+            "resultType": "List",
+            "resultAll": true,
+            "operate": "select",
+            "tblName": "top_info",
+            "productType": "YsP"
+          }
+        }
+      ]
+    },
+    {
+      "key": "MQ_SERVICE_PORT",
+      "const": true,
+      "value": "12902"
+    },
+    {
+      "key": "MQ_HOST",
+      "const": false,
+      "value": "mqHost",
+      "rules": [
+        {
+          "from": "codeMap",
+          "key": "mqHost",
+          "content": "internalIp"
+        }
+      ]
+    },
+    {
+      "key": "YSP_KUBE_HTTP_SERVICE_PORT",
+      "const": false,
+      "value": "yspKubeHttpServicePort",
+      "rules": [
+        {
+          "from": "serviceAttr",
+          "key": "yspKubeHttpServicePort",
+          "content": "YsP.ysp-kube.YSP_KUBE_SERVICE_PORT"
+        }
+      ]
+    }
+  ]
+}

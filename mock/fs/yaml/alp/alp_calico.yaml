@@ -1,0 +1,91 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    svc-app: k8s-VAR_SERVICE_NAME
+  name: VAR_SERVICE_NAME
+  namespace: VAR_NAMESPACE
+spec:
+  type: NodePort
+  ports:
+    - name: web
+      nodePort: 10000000001
+      port: 11008
+      targetPort: 11008
+      protocol: TCP
+    - name: file
+      nodePort: 10000000002
+      port: 11009
+      targetPort: 11009
+      protocol: TCP
+  selector:
+    svcname: VAR_SERVICE_NAME
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: VAR_POD_NAME
+  namespace: VAR_NAMESPACE
+  labels:
+    app: k8s-VAR_POD_NAME
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-VAR_POD_NAME
+  template:
+    metadata:
+      labels:
+        app: k8s-VAR_POD_NAME
+        svcname: VAR_SERVICE_NAME
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: VAR_NODE_NAME
+      volumes:
+        - name: persist
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/alp
+        - name: time-volume
+          hostPath:
+            path: /etc/localtime
+        - name: timezone-volume
+          hostPath:
+            path: /etc/timezone
+        - name: hbp-unix-log
+          hostPath:
+            path: /var/run/.hbp
+        #imagePullSecrets:
+        #  - name: myregistrykey
+
+      containers:
+        - name: VAR_SERVICE_NAME
+          image: hbp/VAR_IMAGE_NAME:VAR_VERSION_NO
+          imagePullPolicy: IfNotPresent
+
+          livenessProbe:
+            exec:
+              command:
+                - ls
+            initialDelaySeconds: 300
+            periodSeconds: 120
+            timeoutSeconds: 300
+            failureThreshold: 3
+            successThreshold: 1
+          resources:
+            limits:
+              memory: '200Mi'
+            requests:
+              memory: '100Mi'
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /alp
+              name: persist
+            - mountPath: /etc/localtime
+              name: time-volume
+            - mountPath: /etc/timezone
+              name: timezone-volume
+            - mountPath: /var/run/.hbp
+              name: hbp-unix-log
+          env:

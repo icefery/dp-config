@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: VAR_POD_NAME
+  namespace: VAR_NAMESPACE
+  labels:
+    app: k8s-VAR_POD_NAME
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-VAR_POD_NAME
+  template:
+    metadata:
+      labels:
+        app: k8s-VAR_POD_NAME
+    spec:
+      hostNetwork: true
+      nodeSelector:
+        kubernetes.io/hostname: VAR_NODE_NAME
+      volumes:
+        - name: VAR_POD_NAME-volume
+          emptyDir: {}
+        - name: log-VAR_SERVICE_NAME
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/log/VAR_SERVICE_NAME/VAR_POD_NAME
+        - name: time-volume
+          hostPath:
+            path: /etc/localtime
+        - name: 'timezone-volume'
+          hostPath:
+            path: '/etc/timezone'
+        - name: nfs-volume
+          persistentVolumeClaim:
+            claimName: pub-conf-pvc-1
+      containers:
+        - name: VAR_SERVICE_NAME
+          image: ysp/VAR_IMAGE_NAME:VAR_VERSION_NO
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+                - ls
+            initialDelaySeconds: 300
+            periodSeconds: 120
+            timeoutSeconds: 300
+            failureThreshold: 3
+            successThreshold: 1
+          resources:
+            limits:
+              memory: '500Mi'
+            requests:
+              memory: '100Mi'
+          volumeMounts:
+            - mountPath: /data
+              name: VAR_POD_NAME-volume
+            - mountPath: /var/log
+              name: log-VAR_SERVICE_NAME
+            - mountPath: /etc/localtime
+              name: time-volume
+            - mountPath: '/etc/timezone'
+              name: 'timezone-volume'
+            - mountPath: /opt/conf/m1
+              name: nfs-volume
+          env:
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: YSP_KUBE_SERVICE_PORT
+              value: '12128'

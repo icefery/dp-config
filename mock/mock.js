@@ -13,11 +13,11 @@ function findFileList(where, fileList = []) {
   fs.readdirSync(where).forEach(name => {
     const full = path.join(where, name)
     const stat = fs.statSync(full)
+    const type = path.extname(full).slice(1)
     if (stat.isDirectory()) {
       findFileList(full, fileList)
-    } else if (path.extname(full) === '.json') {
+    } else if (['json', 'yaml'].includes(type)) {
       const fileString = fs.readFileSync(full, 'utf8')
-      const type = 'json'
       const _id = uuid.v4()
       fileList.push({ _id, name, fileString, type })
     }
@@ -27,7 +27,7 @@ function findFileList(where, fileList = []) {
 
 function main() {
   // 加载文件列表
-  DATA.push(...findFileList(path.join(__dirname, './json')))
+  DATA.push(...findFileList(path.join(__dirname, './fs')))
 
   const port = 8000
   const app = express()

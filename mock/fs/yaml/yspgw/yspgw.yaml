@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: VAR_POD_NAME
+  namespace: VAR_NAMESPACE
+  labels:
+    app: k8s-VAR_POD_NAME
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-VAR_POD_NAME
+  template:
+    metadata:
+      labels:
+        app: k8s-VAR_POD_NAME
+    spec:
+      hostNetwork: true
+      nodeName: VAR_NODE_NAME
+      hostname: VAR_NODE_NAME
+      volumes:
+        - name: VAR_POD_NAME-volume
+          emptyDir: {}
+        - name: log-VAR_SERVICE_NAME
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/log/VAR_SERVICE_NAME/VAR_POD_NAME
+        - name: time-volume
+          hostPath:
+            path: /etc/localtime
+        - name: 'timezone-volume'
+          hostPath:
+            path: '/etc/timezone'
+        - name: hbp-unix-log
+          hostPath:
+            path: /var/run/.hbp
+        - name: 'k8s-config-path'
+          hostPath:
+            path: '/root/.kube'
+      #imagePullSecrets:
+      #  - name: myregistrykey
+      containers:
+        - name: VAR_SERVICE_NAME
+          image: VAR_PRETAG/VAR_IMAGE_NAME:VAR_VERSION_NO
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+                - ls
+            initialDelaySeconds: 300
+            periodSeconds: 120
+            timeoutSeconds: 300
+            failureThreshold: 3
+            successThreshold: 1
+          resources:
+            limits:
+              memory: '750Mi'
+            requests:
+              memory: '100Mi'
+          volumeMounts:
+            - mountPath: /data
+              name: VAR_POD_NAME-volume
+            - mountPath: /var/log
+              name: log-VAR_SERVICE_NAME
+            - mountPath: /etc/localtime
+              name: time-volume
+            - mountPath: '/etc/timezone'
+              name: 'timezone-volume'
+            - mountPath: /var/run/.hbp
+              name: hbp-unix-log
+            - mountPath: '/root/.kube'
+              name: 'k8s-config-path'
+          env:

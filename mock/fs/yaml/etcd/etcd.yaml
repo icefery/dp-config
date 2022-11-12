@@ -1,0 +1,89 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  labels:
+    app: podmonitor-VAR_POD_NAME
+  name: podmonitor-VAR_POD_NAME
+  namespace: VAR_YsP_NAMESPACE
+spec:
+  podMetricsEndpoints:
+    - interval: 15s
+      path: /metrics
+      port: metrics-port
+  namespaceSelector:
+    matchNames:
+      - VAR_YsP_NAMESPACE
+  selector:
+    matchLabels:
+      app: k8s-VAR_POD_NAME
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: VAR_POD_NAME
+  namespace: VAR_YsP_NAMESPACE
+  labels:
+    app: k8s-VAR_POD_NAME
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-VAR_POD_NAME
+  template:
+    metadata:
+      labels:
+        app: k8s-VAR_POD_NAME
+    spec:
+      hostNetwork: true
+      nodeName: VAR_NODE_NAME
+      volumes:
+        - name: VAR_POD_NAME-volume
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/data/VAR_SERVICE_NAME
+        - name: time-volume
+          hostPath:
+            path: /etc/localtime
+        - name: core-path-VAR_POD_NAME
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/core-docker/VAR_SERVICE_NAME
+        - name: log-VAR_SERVICE_NAME
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/log/VAR_SERVICE_NAME/VAR_POD_NAME
+        - name: logdata
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/log/VAR_SERVICE_NAME
+      #imagePullSecrets:
+      #  - name: myregistrykey
+      containers:
+        - name: VAR_SERVICE_NAME
+          image: hbp/VAR_IMAGE_NAME:VAR_VERSION_NO
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: '2Gi'
+            requests:
+              memory: '100Mi'
+          volumeMounts:
+            - mountPath: /home/VAR_SERVICE_NAME
+              name: log-VAR_SERVICE_NAME
+            - mountPath: /opt/local/tmp/core
+              name: core-path-VAR_POD_NAME
+            - mountPath: /etc/localtime
+              name: time-volume
+            - mountPath: /data
+              name: VAR_POD_NAME-volume
+          ports:
+            - name: metrics-port
+              containerPort: 10000000001
+          env:
+            - name: ETCD_CLIENT_PORT
+              value: 'VAR_CLIENT_PORT'
+            - name: ETCD_PEER_PORT
+              value: 'VAR_PEER_PORT'
+            - name: ETCD_DEBUG
+              value: 'VAR_ETCD_DEBUG'
+            - name: ETCD_METRICS
+              value: 'VAR_ETCD_METRICS'
+            - name: ETCD_ENABLE_PPROF
+              value: 'VAR_ETCD_ENABLE_PPROF'

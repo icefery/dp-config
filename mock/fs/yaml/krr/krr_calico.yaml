@@ -1,0 +1,94 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    svc-app: k8s-VAR_SERVICE_NAME
+  name: VAR_SERVICE_NAME
+  namespace: VAR_NAMESPACE
+spec:
+  type: NodePort
+  ports:
+    - name: tcp-port
+      nodePort: 30080
+      port: 8088
+      targetPort: 8088
+      protocol: TCP
+  selector:
+    svcname: VAR_SERVICE_NAME
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: VAR_POD_NAME
+  namespace: VAR_NAMESPACE
+  labels:
+    app: k8s-VAR_POD_NAME
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: k8s-VAR_POD_NAME
+  template:
+    metadata:
+      labels:
+        app: k8s-VAR_POD_NAME
+        svcname: VAR_SERVICE_NAME
+    spec:
+      volumes:
+        - name: VAR_POD_NAME-volume
+          emptyDir: {}
+        - name: log-VAR_SERVICE_NAME
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/log/VAR_SERVICE_NAME/VAR_POD_NAME
+        - name: time-volume
+          hostPath:
+            path: /etc/localtime
+        - name: 'timezone-volume'
+          hostPath:
+            path: '/etc/timezone'
+        - name: hbp-unix-log
+          hostPath:
+            path: /var/run/.hbp
+        - name: 'etc-hosts'
+          hostPath:
+            path: '/etc/hosts'
+        - name: 'nfs-volume'
+          persistentVolumeClaim:
+            claimName: pub-conf-pvc-1
+      #imagePullSecrets:
+      #  - name: myregistrykey
+      containers:
+        - name: VAR_SERVICE_NAME
+          image: VAR_HARBOR_ADDRESS/hbp/VAR_IMAGE_NAME:VAR_VERSION_NO
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+                - ls
+            initialDelaySeconds: 300
+            periodSeconds: 120
+            timeoutSeconds: 300
+            failureThreshold: 3
+            successThreshold: 1
+          resources:
+            limits:
+              memory: '750Mi'
+            requests:
+              memory: '100Mi'
+          volumeMounts:
+            - mountPath: /data
+              name: VAR_POD_NAME-volume
+            - mountPath: /var/log
+              name: log-VAR_SERVICE_NAME
+            - mountPath: /etc/localtime
+              name: time-volume
+            - mountPath: '/etc/timezone'
+              name: 'timezone-volume'
+            - mountPath: /var/run/.hbp
+              name: hbp-unix-log
+            - mountPath: '/etc/hosts'
+              name: 'etc-hosts'
+            - mountPath: '/opt/conf/1'
+              name: 'nfs-volume'
+          env:

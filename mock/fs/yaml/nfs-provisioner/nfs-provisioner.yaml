@@ -1,0 +1,129 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa-nfs-provisioner
+  namespace: VAR_NAMESPACE
+
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nfs-provisioner-runner
+rules:
+  - apiGroups: ['']
+    resources: ['persistentvolumes']
+    verbs: ['get', 'list', 'watch', 'create', 'delete']
+  - apiGroups: ['']
+    resources: ['persistentvolumeclaims']
+    verbs: ['get', 'list', 'watch', 'update']
+  - apiGroups: ['storage.k8s.io']
+    resources: ['storageclasses']
+    verbs: ['get', 'list', 'watch']
+  - apiGroups: ['']
+    resources: ['events']
+    verbs: ['watch', 'create', 'update', 'patch']
+  - apiGroups: ['']
+    resources: ['services', 'endpoints']
+    verbs: ['get', 'create', 'list', 'watch', 'update']
+  - apiGroups: ['extensions']
+    resources: ['podsecuritypolicies']
+    resourceNames: ['nfs-provisioner']
+    verbs: ['use']
+
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: run-nfs-provisioner
+subjects:
+  - kind: ServiceAccount
+    name: sa-nfs-provisioner
+    namespace: VAR_NAMESPACE
+roleRef:
+  kind: ClusterRole
+  name: nfs-provisioner-runner
+  apiGroup: rbac.authorization.k8s.io
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nfs-provisioner-role
+  namespace: VAR_NAMESPACE
+rules:
+  - apiGroups: ['']
+    resources: ['endpoints']
+    verbs: ['get', 'list', 'watch', 'create', 'update', 'patch']
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nfs-provisioner-rolebinding
+  namespace: VAR_NAMESPACE
+subjects:
+  - kind: ServiceAccount
+    name: sa-nfs-provisioner
+    namespace: VAR_NAMESPACE
+roleRef:
+  kind: Role
+  name: nfs-provisioner-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: managed-nfs-storage
+# must match deployment's env PROVISIONER_NAME
+provisioner: k8s-sigs.io/nfs-subdir-external-provisioner
+parameters:
+  archiveOnDelete: 'false'
+  #pathPattern: "${.PVC.namespace}/${.PVC.annotations.nfs.io/storage-path}"
+reclaimPolicy: Retain
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: VAR_POD_NAME
+  namespace: VAR_NAMESPACE
+  labels:
+    app: k8s-VAR_POD_NAME
+spec:
+  replicas: VAR_REPLICAS_NUM
+  selector:
+    matchLabels:
+      app: k8s-VAR_POD_NAME
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: k8s-VAR_POD_NAME
+    spec:
+      serviceAccountName: sa-nfs-provisioner
+      containers:
+        - name: nfs-client-provisioner
+          resources:
+            limits:
+              memory: '500Mi'
+            requests:
+              memory: '50Mi'
+          image: platform/VAR_IMAGE_NAME:VAR_VERSION_NO
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: nfs-client-root
+              mountPath: /persistentvolumes
+          env:
+            - name: PROVISIONER_NAME
+              value: k8s-sigs.io/nfs-subdir-external-provisioner
+            - name: NFS_SERVER
+              value: VAR_NFS_SERVER_IP
+            - name: NFS_PATH
+              value: /opt/nfs
+      volumes:
+        - name: nfs-client-root
+          nfs:
+            server: VAR_NFS_SERVER_IP
+            path: /opt/nfs

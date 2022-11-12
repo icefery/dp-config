@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: VAR_POD_NAME
+  namespace: VAR_NAMESPACE
+  labels:
+    app: k8s-VAR_POD_NAME
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-VAR_POD_NAME
+  template:
+    metadata:
+      labels:
+        app: k8s-VAR_POD_NAME
+    spec:
+      hostNetwork: true
+      nodeName: VAR_NODE_NAME
+      hostname: VAR_NODE_NAME
+      volumes:
+        - name: VAR_POD_NAME-volume
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/rabbit/VAR_SERVICE_NAME
+        - name: time-volume
+          hostPath:
+            path: /etc/localtime
+        - name: core-path-VAR_POD_NAME
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/core-docker/VAR_SERVICE_NAME
+        - name: log-VAR_SERVICE_NAME
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/log/VAR_SERVICE_NAME/VAR_POD_NAME
+        - name: logdata
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/log/VAR_SERVICE_NAME
+      #imagePullSecrets:
+      #  - name: myregistrykey
+      containers:
+        - name: VAR_SERVICE_NAME
+          image: hbp/VAR_IMAGE_NAME:VAR_VERSION_NO
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: '4Gi'
+            requests:
+              memory: '100Mi'
+          volumeMounts:
+            - mountPath: /var/lib/VAR_SERVICE_NAME
+              name: VAR_POD_NAME-volume
+            - mountPath: /var/log/VAR_SERVICE_NAME
+              name: log-VAR_SERVICE_NAME
+            - mountPath: /opt/local/tmp/core
+              name: core-path-VAR_POD_NAME
+            - mountPath: /etc/localtime
+              name: time-volume
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: VAR_MQ_DEF_USER
+            - name: RABBITMQ_DEFAULT_PASS
+              value: VAR_MQ_DEF_PWD
+            - name: RABBITMQ_ERLANG_COOKIE
+              value: VAR_RABBITMQ_ERLANG_COOKIE
+            - name: ERL_EPMD_PORT
+              value: 'VAR_ERL_EPMD_PORT'
+            - name: RABBITMQ_TCP_PORT
+              value: 'VAR_RABBITMQ_TCP_PORT'
+            - name: RABBITMQ_MANAGEMENT_PORT
+              value: 'VAR_RABBITMQ_MANAGEMENT_PORT'
+            - name: RABBITMQ_DIST_PORT
+              value: 'VAR_RABBITMQ_DIST_PORT'
+            - name: RABBITMQ_LOGS
+              value: VAR_RABBITMQ_LOGS
+            - name: RABBITMQ_WEB_STOMP_PORT
+              value: 'VAR_RABBITMQ_WEB_STOMP_PORT'
+            - name: RABBITMQ_STOMP_PORT
+              value: 'VAR_RABBITMQ_STOMP_PORT'

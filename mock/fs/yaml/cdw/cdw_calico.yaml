@@ -1,0 +1,122 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    svc-app: k8s-VAR_SERVICE_NAME
+  name: VAR_SERVICE_NAME
+  namespace: VAR_NAMESPACE
+spec:
+  type: NodePort
+  ports:
+    - name: tcp-port
+      port: 9021
+      targetPort: 9021
+      protocol: TCP
+      nodePort: 100000099
+  selector:
+    svcname: VAR_SERVICE_NAME
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: VAR_POD_NAME
+  namespace: VAR_NAMESPACE
+  labels:
+    app: k8s-VAR_POD_NAME
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-VAR_POD_NAME
+  template:
+    metadata:
+      labels:
+        app: k8s-VAR_POD_NAME
+        svcname: VAR_SERVICE_NAME
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: VAR_NODE_NAME
+      volumes:
+        - name: VAR_POD_NAME-volume
+          emptyDir: {}
+        - name: core-path-VAR_POD_NAME
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/core-docker/VAR_SERVICE_NAME
+        - name: log-VAR_SERVICE_NAME
+          hostPath:
+            path: /opt/VAR_PRODUCT_NAME/log/VAR_SERVICE_NAME/VAR_POD_NAME
+        - name: time-volume
+          hostPath:
+            path: /etc/localtime
+        - name: 'timezone-volume'
+          hostPath:
+            path: '/etc/timezone'
+        - name: rsa-volume
+          hostPath:
+            path: /root/.ssh/id_rsa
+        - name: hbp-unix-log
+          hostPath:
+            path: /var/run/.hbp
+        - name: 'tomcat-log'
+          hostPath:
+            path: '/opt/VAR_PRODUCT_NAME/log/VAR_SERVICE_NAME/VAR_POD_NAME/tomcat'
+        - name: 'dp-pkg'
+          hostPath:
+            path: 'RESOURCE_PACKAGE_PATH'
+      #imagePullSecrets:
+      #  - name: myregistrykey
+      containers:
+        - name: VAR_SERVICE_NAME
+          image: ysp/VAR_IMAGE_NAME:VAR_VERSION_NO
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+                - ls
+            initialDelaySeconds: 300
+            periodSeconds: 120
+            timeoutSeconds: 300
+            failureThreshold: 3
+            successThreshold: 1
+          resources:
+            limits:
+              memory: '750Mi'
+            requests:
+              memory: '100Mi'
+          volumeMounts:
+            - mountPath: /data
+              name: VAR_POD_NAME-volume
+            - mountPath: /home/VAR_SERVICE_NAME
+              name: log-VAR_SERVICE_NAME
+            - mountPath: /opt/local/tmp/core
+              name: core-path-VAR_POD_NAME
+            - mountPath: /etc/localtime
+              name: time-volume
+            - mountPath: '/etc/timezone'
+              name: 'timezone-volume'
+            - mountPath: /root/.ssh/id_rsa
+              name: rsa-volume
+            - mountPath: /var/run/.hbp
+              name: hbp-unix-log
+            - mountPath: '/usr/local/tomcat/logs'
+              name: 'tomcat-log'
+            - mountPath: 'RESOURCE_PACKAGE_PATH'
+              name: 'dp-pkg'
+          env:
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: INTERNAL_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
