@@ -4,8 +4,19 @@ import { ElInput } from 'element-plus'
 import { computed } from 'vue'
 
 const commonEnvs = computed<string>({
-  get: () => (ARGS_TEMPLATE_STATE.current ? ARGS_TEMPLATE_STATE.current.json.commonEnvs.join(',') : ''),
-  set: value => ARGS_TEMPLATE_STATE.current && (ARGS_TEMPLATE_STATE.current.json.commonEnvs = value.split(','))
+  get: () => {
+    if (ARGS_TEMPLATE_STATE.current) {
+      if (ARGS_TEMPLATE_STATE.current.json.commonEnvs) {
+        return ARGS_TEMPLATE_STATE.current.json.commonEnvs.join(',')
+      }
+    }
+    return ''
+  },
+  set: value => {
+    if (ARGS_TEMPLATE_STATE.current) {
+      ARGS_TEMPLATE_STATE.current.json.commonEnvs = value.split(',')
+    }
+  }
 })
 </script>
 

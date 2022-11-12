@@ -3,6 +3,7 @@ import request from '@/utils/request'
 
 export interface IDeployDetails {
   name: string
+  type: 'xml' | 'json' | 'yaml'
   module: 'deployDetails'
   json: {
     deployOrder: {
@@ -37,6 +38,7 @@ export interface IDeployDetails {
 
 export interface IPortMng {
   name: string
+  type: 'xml' | 'json' | 'yaml'
   module: 'portMng'
   json: {
     portPreAssign: {
@@ -48,17 +50,18 @@ export interface IPortMng {
       key: string
       range: string
     }[]
-    portStep: {
+    portStep?: {
       key: string
       step: string
     }[]
-    portNodeDiff: string[]
-    portNodeSame: string[]
+    portNodeDiff?: string[]
+    portNodeSame?: string[]
   }
 }
 
 export interface IArgsTemplate {
   name: string
+  type: 'xml' | 'json' | 'yaml'
   module: 'argsTemplate'
   json: {
     templateName: string
@@ -83,13 +86,20 @@ export interface IArgsTemplate {
   }
 }
 
+export interface ICustomYaml {
+  name: string
+  type: 'xml' | 'json' | 'yaml'
+  module: 'customYaml'
+  fileString: string
+}
+
 // 接口响应类型
 export interface IR {
   _id?: string
   name: string
   fileString: string
   size: number
-  type: 'json' | 'xml'
+  type: string
 }
 
 // 加载文件列表

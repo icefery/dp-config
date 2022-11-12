@@ -27,7 +27,7 @@ const handleUpload = async () => {
             name: file.name,
             fileString: event.target?.result as string,
             size: file.size || 0,
-            type: 'json'
+            type: file.name.split('.').pop() || ''
           })
         }
       } else {
@@ -61,7 +61,7 @@ const handleDelete = (index: number) => {
     </el-upload>
     <!-- 手动上传按钮 -->
     <el-button auto-insert-space style="width: 100%; height: 50px" @click="handleUpload()">上传</el-button>
-    <el-table :data="SHARED_STATE.list" border scrollbar-always-on style="margin-top: 10px">
+    <el-table :data="SHARED_STATE.list" border height="600px" scrollbar-always-on style="margin-top: 10px">
       <!-- 操作列 -->
       <el-table-column align="center" fixed="left" width="50">
         <template #default="scope: IScope<IR>">
