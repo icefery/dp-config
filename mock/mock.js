@@ -42,6 +42,7 @@ function main() {
   // 创建
   app.post('/admin/api/OriginJson', (req, res, next) => {
     const todos = req.body.map(it => ({ ...it, _id: uuid.v4() }))
+    // TODO: 持久化到文件系统
     DATA.push(...todos)
     res.json({ code: '0', message: '', data: 'success' })
   })

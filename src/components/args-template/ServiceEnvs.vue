@@ -78,8 +78,8 @@ const handleCurrentChange = (currentRow: IArgsTemplate['json']['serviceEnvs'][nu
 </script>
 
 <template>
-  <el-row :gutter="12">
-    <el-col :span="16">
+  <el-row style="width: 100%">
+    <el-col :span="6">
       <el-table :data="ARGS_TEMPLATE_STATE.current?.json.serviceEnvs" border highlight-current-row max-height="300px" scrollbar-always-on @current-change="handleCurrentChange">
         <!-- 操作列 -->
         <el-table-column align="center" fixed="left" width="50">
@@ -91,25 +91,27 @@ const handleCurrentChange = (currentRow: IArgsTemplate['json']['serviceEnvs'][nu
           </template>
         </el-table-column>
         <!-- 数据列 -->
-        <el-table-column label="serviceName" prop="serviceName" width="150">
+        <el-table-column align="center" label="serviceName" prop="serviceName">
           <template #default="scope: IScope<IArgsTemplate['json']['serviceEnvs'][number]>">
-            <el-input v-model="scope.row.serviceName" readonly spellcheck="false" />
+            <el-input v-model="scope.row.serviceName" disabled spellcheck="false" />
           </template>
         </el-table-column>
       </el-table>
     </el-col>
-    <el-col :span="8">
-      <el-form label-width="100px" style="width: 450px">
-        <el-form-item label="serviceName">
-          <el-input v-model="serviceName" spellcheck="false" style="width: 150px" />
-        </el-form-item>
-        <el-form-item label="envs">
-          <el-input v-model="envs" spellcheck="false" style="width: 150px" />
-        </el-form-item>
-        <el-form-item label="preShellEnvs">
-          <el-input v-model="preShellEnvs" spellcheck="false" style="width: 150px" />
-        </el-form-item>
-      </el-form>
+    <el-col :span="18">
+      <template v-if="currentServiceEnvs">
+        <el-form label-width="100px">
+          <el-form-item label="serviceName">
+            <el-input v-model="serviceName" spellcheck="false" style="width: 100%" />
+          </el-form-item>
+          <el-form-item label="envs">
+            <el-input v-model="envs" spellcheck="false" style="width: 100%" />
+          </el-form-item>
+          <el-form-item label="preShellEnvs">
+            <el-input v-model="preShellEnvs" spellcheck="false" style="width: 100%" />
+          </el-form-item>
+        </el-form>
+      </template>
     </el-col>
   </el-row>
 </template>

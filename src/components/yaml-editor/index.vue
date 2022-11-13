@@ -8,7 +8,7 @@ import type * as monaco from 'monaco-editor'
 import MonacoEditor from 'monaco-editor-vue3'
 
 const options: monaco.editor.IStandaloneEditorConstructionOptions = {
-  theme: 'vs-dark',
+  theme: 'vs',
   tabSize: 2,
   language: 'yaml',
   showFoldingControls: 'always',
@@ -38,7 +38,7 @@ const handleExport = () => {
     </template>
     <template #default>
       <template v-if="YAML_STATE.current">
-        <MonacoEditor v-model:value="YAML_STATE.current.fileString" :options="options" language="javascript" style="width: 100%; height: 500px" theme="vs" />
+        <MonacoEditor v-model:value="YAML_STATE.current.fileString" :options="options" language="javascript" style="width: 100%; height: 1000px" theme="vs" />
       </template>
     </template>
   </el-card>

@@ -163,7 +163,7 @@ const imageTagStatus = computed(() => (index: number) => {
     <!-- 数据列 -->
     <el-table-column align="center" label="serviceName" prop="serviceName" width="150">
       <template #default="scope: IScope<IDeployDetails['json']['deployDetails'][number]>">
-        <el-input v-model="scope.row.serviceName" :suffix-icon="serviceNameStatus(scope.$index)" spellcheck="false"></el-input>
+        <el-input v-model="scope.row.serviceName" :suffix-icon="serviceNameStatus(scope.$index)" spellcheck="false" />
       </template>
     </el-table-column>
     <el-table-column align="center" label="netMode" prop="netMode" width="150">
