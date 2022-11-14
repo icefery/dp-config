@@ -6,17 +6,19 @@ import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElInput, ElTable, ElTableColumn } from 'element-plus'
 import { computed } from 'vue'
 
+//删除
 const handleDelete = (index: number) => {
   if (PORT_MNG_STATE.current) {
     PORT_MNG_STATE.current.json.portStep.splice(index, 1)
   }
 }
+//新增
 const handleAdd = () => {
   if (PORT_MNG_STATE.current) {
-    PORT_MNG_STATE.current.json.portStep.push({ key: '', step: '' })
+    PORT_MNG_STATE.current.json.portStep.unshift({ key: '', step: '' })
   }
 }
-
+//校验
 const portStepOptions = computed(() => (index: number) => {
   if (PORT_MNG_STATE.current) {
     const a = Array.from(

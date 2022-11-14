@@ -1,4 +1,5 @@
 <script lang="tsx" setup>
+import zhCN from 'element-plus/es/locale/lang/zh-cn'
 import ArgsTemplate from './components/args-template/index.vue'
 import DeployDetails from './components/deploy-details/index.vue'
 import FileManager from './components/file-manager/index.vue'
@@ -7,7 +8,7 @@ import YamlEditor from './components/yaml-editor/index.vue'
 </script>
 
 <template>
-  <el-config-provider size="small">
+  <el-config-provider :locale="zhCN" size="small">
     <el-container>
       <el-aside>
         <FileManager />

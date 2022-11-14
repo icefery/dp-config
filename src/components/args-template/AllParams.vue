@@ -5,7 +5,7 @@ import ValidationSuccess from '@/components/validation/ValidationSuccess'
 import { ARGS_TEMPLATE_STATE } from '@/store'
 import type { IScope } from '@/types/element-plus'
 import { and } from '@/utils/validation'
-import { ArrowRightBold, Delete, Plus } from '@element-plus/icons-vue'
+import { Delete, Plus } from '@element-plus/icons-vue'
 import { computed, ref } from 'vue'
 
 const currentRules = ref<IArgsTemplate['json']['allParams'][number]>()
@@ -34,7 +34,7 @@ const handleAllParamsDelete = (allParamsIndex: number) => {
 // allParams 增加
 const handleAllParamsAdd = () => {
   if (ARGS_TEMPLATE_STATE.current) {
-    ARGS_TEMPLATE_STATE.current.json.allParams.push({ key: '', const: false, value: '', rules: [] })
+    ARGS_TEMPLATE_STATE.current.json.allParams.unshift({ key: '', const: false, value: '', rules: [] })
   }
 }
 
@@ -51,7 +51,7 @@ const handleRulesDelete = (rulesIndex: number) => {
 const handleRulesAdd = () => {
   if (ARGS_TEMPLATE_STATE.current && currentRules.value) {
     if (currentRules.value.rules) {
-      currentRules.value.rules.push({ from: '', key: '', content: '' })
+      currentRules.value.rules.unshift({ from: '', key: '', content: '' })
     } else {
       currentRules.value.rules = [{ from: '', key: '', content: '' }]
     }
@@ -74,15 +74,16 @@ const allParamsKeyStatus = computed(() => (index: number) => {
   return <ValidationSuccess />
 })
 
+//allParams中可选Key来自于shellParams、commonEnvs、serviceEnvs三部分
 const allParamsKeyOptions = computed(() => (index: number) => {
   if (ARGS_TEMPLATE_STATE.current) {
     const a = Array.from(
       new Set([
-        //
+        //获取shellParams中内容
         ...ARGS_TEMPLATE_STATE.current.json.shellParams,
-        //
+        //获取commonEnvs中内容
         ...ARGS_TEMPLATE_STATE.current.json.commonEnvs,
-        //
+        //获取serviceEnvs中内容
         ...(ARGS_TEMPLATE_STATE.current.json.serviceEnvs || []).map(it => [...(it.envs || []), ...(it.preShellEnvs || [])]).flatMap(it => [...it])
       ])
     )
@@ -135,9 +136,10 @@ const handleCurrentChange = (currentRow: IArgsTemplate['json']['allParams'][numb
         <!-- allParams 展开列 -->
         <el-table-column align="center" label="rules" width="50">
           <template #default="allParamsScope: IScope<IArgsTemplate['json']['allParams'][number]>">
-            <el-icon>
+            <!-- <el-icon>
               <ArrowRightBold />
-            </el-icon>
+            </el-icon> -->
+            <el-button circle icon="el-icon-search"></el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -13,7 +13,7 @@ import TemplateName from './TemplateName.vue'
 // 导出文件
 const handleExport = () => {
   if (ARGS_TEMPLATE_STATE.current) {
-    const blob = new Blob([JSON.stringify(ARGS_TEMPLATE_STATE.current.json)], { type: 'text/json' })
+    const blob = new Blob([JSON.stringify(ARGS_TEMPLATE_STATE.current.json, null, ' ')], { type: 'application/json' })
     FileSaver.saveAs(blob, ARGS_TEMPLATE_STATE.current.name)
   }
 }
@@ -22,12 +22,19 @@ const handleExport = () => {
 <template>
   <el-card>
     <template #header>
-      <el-select v-model="ARGS_TEMPLATE_STATE.current" value-key="name">
-        <template v-for="item of SHARED_CONFIG_LIST.filter(it => it.module === 'argsTemplate')" :key="item.name">
-          <el-option :label="item.name" :value="item" />
-        </template>
-      </el-select>
-      <el-button :icon="Download" circle @click="handleExport()" />
+      <el-space>
+        <el-select v-model="ARGS_TEMPLATE_STATE.current" value-key="name">
+          <template v-for="item of SHARED_CONFIG_LIST.filter(it => it.module === 'argsTemplate')" :key="item.name">
+            <el-option :label="item.name" :value="item" />
+          </template>
+        </el-select>
+        <el-popconfirm title="请务必务必仔细检查!!!" width="200px" @confirm="handleExport()">
+          <template #reference>
+            <el-button :icon="Download" circle />
+          </template>
+        </el-popconfirm>
+        <el-image :initial-index="4" :preview-src-list="['/src/assets/3.png']" fit="cover" src="/src/assets/operation-description.png" style="width: 100px; height: 25px" />
+      </el-space>
     </template>
     <el-form label-width="100px">
       <el-form-item label="templateName">

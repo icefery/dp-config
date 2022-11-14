@@ -18,7 +18,7 @@ const handleDelete = (index: number) => {
 // 增加
 const handleAdd = () => {
   if (PORT_MNG_STATE.current) {
-    PORT_MNG_STATE.current.json.portPreAssign.push({ portType: '', calicoPortType: '', serviceName: '' })
+    PORT_MNG_STATE.current.json.portPreAssign.unshift({ portType: '', calicoPortType: '', serviceName: '' })
   }
 }
 

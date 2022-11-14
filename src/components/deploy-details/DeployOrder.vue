@@ -20,7 +20,7 @@ const handleAdd = () => {
   if (DEPLOY_DETAILS_STATE.current) {
     // 求数据中最大的 order
     const order = DEPLOY_DETAILS_STATE.current?.json.deployOrder.map(it => it.order).reduce((max, curr) => (max > curr ? max : curr), 0)
-    DEPLOY_DETAILS_STATE.current.json.deployOrder.push({ serviceName: '', mustSucceed: false, order: order + 1 })
+    DEPLOY_DETAILS_STATE.current.json.deployOrder.unshift({ serviceName: '', mustSucceed: false, order: order + 1 })
   }
 }
 
@@ -43,8 +43,10 @@ const serviceNameOptions = computed(() => (index: number) => {
   if (DEPLOY_DETAILS_STATE.current) {
     const a = DEPLOY_DETAILS_STATE.current.json.deployDetails.map(it => it.serviceName)
     const b = DEPLOY_DETAILS_STATE.current.json.deployOrder.filter((it, idx) => idx !== index).map(it => it.serviceName)
+    // 求a-b的差集
     return a.filter(it => !b.includes(it))
   }
+
   return []
 })
 </script>

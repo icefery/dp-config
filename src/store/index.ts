@@ -26,7 +26,10 @@ export const SHARED_CONFIG_LIST = computed<(IDeployDetails | IPortMng | IArgsTem
     .filter(it => it !== null) as (IDeployDetails | IPortMng | IArgsTemplate | ICustomYaml)[]
 })
 
-export const DEPLOY_DETAILS_STATE = reactive<{ current: IDeployDetails | null }>({ current: null })
+export const DEPLOY_DETAILS_STATE = reactive<{ current: IDeployDetails | null; exportable: boolean }>({
+  current: null,
+  exportable: true
+})
 
 export const PORT_MNG_STATE = reactive<{ current: IPortMng | null }>({ current: null })
 

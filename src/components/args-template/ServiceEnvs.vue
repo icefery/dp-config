@@ -17,7 +17,7 @@ const handleAdd = () => {
     const todo = { serviceName: '', envs: [], preShellEnvs: [] }
     if (ARGS_TEMPLATE_STATE.current.json.serviceEnvs) {
       type A = IArgsTemplate['json']['serviceEnvs'][number]
-      ARGS_TEMPLATE_STATE.current.json.serviceEnvs.push(todo)
+      ARGS_TEMPLATE_STATE.current.json.serviceEnvs.unshift(todo)
     } else {
       ARGS_TEMPLATE_STATE.current.json.serviceEnvs = [todo]
     }
@@ -93,7 +93,12 @@ const handleCurrentChange = (currentRow: IArgsTemplate['json']['serviceEnvs'][nu
         <!-- 数据列 -->
         <el-table-column align="center" label="serviceName" prop="serviceName">
           <template #default="scope: IScope<IArgsTemplate['json']['serviceEnvs'][number]>">
-            <el-input v-model="scope.row.serviceName" disabled spellcheck="false" />
+            <el-input v-model="scope.row.serviceName" spellcheck="false" />
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="editor" prop="editor">
+          <template #default="scope: IScope<IArgsTemplate['json']['serviceEnvs'][number]>">
+            <el-button circle icon="el-icon-search"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -102,7 +107,7 @@ const handleCurrentChange = (currentRow: IArgsTemplate['json']['serviceEnvs'][nu
       <template v-if="currentServiceEnvs">
         <el-form label-width="100px">
           <el-form-item label="serviceName">
-            <el-input v-model="serviceName" spellcheck="false" style="width: 100%" />
+            <el-input v-model="serviceName" disabled spellcheck="false" style="width: 100%" />
           </el-form-item>
           <el-form-item label="envs">
             <el-input v-model="envs" spellcheck="false" style="width: 100%" />

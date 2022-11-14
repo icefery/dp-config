@@ -11,7 +11,7 @@ import PortStep from './PortStep.vue'
 // 导出文件
 const handleExport = () => {
   if (PORT_MNG_STATE.current) {
-    const blob = new Blob([JSON.stringify(PORT_MNG_STATE.current.json)], { type: 'text/json' })
+    const blob = new Blob([JSON.stringify(PORT_MNG_STATE.current.json, null, ' ')], { type: 'text/json' })
     FileSaver.saveAs(blob, PORT_MNG_STATE.current.name)
   }
 }
@@ -21,12 +21,19 @@ const handleExport = () => {
   <el-card>
     <!-- header 插槽 -->
     <template #header>
-      <el-select v-model="PORT_MNG_STATE.current" value-key="name">
-        <template v-for="item in SHARED_CONFIG_LIST.filter(it => it.module === 'portMng')" :key="item.name">
-          <el-option :label="item.name" :value="item" />
-        </template>
-      </el-select>
-      <el-button :icon="Download" circle @click="handleExport()" />
+      <el-space>
+        <el-select v-model="PORT_MNG_STATE.current" value-key="name">
+          <template v-for="item in SHARED_CONFIG_LIST.filter(it => it.module === 'portMng')" :key="item.name">
+            <el-option :label="item.name" :value="item" />
+          </template>
+        </el-select>
+        <el-popconfirm title="请务必务必仔细检查!!!" width="200px" @confirm="handleExport()">
+          <template #reference>
+            <el-button :icon="Download" circle />
+          </template>
+        </el-popconfirm>
+        <el-image :initial-index="4" :preview-src-list="['/src/assets/2.png']" fit="cover" src="/src/assets/operation-description.png" style="width: 100px; height: 25px" />
+      </el-space>
     </template>
     <!-- default 插槽-->
     <template #default>

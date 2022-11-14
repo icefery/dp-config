@@ -19,7 +19,7 @@ const handleDelete = (index: number) => {
 // 增加
 const handleAdd = () => {
   if (DEPLOY_DETAILS_STATE.current) {
-    DEPLOY_DETAILS_STATE.current.json.deployDetails.push({
+    DEPLOY_DETAILS_STATE.current.json.deployDetails.unshift({
       serviceName: '',
       templateJson: '',
       netMode: 'host',
@@ -51,9 +51,11 @@ const serviceNameStatus = computed(() => (index: number) => {
       others.findIndex(it => it.serviceName === row.serviceName) === -1 // 唯一
     ])
     if (!condition) {
+      DEPLOY_DETAILS_STATE.exportable = false
       return <ValidationFailure />
     }
   }
+  DEPLOY_DETAILS_STATE.exportable = true
   return <ValidationSuccess />
 })
 
@@ -64,12 +66,15 @@ const templateJsonStatus = computed(() => (index: number) => {
     if (row.netMode === 'host') {
       const condition = and([row.templateJson !== ''])
       if (!condition) {
+        DEPLOY_DETAILS_STATE.exportable = false
         return <ValidationFailure />
       }
     }
   }
+  DEPLOY_DETAILS_STATE.exportable = true
   return <ValidationSuccess />
 })
+
 // templateYaml 校验
 const templateYamlStatus = computed(() => (index: number) => {
   if (DEPLOY_DETAILS_STATE.current) {
@@ -77,10 +82,12 @@ const templateYamlStatus = computed(() => (index: number) => {
     if (row.netMode === 'host') {
       const condition = and([row.templateYaml !== ''])
       if (!condition) {
+        DEPLOY_DETAILS_STATE.exportable = false
         return <ValidationFailure />
       }
     }
   }
+  DEPLOY_DETAILS_STATE.exportable = true
   return <ValidationSuccess />
 })
 
@@ -91,10 +98,12 @@ const calicoArgsStatus = computed(() => (index: number) => {
     if (row.netMode === 'calico') {
       const condition = and([row.calicoArgs !== ''])
       if (!condition) {
+        DEPLOY_DETAILS_STATE.exportable = false
         return <ValidationFailure />
       }
     }
   }
+  DEPLOY_DETAILS_STATE.exportable = true
   return <ValidationSuccess />
 })
 
@@ -105,10 +114,12 @@ const calicoYamlStatus = computed(() => (index: number) => {
     if (row.netMode === 'calico') {
       const condition = and([row.calicoYaml !== ''])
       if (!condition) {
+        DEPLOY_DETAILS_STATE.exportable = false
         return <ValidationFailure />
       }
     }
   }
+  DEPLOY_DETAILS_STATE.exportable = true
   return <ValidationSuccess />
 })
 
@@ -118,9 +129,11 @@ const minMemoryStatus = computed(() => (index: number) => {
     const row = DEPLOY_DETAILS_STATE.current.json.deployDetails[index]
     const condition = and([row.minMemory !== ''])
     if (!condition) {
+      DEPLOY_DETAILS_STATE.exportable = false
       return <ValidationFailure />
     }
   }
+  DEPLOY_DETAILS_STATE.exportable = true
   return <ValidationSuccess />
 })
 
@@ -130,9 +143,11 @@ const limitsMemoryStatus = computed(() => (index: number) => {
     const row = DEPLOY_DETAILS_STATE.current.json.deployDetails[index]
     const condition = and([row.limitsMemory !== ''])
     if (!condition) {
+      DEPLOY_DETAILS_STATE.exportable = false
       return <ValidationFailure />
     }
   }
+  DEPLOY_DETAILS_STATE.exportable = true
   return <ValidationSuccess />
 })
 
@@ -142,9 +157,11 @@ const imageTagStatus = computed(() => (index: number) => {
     const row = DEPLOY_DETAILS_STATE.current.json.deployDetails[index]
     const condition = and([row.imageTag !== ''])
     if (!condition) {
+      DEPLOY_DETAILS_STATE.exportable = false
       return <ValidationFailure />
     }
   }
+  DEPLOY_DETAILS_STATE.exportable = true
   return <ValidationSuccess />
 })
 </script>

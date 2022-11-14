@@ -15,7 +15,7 @@ const handleDelete = (index: number) => {
 }
 const handleAdd = () => {
   if (PORT_MNG_STATE.current) {
-    PORT_MNG_STATE.current.json.portRange.push({ key: '', range: '' })
+    PORT_MNG_STATE.current.json.portRange.unshift({ key: '', range: '' })
   }
 }
 
