@@ -1,5 +1,5 @@
 <script lang="tsx" setup>
-import { PORT_MNG_STATE, SHARED_CONFIG_LIST } from '@/store'
+import { PORT_MNG_STATE, SHARED_ASSETS, SHARED_CONFIG_LIST } from '@/store'
 import { Download } from '@element-plus/icons-vue'
 import FileSaver from 'file-saver'
 import PortNodeDiff from './PortNodeDiff.vue'
@@ -32,7 +32,7 @@ const handleExport = () => {
             <el-button :icon="Download" circle />
           </template>
         </el-popconfirm>
-        <el-image :initial-index="4" :preview-src-list="['/src/assets/2.png']" fit="cover" src="/src/assets/operation-description.png" style="width: 100px; height: 25px" />
+        <el-image :initial-index="4" :preview-src-list="[SHARED_ASSETS.twoPNG]" :src="SHARED_ASSETS.operationDescriptionPNG" fit="cover" style="width: 100px; height: 25px" />
       </el-space>
     </template>
     <!-- default 插槽-->

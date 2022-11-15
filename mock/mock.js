@@ -35,6 +35,7 @@ function main() {
   app.use(cors())
   app.use(bodyParser.json({ limit: `${1024 * 10}kb` }))
   app.use(bodyParser.urlencoded())
+  app.use(express.static(path.join(__dirname, 'static')))
 
   // 查询
   app.get('/admin/api/OriginJson', (req, res, next) => res.json(DATA))

@@ -1,7 +1,20 @@
 import type { IArgsTemplate, ICustomYaml, IDeployDetails, IPortMng, IR } from '@/api/json'
+import onePNG from '@/assets/1.png'
+import twoPNG from '@/assets/2.png'
+import threePNG from '@/assets/3.png'
+import operationDescriptionPNG from '@/assets/operation-description.png'
 import { computed, reactive } from 'vue'
 
 export const SHARED_STATE = reactive<{ list: IR[] }>({ list: [] })
+
+export const SHARED_ASSETS = reactive<{
+  [key: string]: string
+}>({
+  onePNG,
+  twoPNG,
+  threePNG,
+  operationDescriptionPNG
+})
 
 export const SHARED_CONFIG_LIST = computed<(IDeployDetails | IPortMng | IArgsTemplate | ICustomYaml)[]>(() => {
   return SHARED_STATE.list

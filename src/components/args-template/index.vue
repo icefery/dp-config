@@ -1,5 +1,5 @@
 <script lang="tsx" setup>
-import { ARGS_TEMPLATE_STATE, SHARED_CONFIG_LIST } from '@/store'
+import { ARGS_TEMPLATE_STATE, SHARED_ASSETS, SHARED_CONFIG_LIST } from '@/store'
 import { Download } from '@element-plus/icons-vue'
 import { ElButton, ElCard, ElForm, ElFormItem, ElOption, ElSelect } from 'element-plus'
 import FileSaver from 'file-saver'
@@ -33,7 +33,7 @@ const handleExport = () => {
             <el-button :icon="Download" circle />
           </template>
         </el-popconfirm>
-        <el-image :initial-index="4" :preview-src-list="['/src/assets/3.png']" fit="cover" src="/src/assets/operation-description.png" style="width: 100px; height: 25px" />
+        <el-image :initial-index="4" :preview-src-list="[SHARED_ASSETS.threePNG]" :src="SHARED_ASSETS.operationDescriptionPNG" fit="cover" style="width: 100px; height: 25px" />
       </el-space>
     </template>
     <el-form label-width="100px">

@@ -1,5 +1,6 @@
 <script lang="tsx" setup>
-import { DEPLOY_DETAILS_STATE, SHARED_CONFIG_LIST } from '@/store'
+import operationDescriptionPng from '@/assets/operation-description.png'
+import { DEPLOY_DETAILS_STATE, SHARED_ASSETS, SHARED_CONFIG_LIST } from '@/store'
 import { Download } from '@element-plus/icons-vue'
 import { ElButton, ElCard, ElForm, ElFormItem, ElImage, ElOption, ElSelect, ElSpace } from 'element-plus'
 import FileSaver from 'file-saver'
@@ -8,6 +9,9 @@ import ValidationFailure from '../validation/ValidationFailure'
 import ValidationSuccess from '../validation/ValidationSuccess'
 import DeployDetails from './DeployDetails.vue'
 import DeployOrder from './DeployOrder.vue'
+
+// 操作说明按钮
+const operationDescriptionSrc = ref(operationDescriptionPng)
 
 // 导出文件
 const handleExport = () => {
@@ -149,7 +153,7 @@ const visable = ref<boolean>(false)
             <el-button :icon="Download" circle />
           </template>
         </el-popconfirm>
-        <el-image :initial-index="4" :preview-src-list="['/src/assets/1.png']" fit="cover" src="/src/assets/operation-description.png" style="width: 100px; height: 25px" />
+        <el-image :initial-index="4" :preview-src-list="[SHARED_ASSETS.onePNG]" :src="SHARED_ASSETS.operationDescriptionPNG" fit="cover" style="width: 100px; height: 25px" />
       </el-space>
     </template>
     <template #default>
