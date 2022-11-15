@@ -50,12 +50,12 @@ export interface IPortMng {
       key: string
       range: string
     }[]
-    portStep?: {
+    portStep: {
       key: string
       step: string
     }[]
-    portNodeDiff?: string[]
-    portNodeSame?: string[]
+    portNodeDiff: string[]
+    portNodeSame: string[]
   }
 }
 

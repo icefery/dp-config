@@ -1,13 +1,12 @@
-<script lang="tsx" setup>
+<script lang="jsx" setup>
 import { SHARED_CONFIG_LIST, YAML_STATE } from '@/store'
 
 import { Download } from '@element-plus/icons-vue'
 import { ElCard, ElOption, ElSelect } from 'element-plus'
 import FileSaver from 'file-saver'
-import type * as monaco from 'monaco-editor'
 import MonacoEditor from 'monaco-editor-vue3'
 
-const options: monaco.editor.IStandaloneEditorConstructionOptions = {
+const options = {
   theme: 'vs',
   tabSize: 2,
   language: 'yaml',
